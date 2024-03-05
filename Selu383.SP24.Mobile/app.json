@@ -22,10 +22,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.selu383.sp24.p03.g##"
+      "package": "com.bradford.Selu383SP24Mobilep03g011"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e59fd472-1499-4f14-973d-2267ec51951a"
+      }
+    },
+    "owner": "bradford"
   }
 }

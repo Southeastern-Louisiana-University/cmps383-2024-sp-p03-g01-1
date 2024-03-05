@@ -21,8 +21,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to EnStay Hotel</Text>
-      <Text style={styles.subtitle}>Your Home Away From Home</Text>
+      <Text style={styles.subtitle}>Welcome to your home away from home!</Text>
 
       <FlatList
         data={rooms}
@@ -51,6 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#555',
     marginBottom: 20,
+    marginTop: 40,
   },
   roomList: {
     width: '100%',
