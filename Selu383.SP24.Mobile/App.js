@@ -65,23 +65,66 @@
 //     fontWeight: 'bold',
 //   },
 // });
+// import React from 'react';
+// import { View, Text } from 'react-native';
+// import { Button, Card, Title, Paragraph } from 'react-native-paper';
+// const LandingPage = () => {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', padding: 16 }}>
+//       <Card>
+//         <Card.Content>
+//           <Title>Welcome to Enstay Hotel</Title>
+//           <Paragraph>Your perfect getaway destination</Paragraph>
+//         </Card.Content>
+//         <Card.Actions>
+//           <Button>Book Now</Button>
+//         </Card.Actions>
+//       </Card>
+//     </View>
+//   );
+// };
+
+// export default LandingPage;
+import 'react-native-gesture-handler';
 import React from 'react';
-import { View, Text } from 'react-native';
-import { Button, Card, Title, Paragraph } from 'react-native-paper';
-const LandingPage = () => {
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import {View, Text, Button, StyleSheet} from 'react-native';
+import { GestureHandlerRootView} from 'react-native-gesture-handler'
+
+
+
+function HomeScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', padding: 16 }}>
-      <Card>
-        <Card.Content>
-          <Title>Welcome to Enstay Hotel</Title>
-          <Paragraph>Your perfect getaway destination</Paragraph>
-        </Card.Content>
-        <Card.Actions>
-          <Button>Book Now</Button>
-        </Card.Actions>
-      </Card>
+    <View style={style.container}>
+      <Text>Home Screen</Text>
     </View>
   );
-};
+}
 
-export default LandingPage;
+function DetailsScreen() {
+  return (
+    <View style={style.container}>
+      <Text>Details Screen</Text>
+    </View>
+  );
+}
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+const Stack = createStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
