@@ -72,7 +72,6 @@ const LandingPage = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', padding: 16 }}>
       <Card>
-        {/* <Card.Cover source={require('./path/to/your/image.jpg')} /> */}
         <Card.Content>
           <Title>Welcome to Enstay Hotel</Title>
           <Paragraph>Your perfect getaway destination</Paragraph>
