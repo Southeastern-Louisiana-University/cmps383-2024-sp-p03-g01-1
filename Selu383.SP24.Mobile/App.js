@@ -89,15 +89,19 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {View, Text, Button, StyleSheet} from 'react-native';
-import { GestureHandlerRootView} from 'react-native-gesture-handler'
+import { View, Text, StyleSheet } from 'react-native';
+import { Button } from 'react-native-paper';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import CustomNavigationBar from './CustomNavigationBar'; 
+import { PaperProvider } from 'react-native-paper';
 
-
-
-function HomeScreen() {
+function HomeScreen({ navigation }) {
   return (
     <View style={style.container}>
       <Text>Home Screen</Text>
+      <Button mode="contained" onPress={() => navigation.navigate('Details')}>
+        Go to details
+      </Button>
     </View>
   );
 }
@@ -109,6 +113,7 @@ function DetailsScreen() {
     </View>
   );
 }
+
 const style = StyleSheet.create({
   container: {
     flex: 1,
@@ -116,15 +121,24 @@ const style = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PaperProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+              header: (props) => <CustomNavigationBar {...props} />,
+            }}>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Details" component={DetailsScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </GestureHandlerRootView>
   );
 }
