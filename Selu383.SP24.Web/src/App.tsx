@@ -1,35 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+    return (
+        <div className="app">
+            <div className="colorMe">
+                <header className="header">
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+                    <button className="logo" >EnStay</button>
+                    <select className="menubar">
+                        <option className="menubar" value="" disabled selected>Travel</option>
+                        <option value="hotel1" >Hotel 1</option>
+                        <option value="hotel2">Hotel 2</option>
+                        <option value="hotel3">Hotel 3</option>
+                    </select>
+                    <button className="menubar">Offers</button>
+                    <button className="menubar">Contact Us</button>
+                    <button className="menubar">About Us</button>
+                    <button className="login">Login</button>
+                    <button className="login"> Register</button>
+
+
+
+                </header>
+            </div>
+            <section className="color-block">
+                <h1>Where Convenience Checks In</h1>
+            </section>
+            <main>
+                <table>
+                    <td>
+                        <div className="hotel-info">
+                            <img src="https://professionals.tarkett.com/media/img/M/THH_25094225_25187225_001.jpg" alt="Placeholder image"></img>
+                            <div className="hotel-name">Our Benefits</div>
+                            <br></br>
+                            <div className="description">Placeholder for EnStay benefits.</div>
+                            <button className="bookButton">Book Now</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div className="hotel-info">
+                            <img src="https://professionals.tarkett.com/media/img/M/THH_25094225_25187225_001.jpg" alt="Placeholder image"></img>
+                            <div className="hotel-name">Our Features</div>
+                            <br></br>
+                            <div className="description">Placeholder for EnStay features.</div>
+                            <button className="bookButton">Book Now</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div className="hotel-info">
+                            <img src="https://professionals.tarkett.com/media/img/M/THH_25094225_25187225_001.jpg" alt="Placeholder image"></img>
+                            <div className="hotel-name">Our Gurantees</div>
+                            <br></br>
+                            <div className="description">Placeholder for EnStay gurantees.</div>
+                            <button className="bookButton">Book Now</button>
+                        </div>
+                    </td>
+                </table>
+            </main>
+            <footer className="footer">
+                <p>&copy; 2024 Our Hotel. All rights reserved.</p>
+            </footer>
+        </div>
+    );
 }
-
-export default App
+export default App;

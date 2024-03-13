@@ -1,42 +1,138 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+    text-rendering: optimizeLegibility;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+div.colorMe {
+    background-color: silver;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h1 {
+    background-color: silver;
+    margin: 0;
+    padding: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+section.color-block {
+    background-color: silver;
+    text-align: center;
+    padding: 15px;
 }
 
-.card {
-  padding: 2em;
+table {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #22d3ee;
+    width: 100%;
+    padding-top: 40px;
+    padding-bottom: 100px;
 }
 
-.read-the-docs {
-  color: #888;
+div.hotel-info {
+    padding: 30px;
+    width: 33%;
+    height: 33%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    color: black;
+}
+
+button.logo {
+    border: none;
+    background-color: white;
+    padding-right: 50px;
+}
+
+button.login {
+    padding: 5px;
+    background-color: white;
+    border-radius: 100% / 400%;
+    margin-right: 10px;
+}
+
+button.login2 {
+    padding: 5px;
+    background-color: white;
+    border-radius: 100% / 400%;
+}
+
+button.bookButton {
+    border-radius: 50% / 400%;
+    background-color: white;
+}
+
+
+select.menubar, button.menubar {
+    border: none;
+    margin: 3px;
+    width: 100px;
+}
+
+footer.footer {
+    text-align: center;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 50%;
+}
+
+
+
+
+.header {
+    background-color: white;
+    border-radius: 50% / 400%;
+    padding: 15px;
+    width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    text-align: center;
+}
+
+.menubar {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 7px;
+    font-size: 14px;
+    background-color: white;
+}
+
+/*hover styling*/
+
+button.login:hover {
+    background-color: lightgray;
+    color: white;
+}
+
+button.login2:hover {
+    background-color: lightgray;
+    color: white;
+}
+
+button.logo:hover {
+    background-color: white;
+    padding-right: 50px;
+    color: #22d3ee;
+}
+
+select.menubar:hover, button.menubar:hover {
+    border: none;
+    margin: 3px;
+    width: 100px;
+    color: #22d3ee;
+}
+
+button.bookButton:hover {
+    color: #22d3ee;
 }
