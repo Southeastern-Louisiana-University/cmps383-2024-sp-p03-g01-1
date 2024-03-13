@@ -1,3 +1,6 @@
+@import '@fortawesome/fontawesome-free/css/all.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -13,8 +16,24 @@ body {
   background-color: #00171F;
 }
 
+.landing-p-custom {
+  margin: 10px 0;
+  font-size: 75px;
+  color: #22d3ee;
+  text-emphasis: bold;
+}
+
+
 .card-custom {
   background-color: #E07A5F;
+  width: 30%;
+  margin-top: 75px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.card-text-custom {
+  margin: 5px 0 auto
 }
 
 .navbar-custom {
@@ -23,13 +42,42 @@ body {
 
 .nav-link-custom {
   color: #003459;
-  font-size: 34px;
-  margin-right: 25px;
+  font-size: 20px;
 }
 
 .btn-custom {
   background-color: #003459;
   color: #fff;
+  margin: 5px;
+  width: 110px;
+  height: 40px;
+  font-size: 16px;
+  
+}
+
+.btn-custom:hover {
+  background-color: #f2cc8F;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background-color: #22d3ee;
+}
+
+.icon-custom {
+  font-size: 15px;
+  margin: 5px;
+  margin-right: 5px;
+  color: #003459;
+}
+
+.icon-rotate {
+  transform: rotate(270deg);
 }
 
 
