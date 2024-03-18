@@ -1,6 +1,7 @@
 @import '@fortawesome/fontawesome-free/css/all.css';
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -23,40 +24,67 @@ body {
   text-emphasis: bold;
 }
 
-
-.card-custom {
-  background-color: #E07A5F;
-  width: 30%;
-  margin-top: 75px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.card-text-custom {
-  margin: 5px 0 auto
+.navbar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
 }
 
 .navbar-custom {
   background-color: #22d3ee;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+
+.image-custom {
+  width: 100%;
+  height: 100px;
+}
+
+.navbar {
+  padding: 0;
+}
+
+.nav-p-custom {
+  font-size: 50px;
+  padding: 5px 0 0 0;
+  height: 100px;
+  color: #00171F;
+}
+
+.nav-col-link-custom{
+  width: 100px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
 }
 
 .nav-link-custom {
   color: #003459;
   font-size: 20px;
+  padding: 0;
+  width: 75px;
+  height: 26px;
 }
 
-.btn-custom {
-  background-color: #003459;
-  color: #fff;
-  margin: 5px;
-  width: 110px;
-  height: 40px;
-  font-size: 16px;
-  
+.nav-link-custom:hover {
+  color:#f2cc8F;
 }
 
-.btn-custom:hover {
-  background-color: #f2cc8F;
+.nav-col-custom{
+  width: 27px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.icon-col-custom:not(:last-child){
+  margin: 0px;
 }
 
 .icon-button {
@@ -71,8 +99,6 @@ body {
 
 .icon-custom {
   font-size: 15px;
-  margin: 5px;
-  margin-right: 5px;
   color: #003459;
 }
 
@@ -80,6 +106,107 @@ body {
   transform: rotate(270deg);
 }
 
+.nav-btn-col-custom {
+  flex: 1;
+  text-align: center;
+  padding: 0;
+  margin: 0 2px;
+
+}
+
+.nav-btn-custom {
+  background-color: #003459;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  width: 110px;
+  height: 40px;
+  font-size: 16px;  
+}
+
+.nav-btn-custom:hover {
+  background-color: #f2cc8F;
+}
+
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.searchbar-custom {
+  background-color: #22d3ee;
+  width: 70%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+
+.row-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+  margin: 0;
+}
+
+.col-custom {
+  flex: 1;
+  text-align: center;
+  padding: 0;
+
+}
+
+.search-link-custom {
+  color: #003459;
+  font-size: 20px;
+}
+
+.search-btn-custom {
+  background-color: #003459;
+  color: #fff;
+  width: 100%;
+  height: 100px;
+  font-size: 16px; 
+  
+}
+
+.search-btn-custom:hover {
+  background-color: #f2cc8F;
+}
+
+.card-custom {
+  background-color: #E07A5F;
+  width: 30%;
+  margin: 20px;
+  padding: 0;
+}
+
+.card-text-custom {
+  margin: 0;
+}
+
+.btn-custom {
+  background-color: #003459;
+  color: #fff;
+  margin: 5px;
+  width: 110px;
+  height: 40px;
+  font-size: 16px;  
+}
+
+.btn-custom:hover {
+  background-color: #f2cc8F;
+}
+
+
+/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+<span className="navbar-toggler-icon"></span>
+</button> */
 
 
 
