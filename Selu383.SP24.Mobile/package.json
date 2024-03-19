@@ -12,6 +12,7 @@
     "@react-native-community/viewpager": "^5.0.11",
     "@react-navigation/native": "^6.1.15",
     "@react-navigation/stack": "^6.3.27",
+    "axios": "^1.6.8",
     "expo": "^49.0.23",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",

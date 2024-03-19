@@ -1,11 +1,12 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button, PaperProvider, Avatar, Card} from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CustomNavigationBar from './CustomNavigationBar'; 
+import axios from 'axios';
 
 function Header() {
   return (
@@ -22,15 +23,39 @@ function Header() {
     </View>
   );
 }
+// const fetchHotels = async () => {
+//   try {
+//     const response = await axios.get('https://127.0.0.1:7116/api/hotels');
+//     console.log('Fetched hotels:', response.data);
+//     setHotels(response.data);
+//   } catch (error) {
+//     console.error('Error fetching hotels:', error);
+//   }
+// };
 
 function HomeScreen({ navigation }) {
+  const [hotels, setHotels] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchHotels = async () => {
+      try {
+        const response = await axios.get('https://localhost:7116/api/hotels');
+        setHotels(response.data);
+      } catch (error) {
+        console.error('Error fetching hotels:', error);
+        setError(error.message); 
+
+      }
+    };
+
+    fetchHotels();
+  }, []);
+
   return (
     <View style={style.container}>
       <Header />
-
       <Text style={style.title}>Quick book</Text>
-
-
       <View style={style.cardContainer}>
         {hotels.map(hotel => (
           <Card key={hotel.id} style={style.card}>
@@ -62,26 +87,7 @@ function DetailsScreen({ route }) {
 }
 
 
-const hotels = [
-  {
-    id: 1,
-    name: 'Hotel A',
-    description: 'Luxury accommodation with breathtaking views.',
-    image: 'https://via.placeholder.com/600',
-  },
-  {
-    id: 2,
-    name: 'Hotel B',
-    description: 'Modern hotel with state-of-the-art amenities.',
-    image: 'https://via.placeholder.com/600',
-  },
-  {
-    id: 3,
-    name: 'Hotel C',
-    description: 'Cozy retreat in the heart of the city.',
-    image: 'https://via.placeholder.com/600',
-  },
-];
+
 
 
 const style = StyleSheet.create({
