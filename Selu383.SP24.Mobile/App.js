@@ -37,25 +37,38 @@ function HomeScreen({ navigation }) {
   const [hotels, setHotels] = useState([]);
   const [error, setError] = useState(null);
 
+  const fetchHotels = async () => {
+    try {
+      console.log('Fetching hotels...');
+      const response = await axios.get('https://localhost:7116/api/hotels');
+      console.log('Fetched hotels:', response.data);
+      setHotels(response.data);
+      setError(null); // Clear error on successful fetch
+    } catch (error) {
+      console.error('Error fetching hotels:', error);
+      setError('Failed to fetch hotels. Please try again.'); // Set custom error message
+    }
+  };
+
   useEffect(() => {
-    const fetchHotels = async () => {
-      try {
-        const response = await axios.get('https://localhost:7116/api/hotels');
-        setHotels(response.data);
-      } catch (error) {
-        console.error('Error fetching hotels:', error);
-        setError(error.message); 
-
-      }
-    };
-
     fetchHotels();
   }, []);
+
+  const handleRetry = () => {
+    setError(null); // Clear previous error
+    fetchHotels(); // Retry fetching data
+  };
 
   return (
     <View style={style.container}>
       <Header />
       <Text style={style.title}>Quick book</Text>
+      {error ? ( // Display error message if there's an error
+        <View style={style.errorContainer}>
+          <Text style={style.errorText}>{error}</Text>
+          <Button onPress={handleRetry}>Retry</Button>
+        </View>
+      ) : (
       <View style={style.cardContainer}>
         {hotels.map(hotel => (
           <Card key={hotel.id} style={style.card}>
@@ -69,6 +82,7 @@ function HomeScreen({ navigation }) {
           </Card>
         ))}
       </View>
+      )}
     </View>
   );
 }
@@ -85,10 +99,6 @@ function DetailsScreen({ route }) {
     </View>
   );
 }
-
-
-
-
 
 const style = StyleSheet.create({
   container: {
