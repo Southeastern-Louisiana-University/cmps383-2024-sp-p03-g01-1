@@ -2,11 +2,12 @@ import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, StyleSheet } from 'react-native';
-import { Button, PaperProvider, Avatar, Card} from 'react-native-paper';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Button, PaperProvider, Avatar, Card, Title, Paragraph} from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CustomNavigationBar from './CustomNavigationBar'; 
 import axios from 'axios';
+import seededHotels from './seededHotels';
 
 function Header() {
   return (
@@ -23,6 +24,7 @@ function Header() {
     </View>
   );
 }
+
 // const fetchHotels = async () => {
 //   try {
 //     const response = await axios.get('https://127.0.0.1:7116/api/hotels');
@@ -33,59 +35,67 @@ function Header() {
 //   }
 // };
 
+// function HomeScreen({ navigation }) {
+//   const [hotels, setHotels] = useState(seededHotels);
+//   const [error, setError] = useState(null);
+
+//   const fetchHotels = async () => {
+//     try {
+//       console.log('Fetching hotels...');
+//       const response = await axios.get('https://localhost:7116/api/hotels');
+//       console.log('Fetched hotels:', response.data);
+//       setHotels(response.data);
+//       setError(null); // Clear error on successful fetch
+//     } catch (error) {
+//       console.error('Error fetching hotels:', error);
+//       setError('Failed to fetch hotels. Please try again.'); // Set custom error message
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchHotels();
+//   }, []);
+
+//   const handleRetry = () => {
+//     setError(null); // Clear previous error
+//     fetchHotels(); // Retry fetching data
+//   };
+
 function HomeScreen({ navigation }) {
-  const [hotels, setHotels] = useState([]);
   const [error, setError] = useState(null);
-
-  const fetchHotels = async () => {
-    try {
-      console.log('Fetching hotels...');
-      const response = await axios.get('https://localhost:7116/api/hotels');
-      console.log('Fetched hotels:', response.data);
-      setHotels(response.data);
-      setError(null); // Clear error on successful fetch
-    } catch (error) {
-      console.error('Error fetching hotels:', error);
-      setError('Failed to fetch hotels. Please try again.'); // Set custom error message
-    }
-  };
-
-  useEffect(() => {
-    fetchHotels();
-  }, []);
-
-  const handleRetry = () => {
-    setError(null); // Clear previous error
-    fetchHotels(); // Retry fetching data
-  };
 
   return (
     <View style={style.container}>
       <Header />
       <Text style={style.title}>Quick book</Text>
-      {error ? ( // Display error message if there's an error
+      {error ? (
         <View style={style.errorContainer}>
           <Text style={style.errorText}>{error}</Text>
           <Button onPress={handleRetry}>Retry</Button>
         </View>
       ) : (
-      <View style={style.cardContainer}>
-        {hotels.map(hotel => (
-          <Card key={hotel.id} style={style.card}>
-            <Card.Title title={hotel.name} subtitle={hotel.description} />
-            <Card.Cover source={{ uri: hotel.image }} />
-            <Card.Actions>
-              <Button onPress={() => navigation.navigate('Details', { hotel })}>
-                View Details
-              </Button>
-            </Card.Actions>
-          </Card>
-        ))}
-      </View>
+        <View style={style.cardContainer}>
+          {seededHotels.map((hotel) => (
+            <TouchableOpacity
+              key={hotel.id}
+              onPress={() => navigation.navigate('Details', { hotel })}
+            >
+              <Card elevation={5} style={style.card}>
+                <Card.Cover source={{ uri: hotel.image }} />
+                <Card.Content>
+                  <Title>{hotel.name}</Title>
+                  <Paragraph>{hotel.description}</Paragraph>
+                </Card.Content>
+              </Card>
+            </TouchableOpacity>
+          ))}
+        </View>
       )}
     </View>
   );
 }
+
+
 
 
 function DetailsScreen({ route }) {
