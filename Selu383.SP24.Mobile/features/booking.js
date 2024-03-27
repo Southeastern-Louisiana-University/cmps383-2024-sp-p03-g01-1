@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity, checkInDate, checkOutDate } from 'react-native';
 import { Snackbar } from 'react-native-paper';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 function BookingScreen({ route }) {
     const { hotel } = route.params;
@@ -8,6 +9,8 @@ function BookingScreen({ route }) {
     const [customerEmail, setCustomerEmail] = useState('');
     const [showSnackbar, setShowSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [checkInDate, setCheckInDate] = useState('');
+    const [checkOutDate, setCheckOutDate] = useState('');
 
     const handleBookRoom = () => {
       if (customerName.trim() === '' || customerEmail.trim() === '') {
@@ -54,11 +57,21 @@ function BookingScreen({ route }) {
         <View style={style.dateContainer}>
           <TouchableOpacity onPress={() => console.log('Open calendar for check-in date')}>
             <Text style={style.dateLabel}>Check-in Date:</Text>
-            <Text style={style.dateText}>{checkInDate || 'Select Date'}</Text>
+            <Text style={style.dateText}>{checkInDate ? new Date(checkInDate).toLocaleDateString() : 'Select Date'}</Text>
+
+          <DateTimePicker
+            style={{ width: 200 }}
+            value={checkInDate ? new Date(checkInDate) : new Date()} // Pass a JavaScript Date object
+            mode="date"
+            display="spinner" 
+            onChange={(event, date) => setCheckInDate(date)} // Use onChange event to update the state
+          />
           </TouchableOpacity>
+
           <TouchableOpacity onPress={() => console.log('Open calendar for check-out date')}>
             <Text style={style.dateLabel}>Check-out Date:</Text>
-            <Text style={style.dateText}>{checkOutDate || 'Select Date'}</Text>
+            <Text style={style.dateText}>{checkOutDate ? new Date(checkOutDate).toLocaleDateString() : 'Select Date'}</Text>
+
           </TouchableOpacity>
         </View>
 
