@@ -13,5 +13,6 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
 
         builder.Property(x => x.Address)
             .IsRequired();
+
     }
 }

@@ -78,7 +78,8 @@ public static class SeedHelper
             return;
         }
 
-        for (int i = 0; i < 4; i++)
+
+       for (int i = 0; i < 4; i++)
         {
             dataContext.Set<Hotel>()
                 .Add(new Hotel
