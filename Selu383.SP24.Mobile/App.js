@@ -2,12 +2,13 @@ import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, navigation } from 'react-native';
 import { Button, PaperProvider, Avatar, Card, Title, Paragraph} from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import CustomNavigationBar from './CustomNavigationBar'; 
+import CustomNavigationBar from './features/CustomNavigationBar'; 
 import axios from 'axios';
-import seededHotels from './seededHotels';
+import seededHotels from './features/seededHotels';
+import DetailsScreen from './features/details';
 
 function Header() {
   return (
@@ -24,6 +25,129 @@ function Header() {
     </View>
   );
 }
+
+
+function HomeScreen({ navigation }) {
+  const [error, setError] = useState(null);
+
+  return (
+    <View style={style.container}>
+      <Header />
+      <Text style={style.title}>Quick book</Text>
+      {error ? (
+        <View style={style.errorContainer}>
+          <Text style={style.errorText}>{error}</Text>
+          <Button onPress={handleRetry}>Retry</Button>
+        </View>
+      ) : (
+        <ScrollView contentContainerStyle={style.scrollContainer}>
+          <View style={style.cardContainer}>
+            {seededHotels.map((hotel) => (
+              <TouchableOpacity
+                key={hotel.id}
+                onPress={() => navigation.navigate('Details', { hotel })}
+              >
+                <Card elevation={5} style={style.card}>
+                  <Card.Cover source={{ uri: hotel.image }} />
+                  <Card.Content>
+                    <Title>{hotel.name}</Title>
+                    <Paragraph>{hotel.description}</Paragraph>
+                  </Card.Content>
+                </Card>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
+
+      )}
+    </View>
+  );
+}
+
+
+// function DetailsScreen({ route }) {
+//   const { hotel } = route.params;
+//   const handleBookNow = () => {
+//     // Navigate to the booking screen or implement booking logic here
+//     navigation.navigate('Booking', { hotel });
+//   };
+//   return (
+//     <View style={style.container}>
+//       <Text>{hotel.name}</Text>
+//       <Text>{hotel.description}</Text>
+//       <Button mode="contained" onPress={handleBookNow}>Book Now</Button>
+
+//     </View>
+//   );
+// }
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    backgroundColor: '#22D3EE',
+    padding: 20,
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: 'black',
+    marginBottom: 20,
+  },
+  button: {
+    marginTop: 10,
+    width: '100%',
+  },
+  cardContainer: {
+    flex: 1,
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+  },
+  card: {
+    marginBottom: 20,
+  },
+});
+
+const Stack = createStackNavigator();
+
+export default function App() {
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PaperProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+              header: (props) => <CustomNavigationBar {...props} />,
+            }}>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Details" component={DetailsScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </GestureHandlerRootView>
+    
+  );
+}
+
+
+
+
+
+
+
 
 // const fetchHotels = async () => {
 //   try {
@@ -60,110 +184,3 @@ function Header() {
 //     setError(null); // Clear previous error
 //     fetchHotels(); // Retry fetching data
 //   };
-
-function HomeScreen({ navigation }) {
-  const [error, setError] = useState(null);
-
-  return (
-    <View style={style.container}>
-      <Header />
-      <Text style={style.title}>Quick book</Text>
-      {error ? (
-        <View style={style.errorContainer}>
-          <Text style={style.errorText}>{error}</Text>
-          <Button onPress={handleRetry}>Retry</Button>
-        </View>
-      ) : (
-        <View style={style.cardContainer}>
-          {seededHotels.map((hotel) => (
-            <TouchableOpacity
-              key={hotel.id}
-              onPress={() => navigation.navigate('Details', { hotel })}
-            >
-              <Card elevation={5} style={style.card}>
-                <Card.Cover source={{ uri: hotel.image }} />
-                <Card.Content>
-                  <Title>{hotel.name}</Title>
-                  <Paragraph>{hotel.description}</Paragraph>
-                </Card.Content>
-              </Card>
-            </TouchableOpacity>
-          ))}
-        </View>
-      )}
-    </View>
-  );
-}
-
-
-
-
-function DetailsScreen({ route }) {
-  const { hotel } = route.params;
-
-  return (
-    <View style={style.container}>
-      <Text>{hotel.name}</Text>
-      <Text>{hotel.description}</Text>
-      {/* Render other details of the hotel */}
-    </View>
-  );
-}
-
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    backgroundColor: '#22D3EE',
-    padding: 20,
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: 'black',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: 'black',
-    marginBottom: 20,
-  },
-  button: {
-    marginTop: 10,
-    width: '100%',
-  },
-  cardContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-  },
-  card: {
-    width: '33%', // Adjust according to your preference
-    marginBottom: 20,
-  },
-});
-
-const Stack = createStackNavigator();
-
-export default function App() {
-  return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <PaperProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Home"
-            screenOptions={{
-              header: (props) => <CustomNavigationBar {...props} />,
-            }}>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Details" component={DetailsScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
-    </GestureHandlerRootView>
-    
-  );
-}
