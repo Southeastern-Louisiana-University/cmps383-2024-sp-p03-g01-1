@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import { useNavigation } from '@react-navigation/native'; 
 
 function DetailsScreen({ route }) {
-  const navigation = useNavigation(); // Get navigation object using useNavigation hook
+  const navigation = useNavigation(); 
   const { hotel } = route.params;
 
   const handleBookNow = () => {
@@ -14,7 +14,7 @@ function DetailsScreen({ route }) {
     <View style={style.container}>
       <Text>{hotel.name}</Text>
       <Text>{hotel.description}</Text>
-      <Button mode="contained" onPress={handleBookNow}>Book Now</Button>
+      <Button title="Book Now" onPress={handleBookNow} />
     </View>
   );
 }

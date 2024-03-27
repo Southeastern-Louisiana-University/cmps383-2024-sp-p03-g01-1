@@ -9,6 +9,8 @@ import CustomNavigationBar from './features/CustomNavigationBar';
 import axios from 'axios';
 import seededHotels from './features/seededHotels';
 import DetailsScreen from './features/details';
+import BookingScreen from './features/booking';
+
 
 function Header() {
   return (
@@ -64,23 +66,6 @@ function HomeScreen({ navigation }) {
   );
 }
 
-
-// function DetailsScreen({ route }) {
-//   const { hotel } = route.params;
-//   const handleBookNow = () => {
-//     // Navigate to the booking screen or implement booking logic here
-//     navigation.navigate('Booking', { hotel });
-//   };
-//   return (
-//     <View style={style.container}>
-//       <Text>{hotel.name}</Text>
-//       <Text>{hotel.description}</Text>
-//       <Button mode="contained" onPress={handleBookNow}>Book Now</Button>
-
-//     </View>
-//   );
-// }
-
 const style = StyleSheet.create({
   container: {
     flex: 1,
@@ -134,6 +119,8 @@ export default function App() {
             }}>
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Details" component={DetailsScreen} />
+            <Stack.Screen name="Booking" component={BookingScreen} /> 
+
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
