@@ -79,15 +79,25 @@ public static class SeedHelper
         }
 
 
-       for (int i = 0; i < 4; i++)
-        {
-            dataContext.Set<Hotel>()
-                .Add(new Hotel
-                {
-                    Name = "Hammond " + i,
-                    Address = "1234 Place st"
-                });
-        }
+        dataContext.Set<Hotel>().AddRange(new[]
+         {
+            new Hotel
+            {
+                Name = "Baton Rouge",
+                Address = "200 Convention St. Baton Rouge, LA 70801"
+            },
+            new Hotel
+            {
+                Name = "French Quarter",
+                Address = "225 Barrone St. New Orleans, LA 70112"
+            },
+            new Hotel
+            {
+                Name = "Jackson Square",
+                Address = "405 Esplanade Ave. New Orleans, LA 70116"
+            }
+        });
+
 
         await dataContext.SaveChangesAsync();
     }
