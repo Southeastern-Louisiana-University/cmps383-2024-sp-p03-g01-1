@@ -79,8 +79,8 @@ public static class SeedHelper
         }
 
 
-        dataContext.Set<Hotel>().AddRange(new[]
-         {
+        dataContext.Set<Hotel>().AddRange(
+         [
             new Hotel
             {
                 Name = "Baton Rouge",
@@ -96,7 +96,7 @@ public static class SeedHelper
                 Name = "Jackson Square",
                 Address = "405 Esplanade Ave. New Orleans, LA 70116"
             }
-        });
+        ]);
 
 
         await dataContext.SaveChangesAsync();
