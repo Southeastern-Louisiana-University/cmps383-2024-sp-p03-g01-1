@@ -1,7 +1,5 @@
 import { Outlet } from 'react-router-dom';
 import "../App.css"
-import Navbar from './Navbar';
-import SearchBar from './Search';
 import image1 from '../images/Baton Rouge.jpg';
 import image2 from '../images/FQNOLA.jpg';
 import image3 from '../images/SLCNOLA.jpg';
