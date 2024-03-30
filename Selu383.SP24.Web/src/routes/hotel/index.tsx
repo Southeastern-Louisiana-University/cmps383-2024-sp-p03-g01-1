@@ -22,7 +22,7 @@ function Hotels() {
                 {hotels.map((hotel) => (
                     <div key={hotel.id} className="col-3index">
                         <div className="card card-customindex">
-                            <img className="card-img-topindex" src={hotel.image} alt={hotel.name} />
+                            <img className="card-img-topindex" src={"hotel.image"} alt={hotel.name} />
                             <div className="card-bodyindex">
                                 <h4 className="card-titleindex">{hotel.name}</h4>
                                 <p className="card-text card-text-customindex">{hotel.address}</p>
