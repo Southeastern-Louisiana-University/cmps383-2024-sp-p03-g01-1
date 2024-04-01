@@ -138,7 +138,7 @@ export default function App() {
 
 // const fetchHotels = async () => {
 //   try {
-//     const response = await axios.get('https://127.0.0.1:7116/api/hotels');
+//     const response = await axios.get('https://localhost:7116/api/hotels');
 //     console.log('Fetched hotels:', response.data);
 //     setHotels(response.data);
 //   } catch (error) {
