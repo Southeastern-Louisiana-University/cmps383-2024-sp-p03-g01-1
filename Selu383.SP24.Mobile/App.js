@@ -46,9 +46,9 @@ function HomeScreen({ navigation }) {
 
   const fetchHotels = async () => {
     try {
-      console.log('Fetching hotels...');
+      //console.log('Fetching hotels...');
       const response = await axios.get('https://selu383-sp24-p03-g01.azurewebsites.net/api/hotels');
-      console.log('Fetched hotels:', response.data);
+      //console.log('Fetched hotels:', response.data);
       setHotels(response.data);
       setError(null); // Clear error on successful fetch
     } catch (error) {

@@ -26,10 +26,11 @@ export default function LoginScreen() {
 
           if (response.ok) {
             login(data); 
-            console.log(username)
+            //console.log(username)
+            Alert.alert('Login Successful', data.message);
             navigation.navigate('Home'); 
 
-            //Alert.alert('Login Successful', data.message);
+            
           } else {
             // Login failed, display error message
             Alert.alert('Login Failed', data.message);
