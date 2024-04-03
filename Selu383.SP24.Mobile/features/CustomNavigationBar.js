@@ -15,8 +15,8 @@ export default function CustomNavigationBar({
   const title = getHeaderTitle(options, route.name);
 
   const handleLoginPress = () => {
-    navigation.navigate('Login'); // Navigate to login screen
-    closeMenu(); // Close the menu
+    navigation.navigate('Login'); 
+    closeMenu(); 
   };
 
   return (
