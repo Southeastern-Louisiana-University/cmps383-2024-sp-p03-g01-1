@@ -85,19 +85,25 @@ public static class SeedHelper
             {
                 Name = "Baton Rouge",
                 Address = "200 Convention St.",
-                CityStateZip = "Baton Rouge, LA 70801"
+                City = "Baton Rouge",
+                State = "LA",
+                PostalCode = "70801"
             },
             new Hotel
             {
                 Name = "French Quarter",
                 Address = "225 Barrone St.",
-                CityStateZip = "New Orleans, LA 70112"
+                City = "New Orleans",
+                State = "LA",
+                PostalCode = "70112"
             },
             new Hotel
             {
                 Name = "Jackson Square",
                 Address = "405 Esplanade Ave.",
-                CityStateZip = "New Orleans, LA 70116"
+                City = "New Orleans",
+                State = "LA",
+                PostalCode = "70116"
             }
         ]);
 
