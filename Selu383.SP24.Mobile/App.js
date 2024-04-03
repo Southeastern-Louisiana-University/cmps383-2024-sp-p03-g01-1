@@ -40,6 +40,10 @@ function HomeScreen({ navigation }) {
     console.log('User:', user);
   }, [user]);
   
+  const logCurrentUser = () => {
+    console.log('Current User:', user);
+  };
+
   const fetchHotels = async () => {
     try {
       console.log('Fetching hotels...');
@@ -66,8 +70,11 @@ function HomeScreen({ navigation }) {
     <View style={style.container}>
       <Header />
 
+
+      <Text>{user ? `Logged in as ${user.userName}` : 'Not logged in'}</Text>
+      <Button title="Log Current User" onPress={logCurrentUser} />
       <Text style={{ fontSize: 24, marginBottom: 10 }}>
-        {user ? `Hello, ${user.username}` : 'Welcome!'}
+        {user ? `Hello, ${user.userName}` : 'Welcome!'}
       </Text>
 
       <Text style={style.title}>Quick book</Text>
@@ -146,9 +153,10 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    <AuthProvider>
+
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PaperProvider>
-        <AuthProvider>
 
           <NavigationContainer>
             <Stack.Navigator
@@ -162,10 +170,10 @@ export default function App() {
               <Stack.Screen name="Login" component={LoginScreen} />
             </Stack.Navigator>
           </NavigationContainer>
-        </AuthProvider>
       </PaperProvider>
     </GestureHandlerRootView>
-    
+    </AuthProvider>
+
   );
 }
 

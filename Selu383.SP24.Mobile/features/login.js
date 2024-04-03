@@ -22,8 +22,10 @@ export default function LoginScreen() {
           });
           const data = await response.json();
     
+          console.log('Login response:', data);
+
           if (response.ok) {
-            login(data.user); 
+            login(data); 
             console.log(username)
             navigation.navigate('Home'); 
 
