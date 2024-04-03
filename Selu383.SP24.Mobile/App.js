@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, navigation } from 'react-native';
@@ -10,7 +10,7 @@ import axios from 'axios';
 import DetailsScreen from './features/details';
 import BookingScreen from './features/booking';
 import LoginScreen from './features/login';
-
+import { AuthProvider, useAuth } from './features/AuthContext';
 
 function Header() {
   return (
@@ -33,7 +33,13 @@ function Header() {
 function HomeScreen({ navigation }) {
   const [hotels, setHotels] = useState([]);
   const [error, setError] = useState(null);
-
+  
+  const { user } = useAuth();
+  
+  useEffect(() => {
+    console.log('User:', user);
+  }, [user]);
+  
   const fetchHotels = async () => {
     try {
       console.log('Fetching hotels...');
@@ -59,6 +65,11 @@ function HomeScreen({ navigation }) {
   return (
     <View style={style.container}>
       <Header />
+
+      <Text style={{ fontSize: 24, marginBottom: 10 }}>
+        {user ? `Hello, ${user.username}` : 'Welcome!'}
+      </Text>
+
       <Text style={style.title}>Quick book</Text>
       {error ? (
         <View style={style.errorContainer}>
@@ -137,20 +148,21 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PaperProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Home"
-            screenOptions={{
-              header: (props) => <CustomNavigationBar {...props} />,
-            }}>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Details" component={DetailsScreen} />
-            <Stack.Screen name="Booking" component={BookingScreen} /> 
-            <Stack.Screen name="Login" component={LoginScreen} />
+        <AuthProvider>
 
-
-          </Stack.Navigator>
-        </NavigationContainer>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Home"
+              screenOptions={{
+                header: (props) => <CustomNavigationBar {...props} />,
+              }}>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Details" component={DetailsScreen} />
+              <Stack.Screen name="Booking" component={BookingScreen} /> 
+              <Stack.Screen name="Login" component={LoginScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </AuthProvider>
       </PaperProvider>
     </GestureHandlerRootView>
     
@@ -160,42 +172,4 @@ export default function App() {
 
 
 
-
-
-// function HomeScreen({ navigation }) {
-//   const [error, setError] = useState(null);
-
-//   return (
-//     <View style={style.container}>
-//       <Header />
-//       <Text style={style.title}>Quick book</Text>
-//       {error ? (
-//         <View style={style.errorContainer}>
-//           <Text style={style.errorText}>{error}</Text>
-//           <Button onPress={handleRetry}>Retry</Button>
-//         </View>
-//       ) : (
-//         <ScrollView contentContainerStyle={style.scrollContainer}>
-//           <View style={style.cardContainer}>
-//             {seededHotels.map((hotel) => (
-//               <TouchableOpacity
-//                 key={hotel.id}
-//                 onPress={() => navigation.navigate('Details', { hotel })}
-//               >
-//                 <Card elevation={5} style={style.card}>
-//                   <Card.Cover source={{ uri: hotel.image }} />
-//                   <Card.Content>
-//                     <Title>{hotel.name}</Title>
-//                     <Paragraph>{hotel.description}</Paragraph>
-//                   </Card.Content>
-//                 </Card>
-//               </TouchableOpacity>
-//             ))}
-//           </View>
-//         </ScrollView>
-
-//       )}
-//     </View>
-//   );
-// }
 

@@ -1,9 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
+import { useAuth } from './AuthContext';
+import { useNavigation } from '@react-navigation/native'
 
 export default function LoginScreen() {
-
+    
+    const { login } = useAuth();
+    const navigation = useNavigation();
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
@@ -19,8 +23,11 @@ export default function LoginScreen() {
           const data = await response.json();
     
           if (response.ok) {
-            // Login successful, navigate to home screen or authenticated screen
-            console.log('Login successful');
+            login(data.user); 
+            console.log(username)
+            navigation.navigate('Home'); 
+
+            //Alert.alert('Login Successful', data.message);
           } else {
             // Login failed, display error message
             Alert.alert('Login Failed', data.message);
