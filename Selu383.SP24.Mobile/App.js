@@ -7,9 +7,9 @@ import { Button, PaperProvider, Avatar, Card, Title, Paragraph} from 'react-nati
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CustomNavigationBar from './features/CustomNavigationBar'; 
 import axios from 'axios';
-import seededHotels from './features/seededHotels';
 import DetailsScreen from './features/details';
 import BookingScreen from './features/booking';
+import LoginScreen from './features/login';
 
 
 function Header() {
@@ -146,6 +146,8 @@ export default function App() {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Details" component={DetailsScreen} />
             <Stack.Screen name="Booking" component={BookingScreen} /> 
+            <Stack.Screen name="Login" component={LoginScreen} />
+
 
           </Stack.Navigator>
         </NavigationContainer>

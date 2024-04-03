@@ -14,6 +14,11 @@ export default function CustomNavigationBar({
 
   const title = getHeaderTitle(options, route.name);
 
+  const handleLoginPress = () => {
+    navigation.navigate('Login'); // Navigate to login screen
+    closeMenu(); // Close the menu
+  };
+
   return (
     <Appbar.Header>
       {back ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
@@ -28,12 +33,10 @@ export default function CustomNavigationBar({
               onPress={openMenu}
             />
           }>
-          <Menu.Item
-            onPress={() => {
-              console.log('Option 1 was pressed');
-            }}
-            title="Option 1"
-          />
+            <Menu.Item
+              onPress={handleLoginPress}
+              title="Login"
+            />
           <Menu.Item
             onPress={() => {
               console.log('Option 2 was pressed');
