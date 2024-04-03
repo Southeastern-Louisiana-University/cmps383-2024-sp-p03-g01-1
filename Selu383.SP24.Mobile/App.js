@@ -31,7 +31,7 @@ function Header() {
 
 
 function HomeScreen({ navigation }) {
-  const [hotels, setHotels] = useState(seededHotels);
+  const [hotels, setHotels] = useState([]);
   const [error, setError] = useState(null);
 
   const fetchHotels = async () => {
@@ -55,6 +55,39 @@ function HomeScreen({ navigation }) {
     setError(null); // Clear previous error
     fetchHotels(); // Retry fetching data
   };
+
+  return (
+    <View style={style.container}>
+      <Header />
+      <Text style={style.title}>Quick book</Text>
+      {error ? (
+        <View style={style.errorContainer}>
+          <Text style={style.errorText}>{error}</Text>
+          <Button onPress={handleRetry}>Retry</Button>
+        </View>
+      ) : (
+        <ScrollView contentContainerStyle={style.scrollContainer}>
+          <View style={style.cardContainer}>
+            {hotels.map((hotel) => (
+              <TouchableOpacity
+                key={hotel.id}
+                onPress={() => navigation.navigate('Details', { hotel })}
+              >
+                <Card elevation={5} style={style.card}>
+                  <Card.Cover source={{ uri: hotel.image }} />
+                  <Card.Content>
+                    <Title>{hotel.name}</Title>
+                    <Paragraph>{hotel.description}</Paragraph>
+                  </Card.Content>
+                </Card>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
+
+      )}
+    </View>
+  );
 }
 
 
@@ -164,12 +197,3 @@ export default function App() {
 //   );
 // }
 
-// const fetchHotels = async () => {
-//   try {
-//     const response = await axios.get('https://selu383-sp24-p03-g01.azurewebsites.net/api/hotels');
-//     console.log('Fetched hotels:', response.data);
-//     setHotels(response.data);
-//   } catch (error) {
-//     console.error('Error fetching hotels:', error);
-//   }
-// };
