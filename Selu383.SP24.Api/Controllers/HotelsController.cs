@@ -53,6 +53,7 @@ public class HotelsController : ControllerBase
         {
             Name = dto.Name,
             Address = dto.Address,
+            CityStateZip = dto.CityStateZip,
             ManagerId = dto.ManagerId
         };
         hotels.Add(hotel);
@@ -153,6 +154,7 @@ public class HotelsController : ControllerBase
                 Id = x.Id,
                 Name = x.Name,
                 Address = x.Address,
+                CityStateZip = x.CityStateZip,
                 ManagerId = x.ManagerId
             });
     }
