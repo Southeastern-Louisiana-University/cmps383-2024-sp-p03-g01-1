@@ -28,77 +28,35 @@ function Header() {
   );
 }
 
-const fetchHotels = async () => {
-  try {
-    const response = await axios.get('https://localhost:7116/api/hotels');
-    console.log('Fetched hotels:', response.data);
-    setHotels(response.data);
-  } catch (error) {
-    console.error('Error fetching hotels:', error);
-  }
-};
+
+
 function HomeScreen({ navigation }) {
+  const [hotels, setHotels] = useState(seededHotels);
   const [error, setError] = useState(null);
 
-  return (
-    <View style={style.container}>
-      <Header />
-      <Text style={style.title}>Quick book</Text>
-      {error ? (
-        <View style={style.errorContainer}>
-          <Text style={style.errorText}>{error}</Text>
-          <Button onPress={handleRetry}>Retry</Button>
-        </View>
-      ) : (
-        <ScrollView contentContainerStyle={style.scrollContainer}>
-          <View style={style.cardContainer}>
-            {seededHotels.map((hotel) => (
-              <TouchableOpacity
-                key={hotel.id}
-                onPress={() => navigation.navigate('Details', { hotel })}
-              >
-                <Card elevation={5} style={style.card}>
-                  <Card.Cover source={{ uri: hotel.image }} />
-                  <Card.Content>
-                    <Title>{hotel.name}</Title>
-                    <Paragraph>{hotel.description}</Paragraph>
-                  </Card.Content>
-                </Card>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
+  const fetchHotels = async () => {
+    try {
+      console.log('Fetching hotels...');
+      const response = await axios.get('https://selu383-sp24-p03-g01.azurewebsites.net/api/hotels');
+      console.log('Fetched hotels:', response.data);
+      setHotels(response.data);
+      setError(null); // Clear error on successful fetch
+    } catch (error) {
+      console.error('Error fetching hotels:', error);
+      setError('Failed to fetch hotels. Please try again.'); // Set custom error message
+    }
+  };
 
-      )}
-    </View>
-  );
+  useEffect(() => {
+    fetchHotels();
+  }, []);
+
+  const handleRetry = () => {
+    setError(null); // Clear previous error
+    fetchHotels(); // Retry fetching data
+  };
 }
-// function HomeScreen({ navigation }) {
-//   const [hotels, setHotels] = useState(seededHotels);
-//   const [error, setError] = useState(null);
 
-//   const fetchHotels = async () => {
-//     try {
-//       console.log('Fetching hotels...');
-//       const response = await axios.get('https://localhost:7116/api/hotels');
-//       console.log('Fetched hotels:', response.data);
-//       setHotels(response.data);
-//       setError(null); // Clear error on successful fetch
-//     } catch (error) {
-//       console.error('Error fetching hotels:', error);
-//       setError('Failed to fetch hotels. Please try again.'); // Set custom error message
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchHotels();
-//   }, []);
-
-//   const handleRetry = () => {
-//     setError(null); // Clear previous error
-//     fetchHotels(); // Retry fetching data
-//   };
-// }
 
 
 const style = StyleSheet.create({
@@ -206,3 +164,12 @@ export default function App() {
 //   );
 // }
 
+// const fetchHotels = async () => {
+//   try {
+//     const response = await axios.get('https://selu383-sp24-p03-g01.azurewebsites.net/api/hotels');
+//     console.log('Fetched hotels:', response.data);
+//     setHotels(response.data);
+//   } catch (error) {
+//     console.error('Error fetching hotels:', error);
+//   }
+// };
