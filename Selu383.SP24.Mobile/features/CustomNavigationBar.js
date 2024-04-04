@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Appbar, Menu } from 'react-native-paper';
 import { getHeaderTitle } from '@react-navigation/elements';
+import { useAuth } from './AuthContext';
 
 export default function CustomNavigationBar({
   navigation,
@@ -8,6 +9,7 @@ export default function CustomNavigationBar({
   options,
   back,
 }) {
+  const { userType } = useAuth(); // Assuming useAuth() returns the user type from the AuthContext
   const [visible, setVisible] = React.useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
@@ -33,23 +35,32 @@ export default function CustomNavigationBar({
               onPress={openMenu}
             />
           }>
-            <Menu.Item
-              onPress={handleLoginPress}
-              title="Login"
-            />
+          <Menu.Item
+            onPress={handleLoginPress}
+            title="Login"
+          />
           <Menu.Item
             onPress={() => {
               console.log('Option 2 was pressed');
             }}
             title="Option 2"
           />
-          <Menu.Item
-            onPress={() => {
-              console.log('Option 3 was pressed');
-            }}
-            title="Option 3"
-            disabled
-          />
+          {userType === 'Admin' ? (
+            <Menu.Item
+              onPress={() => {
+                console.log('Admin Portal was pressed');
+              }}
+              title="Admin Portal"
+            />
+          ) : (
+            <Menu.Item
+              onPress={() => {
+                console.log('Option 3 was pressed');
+              }}
+              title="Option 3"
+              disabled
+            />
+          )}
         </Menu>
       ) : null}
     </Appbar.Header>
