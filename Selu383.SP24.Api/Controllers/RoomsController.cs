@@ -133,11 +133,5 @@ namespace Selu383.SP24.Api.Controllers
                     Available = x.Available
                 });
         }
-
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
     }
 }

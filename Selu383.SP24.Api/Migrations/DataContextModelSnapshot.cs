@@ -259,7 +259,7 @@ namespace Selu383.SP24.Api.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("Hotel");
+                    b.ToTable("Hotel", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
