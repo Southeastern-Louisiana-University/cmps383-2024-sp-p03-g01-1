@@ -23,8 +23,10 @@ function Navbar() {
             <a className="nav-link nav-link-custom" href="javascript:void(0)">Travel</a>
           </div>
           <div className="nav-col-link-custom">
+         
             <a className="nav-link nav-link-custom" href="javascript:void(0)">Offers</a>
-          </div>
+          
+           </div>
           <div className="nav-col-link-custom">
             <a className="nav-link nav-link-custom" href="javascript:void(0)">About</a>
           </div>
