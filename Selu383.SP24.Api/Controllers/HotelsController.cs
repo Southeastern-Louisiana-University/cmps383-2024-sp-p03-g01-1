@@ -6,6 +6,7 @@ using Selu383.SP24.Api.Extensions;
 using Selu383.SP24.Api.Features.Authorization;
 using Selu383.SP24.Api.Features.Bookings;
 using Selu383.SP24.Api.Features.Hotels;
+using System.Security.Claims;
 
 namespace Selu383.SP24.Api.Controllers;
 
@@ -115,8 +116,15 @@ public class HotelsController : ControllerBase
 
     [HttpPost("{hotelId}/bookings")]
     [Authorize]
-    public ActionResult<BookingDto> CreateBooking(int hotelId, BookingDto dto)
+    public async Task<ActionResult<BookingDto>> CreateBooking(int hotelId, BookingDto dto)
     {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); // Get the ID of the logged-in user
+        var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); // Retrieve the user entity
+
+        if (user == null)
+        {
+            return Unauthorized("User not found");
+        }
         //if (IsInvalidBooking(dto))
         //{
         //    return BadRequest();
@@ -131,6 +139,8 @@ public class HotelsController : ControllerBase
         var booking = new Booking
         {
             HotelId = hotelId,
+            UserId = userId, // Associate the booking with the logged-in user
+
             CheckInDate = dto.CheckInDate,
             CheckOutDate = dto.CheckOutDate
             // Add more properties as needed
