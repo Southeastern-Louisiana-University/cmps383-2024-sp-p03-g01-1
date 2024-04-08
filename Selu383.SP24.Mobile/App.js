@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, navigation } from 'react-native';
@@ -7,10 +7,10 @@ import { Button, PaperProvider, Avatar, Card, Title, Paragraph} from 'react-nati
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CustomNavigationBar from './features/CustomNavigationBar'; 
 import axios from 'axios';
-import seededHotels from './features/seededHotels';
 import DetailsScreen from './features/details';
 import BookingScreen from './features/booking';
-
+import LoginScreen from './features/login';
+import { AuthProvider, useAuth } from './features/AuthContext';
 
 function Header() {
   return (
@@ -29,12 +29,54 @@ function Header() {
 }
 
 
+
 function HomeScreen({ navigation }) {
+  const [hotels, setHotels] = useState([]);
   const [error, setError] = useState(null);
+  
+  const { user } = useAuth();
+  
+  useEffect(() => {
+    console.log('User:', user);
+  }, [user]);
+  
+  const logCurrentUser = () => {
+    console.log('Current User:', user);
+  };
+
+  const fetchHotels = async () => {
+    try {
+      //console.log('Fetching hotels...');
+      const response = await axios.get('https://selu383-sp24-p03-g01.azurewebsites.net/api/hotels');
+      //console.log('Fetched hotels:', response.data);
+      setHotels(response.data);
+      setError(null); // Clear error on successful fetch
+    } catch (error) {
+      console.error('Error fetching hotels:', error);
+      setError('Failed to fetch hotels. Please try again.'); // Set custom error message
+    }
+  };
+
+  useEffect(() => {
+    fetchHotels();
+  }, []);
+
+  const handleRetry = () => {
+    setError(null); // Clear previous error
+    fetchHotels(); // Retry fetching data
+  };
 
   return (
     <View style={style.container}>
       <Header />
+
+
+      <Text>{user ? `Logged in as ${user.userName}` : 'Not logged in'}</Text>
+      <Button title="Log Current User" onPress={logCurrentUser} />
+      <Text style={{ fontSize: 24, marginBottom: 10 }}>
+        {user ? `Hello, ${user.userName}` : 'Welcome!'}
+      </Text>
+
       <Text style={style.title}>Quick book</Text>
       {error ? (
         <View style={style.errorContainer}>
@@ -44,7 +86,7 @@ function HomeScreen({ navigation }) {
       ) : (
         <ScrollView contentContainerStyle={style.scrollContainer}>
           <View style={style.cardContainer}>
-            {seededHotels.map((hotel) => (
+            {hotels.map((hotel) => (
               <TouchableOpacity
                 key={hotel.id}
                 onPress={() => navigation.navigate('Details', { hotel })}
@@ -65,6 +107,8 @@ function HomeScreen({ navigation }) {
     </View>
   );
 }
+
+
 
 const style = StyleSheet.create({
   container: {
@@ -109,23 +153,27 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    <AuthProvider>
+
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PaperProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Home"
-            screenOptions={{
-              header: (props) => <CustomNavigationBar {...props} />,
-            }}>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Details" component={DetailsScreen} />
-            <Stack.Screen name="Booking" component={BookingScreen} /> 
 
-          </Stack.Navigator>
-        </NavigationContainer>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Home"
+              screenOptions={{
+                header: (props) => <CustomNavigationBar {...props} />,
+              }}>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Details" component={DetailsScreen} />
+              <Stack.Screen name="Booking" component={BookingScreen} /> 
+              <Stack.Screen name="Login" component={LoginScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
       </PaperProvider>
     </GestureHandlerRootView>
-    
+    </AuthProvider>
+
   );
 }
 
@@ -133,41 +181,3 @@ export default function App() {
 
 
 
-
-
-
-// const fetchHotels = async () => {
-//   try {
-//     const response = await axios.get('https://127.0.0.1:7116/api/hotels');
-//     console.log('Fetched hotels:', response.data);
-//     setHotels(response.data);
-//   } catch (error) {
-//     console.error('Error fetching hotels:', error);
-//   }
-// };
-
-// function HomeScreen({ navigation }) {
-//   const [hotels, setHotels] = useState(seededHotels);
-//   const [error, setError] = useState(null);
-
-//   const fetchHotels = async () => {
-//     try {
-//       console.log('Fetching hotels...');
-//       const response = await axios.get('https://localhost:7116/api/hotels');
-//       console.log('Fetched hotels:', response.data);
-//       setHotels(response.data);
-//       setError(null); // Clear error on successful fetch
-//     } catch (error) {
-//       console.error('Error fetching hotels:', error);
-//       setError('Failed to fetch hotels. Please try again.'); // Set custom error message
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchHotels();
-//   }, []);
-
-//   const handleRetry = () => {
-//     setError(null); // Clear previous error
-//     fetchHotels(); // Retry fetching data
-//   };
