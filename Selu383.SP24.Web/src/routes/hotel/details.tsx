@@ -24,6 +24,9 @@ export default function HotelDetails() {
                 <div className="container">
                     <h2 style={{ color: 'white' }}>{hotel.name}</h2>
                     <p style={{ color: 'white' }}>{hotel.address}</p>
+                    <p style={{ color: 'white' }}>{hotel.city}</p>
+                    <p style={{ color: 'white' }}>{hotel.state}</p>
+                    <p style={{ color: 'white' }}>{hotel.postalcode}</p>
                     {/* Render other details of the hotel */}
                     <div className="row">
                         <div className="image-container">
