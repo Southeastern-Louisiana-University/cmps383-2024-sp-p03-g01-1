@@ -26,6 +26,9 @@ function Hotels() {
                             <div className="card-bodyindex">
                                 <h4 className="card-titleindex">{hotel.name}</h4>
                                 <p className="card-text card-text-customindex">{hotel.address}</p>
+                                <p className="card-text card-text-customindex">{hotel.city}</p>
+                                <p className="card-text card-text-customindex">{hotel.state}</p>
+                                <p className="card-text card-text-customindex">{hotel.postalcode}</p>
                                 <Link to={`/hotels/details/${hotel.id}`}>
                                     <button className="btn btn-custom rounded-5index">Availability</button>
                                 </Link>
