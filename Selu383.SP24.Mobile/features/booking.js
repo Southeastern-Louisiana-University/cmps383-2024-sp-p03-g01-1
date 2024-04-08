@@ -11,6 +11,8 @@ function BookingScreen({ route }) {
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [checkInDate, setCheckInDate] = useState('');
     const [checkOutDate, setCheckOutDate] = useState('');
+    const [showCheckInDatePicker, setShowCheckInDatePicker] = useState(false);
+    const [showCheckOutDatePicker, setShowCheckOutDatePicker] = useState(false);
 
     const handleBookRoom = () => {
       if (customerName.trim() === '' || customerEmail.trim() === '') {
@@ -32,6 +34,13 @@ function BookingScreen({ route }) {
       setShowSnackbar(true);
     };
   
+    const handleCheckInDateSelection = () => {
+      setShowCheckInDatePicker(true);
+    };
+    
+    const handleCheckOutDateSelection = () => {
+      setShowCheckOutDatePicker(true);
+    };
     return (
       <ScrollView contentContainerStyle={style.container}>
         <Text style={style.hotelName}>{hotel.name}</Text>
@@ -55,25 +64,51 @@ function BookingScreen({ route }) {
         />
 
         <View style={style.dateContainer}>
-          <TouchableOpacity onPress={() => console.log('Open calendar for check-in date')}>
+        <TouchableOpacity onPress={handleCheckInDateSelection}>
             <Text style={style.dateLabel}>Check-in Date:</Text>
             <Text style={style.dateText}>{checkInDate ? new Date(checkInDate).toLocaleDateString() : 'Select Date'}</Text>
+        </TouchableOpacity>
+
+          {showCheckInDatePicker && (
+
 
           <DateTimePicker
             style={{ width: 200 }}
             value={checkInDate ? new Date(checkInDate) : new Date()} // Pass a JavaScript Date object
             mode="date"
             display="spinner" 
-            onChange={(event, date) => setCheckInDate(date)} // Use onChange event to update the state
+            onChange={(event, date) => {
+              if (date) {
+                setCheckInDate(date);
+                setShowCheckInDatePicker(false);
+              }
+            }} // Use onChange event to update the state
           />
-          </TouchableOpacity>
+          )}
 
-          <TouchableOpacity onPress={() => console.log('Open calendar for check-out date')}>
+
+          <TouchableOpacity onPress={handleCheckOutDateSelection}>
             <Text style={style.dateLabel}>Check-out Date:</Text>
             <Text style={style.dateText}>{checkOutDate ? new Date(checkOutDate).toLocaleDateString() : 'Select Date'}</Text>
-
           </TouchableOpacity>
+
+          {showCheckOutDatePicker && (
+            <DateTimePicker
+              style={{ width: 200 }}
+              value={checkOutDate ? new Date(checkOutDate) : new Date()}
+              mode="date"
+              display="spinner" 
+              onChange={(event, date) => {
+                if (date) {
+                  setCheckOutDate(date);
+                  setShowCheckOutDatePicker(false);
+                }
+              }}
+            />
+          )}
         </View>
+
+
 
         <Button title="Book Room" onPress={handleBookRoom} />
         <Snackbar
