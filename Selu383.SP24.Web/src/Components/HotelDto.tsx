@@ -5,4 +5,5 @@ export interface HotelDto {
     city: string;
     state: string;
     postalcode: string;
+    managerId: number;
 }
