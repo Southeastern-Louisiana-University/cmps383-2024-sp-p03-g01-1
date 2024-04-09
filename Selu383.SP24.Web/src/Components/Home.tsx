@@ -33,10 +33,10 @@ function Home() {
     return <div>Error: {error.message}</div>
   }
 
-  const cityImageMap: Record<number, string> = {
-    1: BatonRouge,
-    2: FQNOLA,
-    3: SLCNOLA
+  const cityImageMap: Record<string, string> = {
+    "Baton Rouge": BatonRouge,
+    "French Quarter": FQNOLA,
+    "Jackson Square": SLCNOLA
   };
 
   const handleButtonClick = (hotelId: number) => {
@@ -50,7 +50,7 @@ function Home() {
 					{hotels.map((hotel) => (
 						<div key={hotel.id} className="col-3index">
 							<div className="card card-customindex">
-								<img className="card-img-topindex" src={cityImageMap[hotel.id]} alt={hotel.name} />
+								<img className="card-img-topindex" src={cityImageMap[hotel.name]} alt={hotel.name} />
 								<div className="card-bodyindex">
 									<h4 className="card-titleindex">{hotel.name}</h4>
 									<p className="card-text card-text-customindex">{hotel.address}</p>
