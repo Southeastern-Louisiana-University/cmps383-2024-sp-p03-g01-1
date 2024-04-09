@@ -2,20 +2,43 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { HotelDto } from "../../Components/HotelDto";
 import { Outlet } from 'react-router-dom';
+import BatonRouge from "../../images/Baton Rouge.jpg";
+import FQNOLA from "../../images/FQNOLA.jpg";
+import SLCNOLA from "../../images/SLCNOLA.jpg";
 
 export default function HotelDetails() {
     const { id } = useParams();
     const [hotel, setHotel] = useState<HotelDto>();
+    const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
         fetch(`/api/hotels/${id}`, {
             method: "get",
         })
-            .then<HotelDto>((r) => r.json())
+            .then<HotelDto>((r) => {
+                if (!r.ok){
+                    throw new Error('Network response was not ok');
+                }
+                return r.json();
+            })
             .then((j) => {
                 setHotel(j);
+            })
+            .catch((error: Error) => {
+                setError(error);
             });
     }, [id]); // Dependency array with 'id'
+
+    if (error) {
+        return <div>Error: {error.message}</div>
+    }
+
+    //Map city names to image paths
+    const cityImageMap: Record<number, string> = {
+        1: BatonRouge,
+        2: FQNOLA,
+        3: SLCNOLA
+    };
 
     return (
         <>
@@ -24,13 +47,11 @@ export default function HotelDetails() {
                 <div className="container">
                     <h2 style={{ color: 'white' }}>{hotel.name}</h2>
                     <p style={{ color: 'white' }}>{hotel.address}</p>
-                    <p style={{ color: 'white' }}>{hotel.city}</p>
-                    <p style={{ color: 'white' }}>{hotel.state}</p>
-                    <p style={{ color: 'white' }}>{hotel.postalcode}</p>
+                    <p style={{ color: 'white' }}>{hotel.city}, {hotel.state}, {hotel.postalCode}</p>
                     {/* Render other details of the hotel */}
                     <div className="row">
                         <div className="image-container">
-                            <img src="big_image.jpg" alt="Big Image" />
+                            <img src={cityImageMap[hotel.id]} alt="Big Image" />
                         </div>
                         <div className="cards-container">
                             <div className="card">
