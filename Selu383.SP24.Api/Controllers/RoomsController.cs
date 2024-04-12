@@ -5,13 +5,14 @@ using Selu383.SP24.Api.Data;
 using Selu383.SP24.Api.Extensions;
 using Selu383.SP24.Api.Features.Authorization;
 using Selu383.SP24.Api.Features.Rooms;
+using Selu383.SP24.Api.Features.Hotels;
 
 
 namespace Selu383.SP24.Api.Controllers
 {
     [Route("api/rooms")]
     [ApiController]
-    public class RoomsController : Controller
+    public class RoomsController : ControllerBase
     {
         private readonly DbSet<Room> _rooms;
         private readonly DataContext _dataContext;
@@ -56,7 +57,8 @@ namespace Selu383.SP24.Api.Controllers
                 Capacity = dto.Capacity,
                 Amenities = dto.Amenities,
                 Price = dto.Price,
-                Available = dto.Available
+                Available = dto.Available,
+                HotelId = dto.HotelId
             };
             _rooms.Add(room);
 
@@ -88,6 +90,8 @@ namespace Selu383.SP24.Api.Controllers
             room.Amenities = dto.Amenities;
             room.Price = dto.Price;
             room.Available = dto.Available;
+            room.HotelId = dto.HotelId;
+
 
             _dataContext.SaveChanges();
 
@@ -116,7 +120,6 @@ namespace Selu383.SP24.Api.Controllers
 
         private bool IsInvalid(RoomDto dto)
         {
-            // You can implement validation logic here
             return false;
         }
 
@@ -130,7 +133,9 @@ namespace Selu383.SP24.Api.Controllers
                     Capacity = x.Capacity,
                     Amenities = x.Amenities,
                     Price = x.Price,
-                    Available = x.Available
+                    Available = x.Available,
+                    HotelId = x.HotelId
+
                 });
         }
     }

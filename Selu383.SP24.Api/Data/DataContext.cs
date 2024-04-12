@@ -10,6 +10,8 @@ namespace Selu383.SP24.Api.Data;
 public class DataContext : IdentityDbContext<User, Role, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
 {
     public DbSet<Booking> Bookings { get; set; }
+    public DbSet<Room> Room { get; set; }
+
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
     }
@@ -27,5 +29,6 @@ public class DataContext : IdentityDbContext<User, Role, int, IdentityUserClaim<
         modelBuilder.Entity<Room>()
             .Property(r => r.Price)
             .HasColumnType("decimal(10,2)");
+
     }
 }

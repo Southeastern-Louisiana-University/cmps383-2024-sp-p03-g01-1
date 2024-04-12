@@ -8,5 +8,7 @@
         public List<string> Amenities { get; set; }
         public decimal Price { get; set; }
         public bool Available { get; set; }
+        public int HotelId { get; set; }
+
     }
 }
