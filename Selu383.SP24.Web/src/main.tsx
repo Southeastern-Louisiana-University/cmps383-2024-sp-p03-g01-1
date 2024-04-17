@@ -28,6 +28,8 @@ import Login from './routes/login/index.tsx';
 
 import Register from './routes/signup/index.tsx';
 
+import About from './routes/about/index.tsx';
+
 
 
 const router = createBrowserRouter([
@@ -83,6 +85,14 @@ const router = createBrowserRouter([
                 path: "/register",
 
                 element: <Register />
+
+            },
+
+            {
+
+                path: "/about",
+
+                element: <About />
 
             },
 

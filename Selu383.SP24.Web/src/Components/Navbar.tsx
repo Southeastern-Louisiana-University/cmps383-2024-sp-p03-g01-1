@@ -24,11 +24,9 @@ function Navbar() {
               Offers
             </a>
           </div>
-          <div className="nav-col-link-custom">
-            <a className="nav-link nav-link-custom" href="javascript:void(0)">
-              About
-            </a>
-          </div>
+                  <Link to={"/about"} className="nav-link nav-link-custom">
+                      <div className="nav-col-link-custom">About</div>
+                  </Link>
           <div className="nav-col-link-custom">
             <a className="nav-link nav-link-custom" href="javascript:void(0)">
               Contact
