@@ -9,7 +9,7 @@ export default function CustomNavigationBar({
   options,
   back,
 }) {
-  const { userType } = useAuth(); // Assuming useAuth() returns the user type from the AuthContext
+  const { userType } = useAuth(); 
   const [visible, setVisible] = React.useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
