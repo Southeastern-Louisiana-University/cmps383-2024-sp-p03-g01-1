@@ -7,6 +7,7 @@ const AdminAvailableRooms = ({ navigation }) => {
   return (
     <View style={styles.container}>
         <Text style={styles.tileText}>These are currently available rooms: </Text>
+        <Text>Currently Available Rooms:</Text>
     </View>
   );
 };
