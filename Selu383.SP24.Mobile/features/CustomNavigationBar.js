@@ -21,6 +21,11 @@ export default function CustomNavigationBar({
     closeMenu(); 
   };
 
+  const handleAdminPortalPress = () => {
+    navigation.navigate('AdminPortal'); // Navigate to AdminPortal.js
+    closeMenu();
+  };
+
   return (
     <Appbar.Header>
       {back ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
@@ -47,9 +52,7 @@ export default function CustomNavigationBar({
           />
           {userType === 'Admin' ? (
             <Menu.Item
-              onPress={() => {
-                console.log('Admin Portal was pressed');
-              }}
+              onPress={handleAdminPortalPress} // Handle Admin Portal Press
               title="Admin Portal"
             />
           ) : (
