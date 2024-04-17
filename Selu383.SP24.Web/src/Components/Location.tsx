@@ -15,38 +15,21 @@ const Location: React.FC<LocationProps> = ({ onLocationChange }) => {
   };
 
   return (
-    <>
-      <div className="row">
-        <div className="col-lg-9">
-          <FontAwesomeIcon icon={faMapMarkerAlt} />
-          <label>&nbsp;Select a location:</label>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-lg-9">
-          <input
-            type="radio"
-            id="batonRouge"
-            value="Baton Rouge"
-            checked={selectedLocation === "Baton Rouge"}
-            onChange={() => handleLocationChange("Baton Rouge")}
-          />
-          <label htmlFor="batonRouge">Baton Rouge</label>
-        </div>
-        <div className="col-lg-9">
-          <input
-            type="radio"
-            id="newOrleans"
-            value="New Orleans"
-            checked={selectedLocation === "New Orleans"}
-            onChange={() => handleLocationChange("New Orleans")}
-          />
-          <label htmlFor="newOrleans">New Orleans</label>
-        </div>
-      </div>
-      
-    </>
+    <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
+      <FontAwesomeIcon icon={faMapMarkerAlt} style={{ marginRight: "8px" }} />
+      <select
+        value={selectedLocation}
+        onChange={(e) => handleLocationChange(e.target.value)}
+        style={{ width: "100%" }} // Apply the same width as the DatePicker input box
+      >
+        <option value="" disabled hidden>Select a Location</option>
+        <option value="Baton Rouge">Baton Rouge</option>
+        <option value="New Orleans">New Orleans</option>
+        <option value="All Locations">All Locations</option>
+      </select>
+    </div>
   );
+  
   
 };
 
