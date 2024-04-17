@@ -9,7 +9,7 @@ export default function CustomNavigationBar({
   options,
   back,
 }) {
-  const { userType } = useAuth(); // Assuming useAuth() returns the user type from the AuthContext
+  const { userType } = useAuth(); 
   const [visible, setVisible] = React.useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
@@ -19,6 +19,11 @@ export default function CustomNavigationBar({
   const handleLoginPress = () => {
     navigation.navigate('Login'); 
     closeMenu(); 
+  };
+
+  const handleAdminPortalPress = () => {
+    navigation.navigate('AdminPortal'); // Navigate to AdminPortal.js
+    closeMenu();
   };
 
   return (
@@ -47,9 +52,7 @@ export default function CustomNavigationBar({
           />
           {userType === 'Admin' ? (
             <Menu.Item
-              onPress={() => {
-                console.log('Admin Portal was pressed');
-              }}
+              onPress={handleAdminPortalPress} // Handle Admin Portal Press
               title="Admin Portal"
             />
           ) : (

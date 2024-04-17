@@ -11,6 +11,7 @@ import DetailsScreen from './features/details';
 import BookingScreen from './features/booking';
 import LoginScreen from './features/login';
 import { AuthProvider, useAuth } from './features/AuthContext';
+import AdminPortalPage from './features/AdminPortal';
 
 function Header() {
   return (
@@ -168,6 +169,7 @@ export default function App() {
               <Stack.Screen name="Details" component={DetailsScreen} />
               <Stack.Screen name="Booking" component={BookingScreen} /> 
               <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="AdminPortal" component={AdminPortalPage} />
             </Stack.Navigator>
           </NavigationContainer>
       </PaperProvider>

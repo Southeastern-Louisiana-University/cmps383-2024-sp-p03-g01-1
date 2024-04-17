@@ -6,7 +6,7 @@ const AdminPortalPage = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to the Admin Page!</Text>
       <Text style={styles.description}>
-        This will be the future home of all the good stuff! ;)
+        This will be the future home for viewing booking information and customer requests)
       </Text>
     </View>
   );
