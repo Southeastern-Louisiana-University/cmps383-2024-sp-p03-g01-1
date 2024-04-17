@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Selu383.SP24.Api.Data;
 using Selu383.SP24.Api.Extensions;
 using Selu383.SP24.Api.Features.Authorization;
+using Selu383.SP24.Api.Features.Bookings;
 using Selu383.SP24.Api.Features.Hotels;
+using System.Security.Claims;
 
 namespace Selu383.SP24.Api.Controllers;
 
@@ -40,6 +42,51 @@ public class HotelsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{hotelId}/bookings")]
+    public ActionResult<IEnumerable<BookingDto>> GetHotelBookings(int hotelId)
+    {
+        var hotel = hotels.FirstOrDefault(x => x.Id == hotelId);
+        if (hotel == null)
+        {
+            return NotFound("Hotel not found");
+        }
+
+        var bookings = dataContext.Set<Booking>().Where(b => b.HotelId == hotelId)
+                           .Select(b => new BookingDto
+                           {
+                               Id = b.Id,
+                               HotelId = b.HotelId,
+                               CheckInDate = b.CheckInDate,
+                               CheckOutDate = b.CheckOutDate
+                               // Include more properties if needed
+                           })
+                           .ToList();
+
+        return Ok(bookings);
+    }
+
+    [HttpGet("{hotelId}/bookings/{bookingId}")]
+    public ActionResult<BookingDto> GetBooking(int hotelId, int bookingId)
+    {
+        var booking = dataContext.Set<Booking>().FirstOrDefault(b => b.Id == bookingId && b.HotelId == hotelId);
+        if (booking == null)
+        {
+            return NotFound("Booking not found");
+        }
+
+        var bookingDto = new BookingDto
+        {
+            Id = booking.Id,
+            HotelId = booking.HotelId,
+            CheckInDate = booking.CheckInDate,
+            CheckOutDate = booking.CheckOutDate
+            // Include more properties if needed
+        };
+
+        return Ok(bookingDto);
+    }
+
+
     [HttpPost]
     [Authorize(Roles = RoleNames.Admin)]
     public ActionResult<HotelDto> CreateHotel(HotelDto dto)
@@ -66,6 +113,45 @@ public class HotelsController : ControllerBase
 
         return CreatedAtAction(nameof(GetHotelById), new { id = dto.Id }, dto);
     }
+
+    [HttpPost("{hotelId}/bookings")]
+    [Authorize]
+    public async Task<ActionResult<BookingDto>> CreateBooking(int hotelId, BookingDto dto)
+    {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); // Get the ID of the logged-in user
+        var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); // Retrieve the user entity
+
+        if (user == null)
+        {
+            return Unauthorized("User not found");
+        }
+        //if (IsInvalidBooking(dto))
+        //{
+        //    return BadRequest();
+        //}
+
+        var hotel = hotels.FirstOrDefault(x => x.Id == hotelId);
+        if (hotel == null)
+        {
+            return NotFound("Hotel not found");
+        }
+
+        var booking = new Booking
+        {
+            HotelId = hotelId,
+            UserId = userId, // Associate the booking with the logged-in user
+
+            CheckInDate = dto.CheckInDate,
+            CheckOutDate = dto.CheckOutDate
+            // Add more properties as needed
+        };
+        dataContext.Add(booking);
+        dataContext.SaveChanges();
+
+        dto.Id = booking.Id;
+        return CreatedAtAction(nameof(GetBooking), new { hotelId, bookingId = dto.Id }, dto);
+    }
+
 
     [HttpPut]
     [Route("{id}")]
@@ -102,6 +188,32 @@ public class HotelsController : ControllerBase
         return Ok(dto);
     }
 
+    [HttpPut("{hotelId}/bookings/{bookingId}")]
+    [Authorize(Roles = RoleNames.Admin)]
+    public ActionResult<BookingDto> UpdateBooking(int hotelId, int bookingId, BookingDto dto)
+    {
+        //if (IsInvalidBooking(dto))
+        //{
+        //    return BadRequest();
+        //}
+
+        var booking = dataContext.Set<Booking>().FirstOrDefault(b => b.Id == bookingId && b.HotelId == hotelId);
+        if (booking == null)
+        {
+            return NotFound("Booking not found");
+        }
+
+        // Update booking properties
+        booking.CheckInDate = dto.CheckInDate;
+        booking.CheckOutDate = dto.CheckOutDate;
+        // Update more properties if needed
+
+        dataContext.SaveChanges();
+
+        return Ok(dto);
+    }
+
+
     [HttpDelete]
     [Route("{id}")]
     [Authorize]
@@ -124,6 +236,23 @@ public class HotelsController : ControllerBase
 
         return Ok();
     }
+
+    [HttpDelete("{hotelId}/bookings/{bookingId}")]
+    [Authorize(Roles = RoleNames.Admin)]
+    public ActionResult DeleteBooking(int hotelId, int bookingId)
+    {
+        var booking = dataContext.Set<Booking>().FirstOrDefault(b => b.Id == bookingId && b.HotelId == hotelId);
+        if (booking == null)
+        {
+            return NotFound("Booking not found");
+        }
+
+        dataContext.Remove(booking);
+        dataContext.SaveChanges();
+
+        return Ok();
+    }
+
 
     private bool InvalidManagerId(int? managerId)
     {
