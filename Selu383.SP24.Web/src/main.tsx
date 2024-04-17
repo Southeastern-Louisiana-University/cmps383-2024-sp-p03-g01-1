@@ -24,6 +24,12 @@ import Home from './Components/Home.tsx';
 
 import Hotels from './routes/hotel/index.tsx';
 
+import Login from './routes/login/index.tsx';
+
+import Register from './routes/signup/index.tsx';
+
+
+
 const router = createBrowserRouter([
 
     {
@@ -63,6 +69,24 @@ const router = createBrowserRouter([
                 element: <Hotels />
 
             },
+
+            {
+
+                path: "/login",
+
+                element: <Login />
+
+            },
+
+            {
+
+                path: "/register",
+
+                element: <Register />
+
+            },
+
+            
         ],
     },
 ]);
