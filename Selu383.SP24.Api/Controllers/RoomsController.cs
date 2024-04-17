@@ -8,8 +8,8 @@ using Selu383.SP24.Api.Features.Rooms;
 using Selu383.SP24.Api.Features.Hotels;
 
 
-namespace Selu383.SP24.Api.Controllers
-{
+namespace Selu383.SP24.Api.Controllers;
+
     [Route("api/rooms")]
     [ApiController]
     public class RoomsController : ControllerBase
@@ -19,16 +19,16 @@ namespace Selu383.SP24.Api.Controllers
 
         public RoomsController(DataContext dataContext)
         {
-            _dataContext = dataContext;
+            this._dataContext = dataContext;
             _rooms = dataContext.Set<Room>();
         }
 
         [HttpGet]
-        
         public IQueryable<RoomDto> GetAllRooms()
         {
             return GetRoomDtos(_rooms);
         }
+
         [HttpGet]
         [Route("{id}")]
         public ActionResult<RoomDto> GetRoomById(int id)
@@ -139,4 +139,4 @@ namespace Selu383.SP24.Api.Controllers
                 });
         }
     }
-}
+
