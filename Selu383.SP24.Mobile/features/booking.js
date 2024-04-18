@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity, checkInDate, checkOutDate } from 'react-native';
-import { Snackbar } from 'react-native-paper';
+import { Snackbar, Avatar, Card, IconButton } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 
@@ -17,51 +17,38 @@ function BookingScreen({ route }) {
     const [selectedRoom, setSelectedRoom] = useState(null); 
     const [availableRooms, setAvailableRooms] = useState([]);
     const [error, setError] = useState(null);
+ 
+    const { hotelId } = route.params;
 
     useEffect(() => {
       // Fetch available rooms for the selected hotel from your backend API
       fetchRooms(hotel.id); // You need to implement this function
+      //console.log(hotelId)
     }, [hotel.id]);
-
-    // const fetchAvailableRooms = async (hotelId) => {
-    //   try {
-    //     // Make an API call to fetch available rooms for the selected hotel
-    //     const response = await fetch(`https://selu383-sp24-p03-g01.azurewebsites.net/api/rooms`);
-    //     const data = await response.json();
-    //     setAvailableRooms(data.rooms); // Assuming data.rooms contains the list of available rooms
-    //   } catch (error) {
-    //     console.error('Error fetching available rooms:', error);
-    //   }
-    // };
-
-    // const fetchRooms = async (hotelId) => {
-    //   try {
-    //     const response = await axios.get(`https://selu383-sp24-p03-g01.azurewebsites.net/api/room`);
-    //     console.log('Response data:', response.data); // Log the response data
-    //     setAvailableRooms(response.data);
-    //     setError(null); // Clear error on successful fetch
-    //   } catch (error) {
-    //     console.error('Error fetching rooms:', error);
-    //     setError('Failed to fetch rooms. Please try again.'); // Set custom error message
-    //   }
-    // };
     
-    const fetchRooms = async () => {
+    const fetchRooms = async (hotelId) => {
+      console.log('Fetching rooms for hotelId:', hotelId); // Add this line
       try {
-        const response = await axios.get('https://selu383-sp24-p03-g01.azurewebsites.net/api/rooms');
+        const response = await axios.get(`https://selu383-sp24-p03-g01.azurewebsites.net/api/rooms?hotelId=${hotelId}`);
         console.log('Response data:', response.data);
-        setAvailableRooms(response.data);
+        const filteredRooms = response.data.filter(room => room.hotelId === hotelId);
+    
+        setAvailableRooms(filteredRooms);        
         setError(null); // Clear error on successful fetch
+        console.log('Available rooms:', availableRooms); // Add this line
+
       } catch (error) {
         console.error('Error fetching hotels:', error);
         setError('Failed to fetch hotels. Please try again.'); // Set custom error message
       }
     };
 
+    
 
     const handleRoomSelection = (room) => {
       // Update the selected room state when a room is selected
       setSelectedRoom(room);
+      console.log(room)
     };
 
     const handleBookRoom = () => {
@@ -99,25 +86,31 @@ function BookingScreen({ route }) {
     };
     return (
       <ScrollView contentContainerStyle={style.container}>
+        
+        {availableRooms.map(room => (
+          <TouchableOpacity key={room.id} onPress={() => handleRoomSelection(room)}>
+            <Card.Title
+              title="Card Title"
+              subtitle="Card Subtitle"
+              left={(props) => <Avatar.Icon {...props} icon="folder" />}
+              right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
+            />
+            <Card>
+              <Card.Title
+                title={room.type}
+                subtitle={`Price: $${room.price}`}
+              />
+              <Card.Content>
+                <Text>Description: {room.description}</Text>
+                {/* You can add more details of the room here */}
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+        ))}
+
+
         <Text style={style.hotelName}>{hotel.name}</Text>
         <Text style={style.description}>{hotel.description}</Text>
-        <TextInput
-          style={style.input}
-          label="Name"
-          value={customerName}
-          onChangeText={setCustomerName}
-          placeholder="Enter your name"
-          placeholderTextColor="#888" 
-        />
-        <TextInput
-          style={style.input}
-          label="Email"
-          value={customerEmail}
-          onChangeText={setCustomerEmail}
-          keyboardType="email-address"
-          placeholder="Enter your email"
-          placeholderTextColor="#888"
-        />
 
         <View style={style.dateContainer}>
         <TouchableOpacity onPress={handleCheckInDateSelection}>
@@ -167,6 +160,8 @@ function BookingScreen({ route }) {
 
 
         <Button title="Book Room" onPress={handleBookRoom} />
+
+
         <Snackbar
           visible={showSnackbar}
           onDismiss={() => setShowSnackbar(false)}
@@ -211,6 +206,9 @@ function BookingScreen({ route }) {
     dateText: {
         fontSize: 16,
     },
+
 });
 
   export default BookingScreen;
+
+
