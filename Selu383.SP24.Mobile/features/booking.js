@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity, checkInDate, checkOutDate } from 'react-native';
-import { Snackbar, Avatar, Card, IconButton } from 'react-native-paper';
+import { Snackbar, Avatar, Card, IconButton, Checkbox } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 
 function BookingScreen({ route }) {
     const { hotel } = route.params;
-    const [customerName, setCustomerName] = useState('');
-    const [customerEmail, setCustomerEmail] = useState('');
+    // const [customerName, setCustomerName] = useState('');
+    // const [customerEmail, setCustomerEmail] = useState('');
     const [showSnackbar, setShowSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [checkInDate, setCheckInDate] = useState('');
@@ -17,15 +17,16 @@ function BookingScreen({ route }) {
     const [selectedRoom, setSelectedRoom] = useState(null); 
     const [availableRooms, setAvailableRooms] = useState([]);
     const [error, setError] = useState(null);
- 
+    const [checked, setChecked] = useState(false);
+  
     const { hotelId } = route.params;
-
+ 
     useEffect(() => {
       // Fetch available rooms for the selected hotel from your backend API
       fetchRooms(hotel.id); // You need to implement this function
       //console.log(hotelId)
     }, [hotel.id]);
-    
+     
     const fetchRooms = async (hotelId) => {
       console.log('Fetching rooms for hotelId:', hotelId); // Add this line
       try {
@@ -47,8 +48,16 @@ function BookingScreen({ route }) {
 
     const handleRoomSelection = (room) => {
       // Update the selected room state when a room is selected
-      setSelectedRoom(room);
+      room.checked = !room.checked;
+      if (selectedRoom === room) {
+        setSelectedRoom(null); // Unselect the room if it's already selected
+        setChecked(false); // Uncheck the room
+      } else {
+        setSelectedRoom(room); // Select the room
+        setChecked(true); // Check the room
+      }
       console.log(room)
+
     };
 
     const handleBookRoom = () => {
@@ -92,11 +101,25 @@ function BookingScreen({ route }) {
 
             <Card>
             <Card.Title
-              title="Card Title"
-              subtitle="Card Subtitle"
-              left={(props) => <Avatar.Icon {...props} icon="folder" />}
-              right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
-            />
+              title={room.type}
+              //subtitle="Card Subtitle"
+              left={(props) =>     
+                <Avatar.Icon
+                  {...props}
+                  icon={
+                  selectedRoom === room
+                    ? `bed-${room.type.toLowerCase()}`
+                    : `bed-${room.type.toLowerCase()}-outline`
+                }
+              />}
+              right={(props) =>     
+              <Checkbox
+                status={checked ? 'checked' : 'unchecked'}
+                onPress={() => {
+                  handleRoomSelection(room);
+                }}
+              />}
+            /> 
               <Card.Title
                 title={room.type}
                 subtitle={`Price: $${room.price}`}
@@ -183,6 +206,7 @@ function BookingScreen({ route }) {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 10,
+        marginTop: 20,
     },
     description: {
         marginBottom: 20,
