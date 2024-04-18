@@ -57,11 +57,11 @@ function BookingScreen({ route }) {
         setShowSnackbar(true);
         return;
       }
-      if (customerName.trim() === '' || customerEmail.trim() === '') {
-        setSnackbarMessage('Please fill in all fields');
-        setShowSnackbar(true);
-        return;
-      }
+      // if (customerName.trim() === '' || customerEmail.trim() === '') {
+      //   setSnackbarMessage('Please fill in all fields');
+      //   setShowSnackbar(true);
+      //   return;
+      // }
 
 
       console.log('Booking Details:', {
@@ -71,8 +71,8 @@ function BookingScreen({ route }) {
         //customer: { name: customerName, email: customerEmail }
       });
       // Reset form fields after booking
-      setCustomerName('');
-      setCustomerEmail('');
+      // setCustomerName('');
+      // setCustomerEmail('');
       setSnackbarMessage('Room booked successfully');
       setShowSnackbar(true);
     };
@@ -89,13 +89,14 @@ function BookingScreen({ route }) {
         
         {availableRooms.map(room => (
           <TouchableOpacity key={room.id} onPress={() => handleRoomSelection(room)}>
+
+            <Card>
             <Card.Title
               title="Card Title"
               subtitle="Card Subtitle"
               left={(props) => <Avatar.Icon {...props} icon="folder" />}
               right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
             />
-            <Card>
               <Card.Title
                 title={room.type}
                 subtitle={`Price: $${room.price}`}
