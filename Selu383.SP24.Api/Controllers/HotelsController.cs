@@ -56,6 +56,8 @@ public class HotelsController : ControllerBase
                            {
                                Id = b.Id,
                                HotelId = b.HotelId,
+                               RoomId = b.RoomId,
+
                                CheckInDate = b.CheckInDate,
                                CheckOutDate = b.CheckOutDate
                                // Include more properties if needed
@@ -78,6 +80,7 @@ public class HotelsController : ControllerBase
         {
             Id = booking.Id,
             HotelId = booking.HotelId,
+            RoomId = booking.RoomId,
             CheckInDate = booking.CheckInDate,
             CheckOutDate = booking.CheckOutDate
             // Include more properties if needed
@@ -136,11 +139,17 @@ public class HotelsController : ControllerBase
             return NotFound("Hotel not found");
         }
 
+        var room = await dataContext.Room.FirstOrDefaultAsync(r => r.Id == dto.RoomId && r.HotelId == hotelId);
+        if (room == null)
+        {
+            return NotFound("Room not found in the hotel");
+        }
+
         var booking = new Booking
         {
             HotelId = hotelId,
             UserId = userId, // Associate the booking with the logged-in user
-
+            RoomId = dto.RoomId,
             CheckInDate = dto.CheckInDate,
             CheckOutDate = dto.CheckOutDate
             // Add more properties as needed
@@ -150,6 +159,7 @@ public class HotelsController : ControllerBase
 
         dto.Id = booking.Id;
         return CreatedAtAction(nameof(GetBooking), new { hotelId, bookingId = dto.Id }, dto);
+        
     }
 
 
@@ -192,11 +202,6 @@ public class HotelsController : ControllerBase
     [Authorize(Roles = RoleNames.Admin)]
     public ActionResult<BookingDto> UpdateBooking(int hotelId, int bookingId, BookingDto dto)
     {
-        //if (IsInvalidBooking(dto))
-        //{
-        //    return BadRequest();
-        //}
-
         var booking = dataContext.Set<Booking>().FirstOrDefault(b => b.Id == bookingId && b.HotelId == hotelId);
         if (booking == null)
         {
