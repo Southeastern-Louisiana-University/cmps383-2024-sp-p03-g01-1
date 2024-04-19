@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Selu383.SP24.Api.Features.Authorization;
 using Selu383.SP24.Api.Features.Hotels;
+using Selu383.SP24.Api.Features.Rooms;
 
 namespace Selu383.SP24.Api.Data;
 
@@ -17,6 +18,7 @@ public static class SeedHelper
         await AddUsers(serviceProvider);
 
         await AddHotels(dataContext);
+        await AddRooms(dataContext);
     }
 
     private static async Task AddUsers(IServiceProvider serviceProvider)
@@ -89,25 +91,84 @@ public static class SeedHelper
                 State = "LA",
                 PostalCode = "70801"
             },
-            new Hotel
-            {
-                Name = "French Quarter",
-                Address = "225 Barrone St.",
-                City = "New Orleans",
-                State = "LA",
-                PostalCode = "70112"
-            },
-            new Hotel
-            {
-                Name = "Jackson Square",
-                Address = "405 Esplanade Ave.",
-                City = "New Orleans",
-                State = "LA",
-                PostalCode = "70116"
-            }
+             new Hotel
+             {
+                 Name = "French Quarter",
+                 Address = "225 Barrone St.",
+                 City = "New Orleans",
+                 State = "LA",
+                 PostalCode = "70112"
+             },
+             new Hotel
+             {
+                 Name = "Jackson Square",
+                 Address = "405 Esplanade Ave.",
+                 City = "New Orleans",
+                 State = "LA",
+                 PostalCode = "70116"
+             }
         ]);
 
 
         await dataContext.SaveChangesAsync();
+
+
+
+
+    }
+
+    private static async Task AddRooms(DataContext dataContext)
+    {
+        var rooms = dataContext.Set<Room>();
+
+        if (await rooms.AnyAsync())
+        {
+            return;
+        }
+
+        // Retrieve hotel IDs
+        var hotelIds = await dataContext.Set<Hotel>().Select(h => h.Id).ToListAsync();
+
+        // Add rooms to each hotel
+        foreach (var hotelId in hotelIds)
+        {
+            rooms.AddRange(
+                new List<Room>
+                {
+                    new Room
+                    {
+                        Type = "Single",
+                        Capacity = 1,
+                        Amenities = new List<string> { "Stuff" },
+                        Price = 100.00m,
+                        Available = true,
+                        HotelId = hotelId
+                    },
+                    new Room
+                    {
+                        Type = "Double",
+                        Capacity = 2,
+                        Amenities = new List<string> { "Stuff" },
+                        Price = 150.00m,
+                        Available = true,
+                        HotelId = hotelId
+                    },
+                    new Room
+                    {
+                        Type = "Suite",
+                        Capacity = 4,
+                        Amenities =new List<string> { "Stuff" },
+                        Price = 250.00m,
+                        Available = true,
+                        HotelId = hotelId
+                    }
+                }
+            );
+        }
+
+        await dataContext.SaveChangesAsync();
     }
 }
+
+    
+
