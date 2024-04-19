@@ -7,6 +7,7 @@ using Selu383.SP24.Api.Features.Authorization;
 using Selu383.SP24.Api.Features.Bookings;
 using Selu383.SP24.Api.Features.Hotels;
 using System.Security.Claims;
+using Selu383.SP24.Api.Features.Rooms;
 
 namespace Selu383.SP24.Api.Controllers;
 
@@ -85,7 +86,7 @@ public class HotelsController : ControllerBase
             CheckOutDate = booking.CheckOutDate
             // Include more properties if needed
         };
-
+        Console.WriteLine($"Received roomId: {booking.RoomId}");
         return Ok(bookingDto);
     }
 
@@ -128,16 +129,15 @@ public class HotelsController : ControllerBase
         {
             return Unauthorized("User not found");
         }
-        //if (IsInvalidBooking(dto))
-        //{
-        //    return BadRequest();
-        //}
+        //Console.WriteLine($"Received roomId: {dto.RoomId}");
+
 
         var hotel = hotels.FirstOrDefault(x => x.Id == hotelId);
         if (hotel == null)
         {
             return NotFound("Hotel not found");
         }
+        //Console.WriteLine($"HotelId: {hotelId}, Received RoomId: {dto.RoomId}");
 
         var room = await dataContext.Room.FirstOrDefaultAsync(r => r.Id == dto.RoomId && r.HotelId == hotelId);
         if (room == null)
@@ -148,12 +148,13 @@ public class HotelsController : ControllerBase
         var booking = new Booking
         {
             HotelId = hotelId,
-            UserId = userId, // Associate the booking with the logged-in user
+            UserId = userId, 
             RoomId = dto.RoomId,
             CheckInDate = dto.CheckInDate,
             CheckOutDate = dto.CheckOutDate
-            // Add more properties as needed
         };
+        Console.WriteLine($"Creating booking: {booking}");
+
         dataContext.Add(booking);
         dataContext.SaveChanges();
 

@@ -3,11 +3,10 @@ import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity
 import { Snackbar, Avatar, Card, IconButton, Checkbox } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
+import { useAuth } from './AuthContext';
 
 function BookingScreen({ route }) {
     const { hotel } = route.params;
-    // const [customerName, setCustomerName] = useState('');
-    // const [customerEmail, setCustomerEmail] = useState('');
     const [showSnackbar, setShowSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [checkInDate, setCheckInDate] = useState('');
@@ -18,72 +17,99 @@ function BookingScreen({ route }) {
     const [availableRooms, setAvailableRooms] = useState([]);
     const [error, setError] = useState(null);
     const [checked, setChecked] = useState(false);
-  
     const { hotelId } = route.params;
- 
+    const { user } = useAuth();
+
     useEffect(() => {
-      // Fetch available rooms for the selected hotel from your backend API
-      fetchRooms(hotel.id); // You need to implement this function
+      fetchRooms(hotel.id); 
       //console.log(hotelId)
     }, [hotel.id]);
-     
+
     const fetchRooms = async (hotelId) => {
-      console.log('Fetching rooms for hotelId:', hotelId); // Add this line
+      console.log('Fetching rooms for hotelId:', hotelId); 
       try {
         const response = await axios.get(`https://selu383-sp24-p03-g01.azurewebsites.net/api/rooms?hotelId=${hotelId}`);
         console.log('Response data:', response.data);
         const filteredRooms = response.data.filter(room => room.hotelId === hotelId);
-    
+        filteredRooms.forEach(room => {
+          console.log('Room Id:', room.id);
+        });        
         setAvailableRooms(filteredRooms);        
-        setError(null); // Clear error on successful fetch
-        console.log('Available rooms:', availableRooms); // Add this line
+        setError(null); 
+        console.log('Available rooms:', availableRooms); 
 
       } catch (error) {
         console.error('Error fetching hotels:', error);
-        setError('Failed to fetch hotels. Please try again.'); // Set custom error message
+        setError('Failed to fetch hotels. Please try again.'); 
       }
     };
 
     
 
     const handleRoomSelection = (room) => {
-      // Update the selected room state when a room is selected
       room.checked = !room.checked;
       if (selectedRoom === room) {
-        setSelectedRoom(null); // Unselect the room if it's already selected
-        setChecked(false); // Uncheck the room
+        setSelectedRoom(null);
+        setChecked(false); 
       } else {
-        setSelectedRoom(room); // Select the room
-        setChecked(true); // Check the room
+        setSelectedRoom(room); 
+        setChecked(true); 
       }
-      console.log(room)
+      console.log('Selected Room:', selectedRoom);
 
     };
 
-    const handleBookRoom = () => {
+    const handleBookRoom = async () => {
       if (!selectedRoom) {
         setSnackbarMessage('Please select a room');
         setShowSnackbar(true);
         return;
       }
-      // if (customerName.trim() === '' || customerEmail.trim() === '') {
-      //   setSnackbarMessage('Please fill in all fields');
-      //   setShowSnackbar(true);
-      //   return;
-      // }
+      if (!checkInDate || !checkOutDate) {
+        setSnackbarMessage('Please select check-in and check-out dates');
+        setShowSnackbar(true);
+        return;
+      }
+      try {
+        if (!user) {
+          throw new Error('User is not logged in');
+        }
+        const selectedRoomId = selectedRoom.id;
+        if (!selectedRoom.id) {
+          console.error('Selected room has no ID:', selectedRoom);
+          return;
+        }
+        console.log('Selected Room ID:', selectedRoomId);
+        //console.log('Hotel ID:', hotel.id);
+        const bookingData = {
+          hotelId: hotel.id,
+          roomId: selectedRoomId,
+          userId: user.id,
+          checkInDate: checkInDate.toISOString(), 
+          checkOutDate: checkOutDate.toISOString(),
+        };
+      
+      //console.log(bookingData)
 
+      const response = await axios.post(`https://selu383-sp24-p03-g01.azurewebsites.net/api/hotels/${hotel.id}/bookings`, bookingData);
 
-      console.log('Booking Details:', {
-        hotel: hotel,
-        room: selectedRoom,
-        //dates: selectedDates,
-        //customer: { name: customerName, email: customerEmail }
-      });
-      // Reset form fields after booking
-      // setCustomerName('');
-      // setCustomerEmail('');
+      console.log('Booking successful:', response.data);
+      //console.log('Booking Room:', selectedRoom.id);
+      //console.log('Booking info:', response.data);
+
       setSnackbarMessage('Room booked successfully');
       setShowSnackbar(true);
+
+ 
+      setCheckInDate('');
+      setCheckOutDate('');
+      setSelectedRoom(null);
+  
+    } catch (error) {
+      console.error('Error booking room:', error);
+      setSnackbarMessage('Failed to book room. Please try again.');
+      setShowSnackbar(true);
+    }
     };
   
     const handleCheckInDateSelection = () => {
@@ -93,6 +119,8 @@ function BookingScreen({ route }) {
     const handleCheckOutDateSelection = () => {
       setShowCheckOutDatePicker(true);
     };
+
+
     return (
       <ScrollView contentContainerStyle={style.container}>
         
@@ -102,7 +130,6 @@ function BookingScreen({ route }) {
             <Card>
             <Card.Title
               title={room.type}
-              //subtitle="Card Subtitle"
               left={(props) =>     
                 <Avatar.Icon
                   {...props}
@@ -126,7 +153,6 @@ function BookingScreen({ route }) {
               />
               <Card.Content>
                 <Text>Description: {room.description}</Text>
-                {/* You can add more details of the room here */}
               </Card.Content>
             </Card>
           </TouchableOpacity>
@@ -147,7 +173,7 @@ function BookingScreen({ route }) {
 
           <DateTimePicker
             style={{ width: 200 }}
-            value={checkInDate ? new Date(checkInDate) : new Date()} // Pass a JavaScript Date object
+            value={checkInDate ? new Date(checkInDate) : new Date()} 
             mode="date"
             display="spinner" 
             onChange={(event, date) => {
@@ -155,7 +181,7 @@ function BookingScreen({ route }) {
                 setCheckInDate(date);
                 setShowCheckInDatePicker(false);
               }
-            }} // Use onChange event to update the state
+            }} 
           />
           )}
 
