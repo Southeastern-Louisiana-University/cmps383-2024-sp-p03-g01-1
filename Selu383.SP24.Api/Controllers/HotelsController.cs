@@ -118,20 +118,17 @@ public class HotelsController : ControllerBase
     [Authorize]
     public async Task<ActionResult<BookingDto>> CreateBooking(int hotelId, BookingDto dto)
     {
-        if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))
-        {
-            var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); // Retrieve the user entity
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); // Get the ID of the logged-in user
+        var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); // Retrieve the user entity
 
-            if (user == null)
-            {
-                return Unauthorized("User not found");
-            }
-        }
-        else
+        if (user == null)
         {
-            // Handle the case where the user identifier couldn't be parsed
-            return BadRequest("Invalid user Identifier");
+            return Unauthorized("User not found");
         }
+        //if (IsInvalidBooking(dto))
+        //{
+        //    return BadRequest();
+        //}
 
         var hotel = hotels.FirstOrDefault(x => x.Id == hotelId);
         if (hotel == null)
