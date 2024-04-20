@@ -40,18 +40,16 @@
 }
 
 .register button {
-  width: 100%;
-  padding: 10px 0;
-  margin-top: 10px;
-  border: none;
-  border-radius: 3px;
-  background-color: #22d3ee;
-  color: white;
-  cursor: pointer;
+  background-color: #003459;
+  color: #fff;
+  margin: auto;
+  width: 130px;
+  height: 40px;
+  font-size: 16px;
 }
 
   .register button:hover {
-      opacity: 0.8;
+    background-color: #f2cc8F;
   }
 
 .text-danger {
