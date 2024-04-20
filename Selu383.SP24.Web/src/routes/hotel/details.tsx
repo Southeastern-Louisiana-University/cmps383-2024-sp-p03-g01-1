@@ -5,73 +5,92 @@ import { Outlet } from 'react-router-dom';
 import BatonRouge from "../../images/Baton Rouge.jpg";
 import FQNOLA from "../../images/FQNOLA.jpg";
 import SLCNOLA from "../../images/SLCNOLA.jpg";
+import { RoomDto } from "../../Components/RoomDto";
 
 export default function HotelDetails() {
-  const { id } = useParams();
-  const [hotel, setHotel] = useState<HotelDto>();
-  const [error, setError] = useState<Error | null>(null);
+    const { id } = useParams<{ id: string }>(); // Specify that id is a string
+    const [hotel, setHotel] = useState<HotelDto>();
+    const [rooms, setRooms] = useState<RoomDto[]>([]); // State to hold room information
+    const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    fetch(`/api/hotels/${id}`, {
-      method: "get",
-    })
-      .then<HotelDto>((r) => {
-        if (!r.ok){
-          throw new Error('Network response was not ok');
+    useEffect(() => {
+        if (id) { // Check if id is defined
+            fetch(`/api/hotels/${id}`, {
+                method: "get",
+            })
+                .then<HotelDto>((r) => {
+                    if (!r.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return r.json();
+                })
+                .then((j) => {
+                    setHotel(j);
+                })
+                .catch((error: Error) => {
+                    setError(error);
+                });
         }
-        return r.json();
-      })
-      .then((j) => {
-          setHotel(j);
-      })
-      .catch((error: Error) => {
-          setError(error);
-      });
-  }, [id]); // Dependency array with 'id'
+    }, [id]);
 
-  if (error) {
-    return <div>Error: {error.message}</div>
-  }
+    useEffect(() => {
+        if (id) { // Check if id is defined
+            fetch(`/api/rooms?hotelId=${id}`, { // Fetch rooms based on hotelId
+                method: "get",
+            })
+                .then<RoomDto[]>((r) => {
+                    if (!r.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return r.json();
+                })
+                .then((j) => {
+                    setRooms(j);
+                })
+                .catch((error: Error) => {
+                    setError(error);
+                });
+        }
+    }, [id]);
 
-  //Map city names to image paths
-  const cityImageMap: Record<string, string> = {
-    "Baton Rouge": BatonRouge,
-    "French Quarter": FQNOLA,
-    "Jackson Square": SLCNOLA
-  };
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
 
-  return (
-    <>
-      {hotel && (
+    const cityImageMap: Record<string, string> = {
+        "Baton Rouge": BatonRouge,
+        "French Quarter": FQNOLA,
+        "Jackson Square": SLCNOLA
+    };
 
-        <div className="container">
-          <h2 style={{ color: 'white' }}>{hotel.name}</h2>
-          <p style={{ color: 'white' }}>{hotel.address}</p>
-          <p style={{ color: 'white' }}>{hotel.city}, {hotel.state}, {hotel.postalCode}</p>
-          {/* Render other details of the hotel */}
-          <div className="row">
-            <div className="image-container">
-              <img src={cityImageMap[hotel.name]} alt="Big Image" />
-            </div>
-            <div className="cards-container">
-              <div className="card">
-                <h2>Card 1</h2>
-                <textarea placeholder="Enter information for Card 1..." />
-              </div>
-              <div className="card">
-                <h2>Card 2</h2>
-                <textarea placeholder="Enter information for Card 2..." />
-              </div>
-              <div className="card">
-                <h2>Card 3</h2>
-                <textarea placeholder="Enter information for Card 3..." />
-              </div>
-            </div>
-          </div>
-          <br />
-          <Outlet />
-        </div>
-      )}
-    </>
-  );
+    return (
+        <>
+            {hotel && (
+                <div className="container">
+                    <h2 style={{ color: 'white' }}>{hotel.name}</h2>
+                    <p style={{ color: 'white' }}>{hotel.address}</p>
+                    <p style={{ color: 'white' }}>{hotel.city}, {hotel.state}, {hotel.postalCode}</p>
+                    <div className="row">
+                        <div className="image-container">
+                            <img src={cityImageMap[hotel.city]} alt="Big Image" />
+                        </div>
+                        <div className="cards-container">
+                            {rooms.map((room, index) => ( // Map through filtered rooms and display card for each room
+                                <div className="card" key={index}>
+                                    <h2>Room {index + 1}</h2>
+                                    <h3>Type: {room.type}</h3>
+                                    <h3>Capacity: {room.capacity}</h3>
+                                    <h3>Amenities: {room.amenities.join(', ')}</h3>
+                                    <h3>Price: {room.price}</h3>
+                                    <h3>Available: {room.available ? 'Yes' : 'No'}</h3>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <br />
+                    <Outlet />
+                </div>
+            )}
+        </>
+    );
 }
