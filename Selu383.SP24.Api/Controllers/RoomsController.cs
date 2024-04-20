@@ -42,7 +42,9 @@ namespace Selu383.SP24.Api.Controllers;
             return Ok(result);
         }
 
-        [HttpPost]
+    
+
+    [HttpPost]
         [Authorize(Roles = RoleNames.Admin)]
         public ActionResult<RoomDto> CreateRoom(RoomDto dto)
         {

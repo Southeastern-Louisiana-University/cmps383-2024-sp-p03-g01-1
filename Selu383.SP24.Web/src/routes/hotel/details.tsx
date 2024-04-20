@@ -6,7 +6,7 @@ import BatonRouge from "../../images/Baton Rouge.jpg";
 import FQNOLA from "../../images/FQNOLA.jpg";
 import SLCNOLA from "../../images/SLCNOLA.jpg";
 import { RoomDto } from "../../Components/RoomDto";
-
+import "./hoteldetails.css";
 export default function HotelDetails() {
     const { id } = useParams<{ id: string }>(); // Specify that id is a string
     const [hotel, setHotel] = useState<HotelDto>();
@@ -74,8 +74,8 @@ export default function HotelDetails() {
                         <div className="image-container">
                             <img src={cityImageMap[hotel.city]} alt="Big Image" />
                         </div>
-                        <div className="cards-container">
-                            {rooms.map((room, index) => ( // Map through filtered rooms and display card for each room
+                        <div className="roomcards-container">
+                            {rooms.slice(0, 3).map((room, index) => (
                                 <div className="card" key={index}>
                                     <h2>Room {index + 1}</h2>
                                     <h3>Type: {room.type}</h3>
@@ -85,6 +85,14 @@ export default function HotelDetails() {
                                     <h3>Available: {room.available ? 'Yes' : 'No'}</h3>
                                 </div>
                             ))}
+
+
+                            
+
+
+
+
+
                         </div>
                     </div>
                     <br />
