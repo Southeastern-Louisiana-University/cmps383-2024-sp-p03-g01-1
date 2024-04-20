@@ -119,21 +119,20 @@ public class HotelsController : ControllerBase
     [Authorize]
     public async Task<ActionResult<BookingDto>> CreateBooking(int hotelId, BookingDto dto)
     {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); 
-        var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); 
-
-        if (user == null)
+        if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))
         {
-            return Unauthorized("User not found");
-        }
-        //Console.WriteLine($"Received roomId: {dto.RoomId}");
+            var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); // Retrieve the user entity
 
+            if (user == null)
+            {
+                return Unauthorized("User not found");
+            }
 
-        var hotel = hotels.FirstOrDefault(x => x.Id == hotelId);
-        if (hotel == null)
-        {
-            return NotFound("Hotel not found");
-        }
+            var hotel = hotels.FirstOrDefault(x => x.Id == hotelId);
+            if (hotel == null)
+            {
+                return NotFound("Hotel not found");
+            }
         //Console.WriteLine($"HotelId: {hotelId}, Received RoomId: {dto.RoomId}");
 
         var room = await dataContext.Room.FirstOrDefaultAsync(r => r.Id == dto.RoomId && r.HotelId == hotelId);
@@ -145,22 +144,26 @@ public class HotelsController : ControllerBase
         //{
         //    return BadRequest("Room ID cannot be zero.");
         //}
-        var booking = new Booking
-        {
-            HotelId = hotelId,
-            UserId = userId, 
+            var booking = new Booking
+            {
+                HotelId = hotelId,
+                UserId = userId, 
             RoomId = dto.RoomId,
-            CheckInDate = dto.CheckInDate,
-            CheckOutDate = dto.CheckOutDate
-        };
+                CheckInDate = dto.CheckInDate,
+                CheckOutDate = dto.CheckOutDate
+                };
         //Console.WriteLine($"Creating booking: {booking}");
 
-        dataContext.Add(booking);
-        dataContext.SaveChanges();
+            dataContext.Add(booking);
+            dataContext.SaveChanges();
 
-        dto.Id = booking.Id;
-        return CreatedAtAction(nameof(GetBooking), new { hotelId, bookingId = dto.Id }, dto);
-        
+            dto.Id = booking.Id;
+            return CreatedAtAction(nameof(GetBooking), new { hotelId, bookingId = dto.Id }, dto);
+        }
+        else
+        {
+            return BadRequest("Invalid user identifier");
+        }
     }
 
 
