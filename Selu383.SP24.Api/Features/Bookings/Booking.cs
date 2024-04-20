@@ -11,6 +11,6 @@ namespace Selu383.SP24.Api.Features.Bookings
         public int RoomId { get; set; }
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
-        //public virtual Room Room { get; set; }
+        public virtual Room Room { get; set; }
     }
 }
