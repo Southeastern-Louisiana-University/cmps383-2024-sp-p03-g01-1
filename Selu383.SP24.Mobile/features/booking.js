@@ -16,7 +16,7 @@ function BookingScreen({ route }) {
     const [selectedRoom, setSelectedRoom] = useState(null); 
     const [availableRooms, setAvailableRooms] = useState([]);
     const [error, setError] = useState(null);
-    const [checked, setChecked] = useState(false);
+    //const [checked, setChecked] = useState(false);
     const { hotelId } = route.params;
     const { user } = useAuth();
 
@@ -47,17 +47,28 @@ function BookingScreen({ route }) {
     
 
     const handleRoomSelection = (room) => {
-      room.checked = !room.checked;
-      if (selectedRoom === room) {
-        setSelectedRoom(null);
-        setChecked(false); 
+      if (selectedRoom && selectedRoom.id === room.id) {
+          // Deselect the room
+          setSelectedRoom(null);
       } else {
-        setSelectedRoom(room); 
-        setChecked(true); 
+          // Select the room
+          setSelectedRoom(room);
       }
-      console.log('Selected Room:', selectedRoom);
-
+      console.log('Selected Room:', room); // Log the current room being processed, not the state
     };
+
+    // const handleRoomSelection = (room) => {
+    //   room.checked = !room.checked;
+    //   if (selectedRoom === room) {
+    //     setSelectedRoom(null);
+    //     setChecked(false); 
+    //   } else {
+    //     setSelectedRoom(room); 
+    //     setChecked(true); 
+    //   }
+    //   console.log('Selected Room:', selectedRoom);
+
+    // };
 
     const handleBookRoom = async () => {
       if (!selectedRoom) {
@@ -89,7 +100,7 @@ function BookingScreen({ route }) {
           checkOutDate: checkOutDate.toISOString(),
         };
       
-      //console.log(bookingData)
+      console.log(bookingData)
 
       const response = await axios.post(`https://selu383-sp24-p03-g01.azurewebsites.net/api/hotels/${hotel.id}/bookings`, bookingData);
 
@@ -141,7 +152,7 @@ function BookingScreen({ route }) {
               />}
               right={(props) =>     
               <Checkbox
-                status={checked ? 'checked' : 'unchecked'}
+                //status={checked ? 'checked' : 'unchecked'}
                 onPress={() => {
                   handleRoomSelection(room);
                 }}

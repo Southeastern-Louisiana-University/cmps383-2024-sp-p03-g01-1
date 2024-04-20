@@ -58,10 +58,8 @@ public class HotelsController : ControllerBase
                                Id = b.Id,
                                HotelId = b.HotelId,
                                RoomId = b.RoomId,
-
                                CheckInDate = b.CheckInDate,
                                CheckOutDate = b.CheckOutDate
-                               // Include more properties if needed
                            })
                            .ToList();
 
@@ -84,7 +82,6 @@ public class HotelsController : ControllerBase
             RoomId = booking.RoomId,
             CheckInDate = booking.CheckInDate,
             CheckOutDate = booking.CheckOutDate
-            // Include more properties if needed
         };
         Console.WriteLine($"Received roomId: {booking.RoomId}");
         return Ok(bookingDto);
@@ -122,8 +119,8 @@ public class HotelsController : ControllerBase
     [Authorize]
     public async Task<ActionResult<BookingDto>> CreateBooking(int hotelId, BookingDto dto)
     {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); // Get the ID of the logged-in user
-        var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); // Retrieve the user entity
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); 
+        var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); 
 
         if (user == null)
         {
@@ -144,7 +141,10 @@ public class HotelsController : ControllerBase
         {
             return NotFound("Room not found in the hotel");
         }
-
+        //if (dto.RoomId == 0)
+        //{
+        //    return BadRequest("Room ID cannot be zero.");
+        //}
         var booking = new Booking
         {
             HotelId = hotelId,
@@ -153,7 +153,7 @@ public class HotelsController : ControllerBase
             CheckInDate = dto.CheckInDate,
             CheckOutDate = dto.CheckOutDate
         };
-        Console.WriteLine($"Creating booking: {booking}");
+        //Console.WriteLine($"Creating booking: {booking}");
 
         dataContext.Add(booking);
         dataContext.SaveChanges();
@@ -209,10 +209,8 @@ public class HotelsController : ControllerBase
             return NotFound("Booking not found");
         }
 
-        // Update booking properties
         booking.CheckInDate = dto.CheckInDate;
         booking.CheckOutDate = dto.CheckOutDate;
-        // Update more properties if needed
 
         dataContext.SaveChanges();
 
@@ -269,7 +267,7 @@ public class HotelsController : ControllerBase
 
         if (!User.IsInRole(RoleNames.Admin))
         {
-            // only admins can change manager ids anyway
+            // only admins can change manager ids 
             return false;
         }
         return !dataContext.Set<User>().Any(x => x.Id == managerId);
