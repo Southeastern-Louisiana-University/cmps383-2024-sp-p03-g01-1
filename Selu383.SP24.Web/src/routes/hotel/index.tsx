@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { HotelDto } from "../../Components/HotelDto";
-import BatonRouge from "../../images/BatonRouge.jpg";
+import BatonRouge from "../../images/Baton Rouge.jpg";
 import FQNOLA from "../../images/FQNOLA.jpg";
 import SLCNOLA from "../../images/SLCNOLA.jpg";
 import "./hotelindex.css";
