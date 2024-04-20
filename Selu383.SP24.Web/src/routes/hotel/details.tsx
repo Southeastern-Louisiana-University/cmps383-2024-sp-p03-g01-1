@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { HotelDto } from "../../Components/HotelDto";
 import { Outlet } from 'react-router-dom';
-import BatonRouge from "../../images/Baton Rouge.jpg";
+import BatonRouge from '../../images/BatonRouge.jpg';
 import FQNOLA from "../../images/FQNOLA.jpg";
 import SLCNOLA from "../../images/SLCNOLA.jpg";
 
