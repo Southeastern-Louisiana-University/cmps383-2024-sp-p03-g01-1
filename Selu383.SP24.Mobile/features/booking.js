@@ -1,36 +1,106 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity, checkInDate, checkOutDate } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import axios from 'axios';
 
 function BookingScreen({ route }) {
-  const { hotel } = route.params;
-  const [customerName, setCustomerName] = useState('');
-  const [customerEmail, setCustomerEmail] = useState('');
-  const [showSnackbar, setShowSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [checkInDate, setCheckInDate] = useState('');
-  const [checkOutDate, setCheckOutDate] = useState('');
-  const [showCheckInDatePicker, setShowCheckInDatePicker] = useState(false);
-  const [showCheckOutDatePicker, setShowCheckOutDatePicker] = useState(false);
+	const { hotel } = route.params;
+	const [customerName, setCustomerName] = useState('');
+	const [customerEmail, setCustomerEmail] = useState('');
+	const [showSnackbar, setShowSnackbar] = useState(false);
+	const [snackbarMessage, setSnackbarMessage] = useState('');
+	const [checkInDate, setCheckInDate] = useState('');
+	const [checkOutDate, setCheckOutDate] = useState('');
+	const [showCheckInDatePicker, setShowCheckInDatePicker] = useState(false);
+	const [showCheckOutDatePicker, setShowCheckOutDatePicker] = useState(false);
+	const [selectedRoom, setSelectedRoom] = useState(null); 
+	const [availableRooms, setAvailableRooms] = useState([]);
+	const [error, setError] = useState(null);
 
-  const handleBookRoom = () => {
-    if (customerName.trim() === '' || customerEmail.trim() === '') {
-      setSnackbarMessage('Please fill in all fields');
-      setShowSnackbar(true);
-      return;
-    }
+	useEffect(() => {
+		// Fetch available rooms for the selected hotel from your backend API
+		fetchRooms(hotel.id); // You need to implement this function
+	}, [hotel.id]);
 
-    console.log('Booking Details:', {
-      hotel: hotel,
-      //dates: selectedDates,
-      customer: { name: customerName, email: customerEmail }
-    });
-    // Reset form fields after booking
-    setCustomerName('');
-    setCustomerEmail('');
-    setSnackbarMessage('Room booked successfully');
-    setShowSnackbar(true);
+	// const fetchAvailableRooms = async (hotelId) => {
+	//   try {
+	//     // Make an API call to fetch available rooms for the selected hotel
+	//     const response = await fetch(`https://selu383-sp24-p03-g01.azurewebsites.net/api/rooms`);
+	//     const data = await response.json();
+	//     setAvailableRooms(data.rooms); // Assuming data.rooms contains the list of available rooms
+	//   } catch (error) {
+	//     console.error('Error fetching available rooms:', error);
+	//   }
+	// };
+
+	// const fetchRooms = async (hotelId) => {
+	//   try {
+	//     const response = await axios.get(`https://selu383-sp24-p03-g01.azurewebsites.net/api/room`);
+	//     console.log('Response data:', response.data); // Log the response data
+	//     setAvailableRooms(response.data);
+	//     setError(null); // Clear error on successful fetch
+	//   } catch (error) {
+	//     console.error('Error fetching rooms:', error);
+	//     setError('Failed to fetch rooms. Please try again.'); // Set custom error message
+	//   }
+	// };
+
+	const fetchRooms = async () => {
+		try {
+			const response = await axios.get('https://selu383-sp24-p03-g01.azurewebsites.net/api/rooms');
+			console.log('Response data:', response.data);
+			setAvailableRooms(response.data);
+			setError(null); // Clear error on successful fetch
+		} catch (error) {
+			console.error('Error fetching hotels:', error);
+			setError('Failed to fetch hotels. Please try again.'); // Set custom error message
+		}
+	};
+
+
+	const handleRoomSelection = (room) => {
+		// Update the selected room state when a room is selected
+		setSelectedRoom(room);
+	};
+
+	const handleBookRoom = () => {
+		if (!selectedRoom) {
+			setSnackbarMessage('Please select a room');
+			setShowSnackbar(true);
+			return;
+		}
+		if (customerName.trim() === '' || customerEmail.trim() === '') {
+			setSnackbarMessage('Please fill in all fields');
+			setShowSnackbar(true);
+			return;
+		}
+
+
+		console.log('Booking Details:', {
+			hotel: hotel,
+			room: selectedRoom,
+			//dates: selectedDates,
+			//customer: { name: customerName, email: customerEmail }
+		});
+		// Reset form fields after booking
+		setCustomerName('');
+		setCustomerEmail('');
+		setSnackbarMessage('Room booked successfully');
+		setShowSnackbar(true);
+		return;
+	}
+
+	console.log('Booking Details:', {
+		hotel: hotel,
+		//dates: selectedDates,
+		customer: { name: customerName, email: customerEmail }
+	});
+		// Reset form fields after booking
+		setCustomerName('');
+		setCustomerEmail('');
+		setSnackbarMessage('Room booked successfully');
+		setShowSnackbar(true);
   };
 
   const handleCheckInDateSelection = () => {

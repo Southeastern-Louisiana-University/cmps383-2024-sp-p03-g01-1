@@ -1,10 +1,16 @@
-import { useState } from 'react';
+// SearchDates.tsx
+import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
-const DateRangePicker = () => {
+interface SearchDatesProps {
+	onStartDateChange: (date: Date | null) => void;
+	onEndDateChange: (date: Date | null) => void;
+}
+
+const SearchDates: React.FC<SearchDatesProps> = ({ onStartDateChange, onEndDateChange }) => {
 	const [startDate, setStartDate] = useState<Date | null>(null);
 	const [endDate, setEndDate] = useState<Date | null>(null);
 
@@ -12,6 +18,8 @@ const DateRangePicker = () => {
 		const [start, end] = dates;
 		setStartDate(start);
 		setEndDate(end);
+		onStartDateChange(start);
+		onEndDateChange(end);
 	};
 
 	return (
@@ -39,4 +47,4 @@ const DateRangePicker = () => {
 	);
 };
 
-export default DateRangePicker;
+export default SearchDates;

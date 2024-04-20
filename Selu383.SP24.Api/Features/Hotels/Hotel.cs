@@ -1,4 +1,5 @@
 ﻿using Selu383.SP24.Api.Features.Authorization;
+using Selu383.SP24.Api.Features.Rooms;
 
 namespace Selu383.SP24.Api.Features.Hotels;
 
@@ -12,4 +13,5 @@ public class Hotel
     public string PostalCode { get; set; }
     public int? ManagerId { get; set; }
     public virtual User Manager { get; set; }
+    public List<Room> Rooms { get; set; }
 }

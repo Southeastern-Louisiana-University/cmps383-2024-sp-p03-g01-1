@@ -7,3 +7,4 @@ export interface HotelDto {
 	postalcode: string;
 	managerId: number;
 }
+
