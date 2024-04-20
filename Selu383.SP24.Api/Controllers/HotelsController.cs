@@ -118,38 +118,40 @@ public class HotelsController : ControllerBase
     [Authorize]
     public async Task<ActionResult<BookingDto>> CreateBooking(int hotelId, BookingDto dto)
     {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); // Get the ID of the logged-in user
-        var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); // Retrieve the user entity
-
-        if (user == null)
+        if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))
         {
-            return Unauthorized("User not found");
+            var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); // Retrieve the user entity
+
+            if (user == null)
+            {
+                return Unauthorized("User not found");
+            }
+
+            var hotel = hotels.FirstOrDefault(x => x.Id == hotelId);
+            if (hotel == null)
+            {
+                return NotFound("Hotel not found");
+            }
+
+            var booking = new Booking
+            {
+                HotelId = hotelId,
+                UserId = userId, // Associate the booking with the logged-in user
+
+                CheckInDate = dto.CheckInDate,
+                CheckOutDate = dto.CheckOutDate
+                // Add more properties as needed
+            };
+            dataContext.Add(booking);
+            dataContext.SaveChanges();
+
+            dto.Id = booking.Id;
+            return CreatedAtAction(nameof(GetBooking), new { hotelId, bookingId = dto.Id }, dto);
         }
-        //if (IsInvalidBooking(dto))
-        //{
-        //    return BadRequest();
-        //}
-
-        var hotel = hotels.FirstOrDefault(x => x.Id == hotelId);
-        if (hotel == null)
+        else
         {
-            return NotFound("Hotel not found");
+            return BadRequest("Invalid user identifier");
         }
-
-        var booking = new Booking
-        {
-            HotelId = hotelId,
-            UserId = userId, // Associate the booking with the logged-in user
-
-            CheckInDate = dto.CheckInDate,
-            CheckOutDate = dto.CheckOutDate
-            // Add more properties as needed
-        };
-        dataContext.Add(booking);
-        dataContext.SaveChanges();
-
-        dto.Id = booking.Id;
-        return CreatedAtAction(nameof(GetBooking), new { hotelId, bookingId = dto.Id }, dto);
     }
 
 

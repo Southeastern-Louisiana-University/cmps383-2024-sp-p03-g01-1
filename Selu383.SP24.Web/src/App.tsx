@@ -12,7 +12,6 @@ function App() {
         <p className="landing-p-custom">Where Convenience Checks In</p>
       </div>
       <SearchBar />
-      
       <Outlet />
     </>
   );
