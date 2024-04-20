@@ -15,7 +15,6 @@ export default function ErrorPage() {
           <i style={{ color: 'white' }}>{error.statusText || error.message}</i>
         </p>
       </center>
-
     </div>
   );
 }

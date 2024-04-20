@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 interface LocationProps {
-    onLocationChange: (location: string) => void;
+  onLocationChange: (location: string) => void;
 }
 
 const Location: React.FC<LocationProps> = ({ onLocationChange }) => {
@@ -29,8 +29,6 @@ const Location: React.FC<LocationProps> = ({ onLocationChange }) => {
       </select>
     </div>
   );
-  
-  
 };
 
 export default Location;
