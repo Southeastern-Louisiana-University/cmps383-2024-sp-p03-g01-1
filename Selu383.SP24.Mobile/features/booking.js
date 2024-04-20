@@ -48,10 +48,8 @@ function BookingScreen({ route }) {
 
     const handleRoomSelection = (room) => {
       if (selectedRoom && selectedRoom.id === room.id) {
-          // Deselect the room
           setSelectedRoom(null);
       } else {
-          // Select the room
           setSelectedRoom(room);
       }
       console.log('Selected Room:', room); // Log the current room being processed, not the state
