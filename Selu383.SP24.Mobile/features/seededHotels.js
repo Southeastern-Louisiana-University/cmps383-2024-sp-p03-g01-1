@@ -1,5 +1,4 @@
 const seededHotels = [
-
     {
       id: 9,
       description: 'Experience the ultimate luxury at our resort and spa. Unwind in our lavish accommodations and indulge in world-class amenities.',

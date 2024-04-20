@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './Components/Navbar';
 import SearchBar from './Components/Search';
 
+
 function App() {
   return (
     <>
@@ -11,6 +12,7 @@ function App() {
         <p className="landing-p-custom">Where Convenience Checks In</p>
       </div>
       <SearchBar />
+      
       <Outlet />
     </>
   );
