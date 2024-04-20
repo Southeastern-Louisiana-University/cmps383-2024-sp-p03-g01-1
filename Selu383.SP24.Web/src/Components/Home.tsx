@@ -2,9 +2,9 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HotelDto } from '../Components/HotelDto';
 import "../App.css"
-import BatonRouge from '../../images/BatonRouge.jpg';
-import FQNOLA from '../../images/FQNOLA.jpg';
-import SLCNOLA from '../../images/SLCNOLA.jpg';
+import BatonRouge from '../images/Baton Rouge.jpg';
+import FQNOLA from '../images/FQNOLA.jpg';
+import SLCNOLA from '../images/SLCNOLA.jpg';
 
 function Home() {
   const [hotels, setHotels] = useState<HotelDto[]>([]);
