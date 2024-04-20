@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import "../App.css";
-
 import logo from "../images/logo.png";
 
 function Navbar() {
@@ -24,9 +23,9 @@ function Navbar() {
               Offers
             </a>
           </div>
-                  <Link to={"/about"} className="nav-link nav-link-custom">
-                      <div className="nav-col-link-custom">About</div>
-                  </Link>
+					<Link to={"/about"} className="nav-link nav-link-custom">
+						<div className="nav-col-link-custom">About</div>
+					</Link>
           <div className="nav-col-link-custom">
             <a className="nav-link nav-link-custom" href="javascript:void(0)">
               Contact
@@ -47,19 +46,17 @@ function Navbar() {
               <i className="fas fa-map-marker-alt icon-custom"></i>
             </button>
           </div>
-                  
-            <div className="nav-col-custom">
-              <button className="icon-button" onClick={handleClick}>
-                <i className="fas fa-user-alt icon-custom"></i>
-              </button>
-            </div>
-
-                  <Link to={"/login"} className="btn rounded-pill nav-btn-custom">
+          <div className="nav-col-custom">
+            <button className="icon-button" onClick={handleClick}>
+              <i className="fas fa-user-alt icon-custom"></i>
+            </button>
+          </div>
+					<Link to={"/login"} className="btn rounded-pill nav-btn-custom">
             <button className="btn rounded-pill nav-btn-custom" type="button">
               Login
             </button>
           </Link>
-                  <Link to={"/register"} className="btn rounded-pill nav-btn-custom">
+          <Link to={"/register"} className="btn rounded-pill nav-btn-custom">
             <button className="btn rounded-pill nav-btn-custom " type="button">
               Register
             </button>
