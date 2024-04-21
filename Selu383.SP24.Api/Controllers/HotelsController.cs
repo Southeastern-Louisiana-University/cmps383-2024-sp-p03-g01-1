@@ -140,15 +140,15 @@ public class HotelsController : ControllerBase
         {
             return NotFound("Room not found in the hotel");
         }
-        //if (dto.RoomId == 0)
-        //{
-        //    return BadRequest("Room ID cannot be zero.");
-        //}
+        if (dto.RoomId == 0)
+        {
+            return BadRequest("Room ID cannot be zero.");
+        }
             var booking = new Booking
             {
                 HotelId = hotelId,
                 UserId = userId, 
-            RoomId = dto.RoomId,
+                RoomId = dto.RoomId,
                 CheckInDate = dto.CheckInDate,
                 CheckOutDate = dto.CheckOutDate
                 };

@@ -9,10 +9,12 @@ namespace Selu383.SP24.Api.Data.Configurations
         public void Configure(EntityTypeBuilder<Booking> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(b => b.RoomId).IsRequired();
             builder.HasOne(b => b.Room)
-                .WithMany()
-                .HasForeignKey(b => b.RoomId);
+                .WithMany(x => x.Bookings)
+                .HasForeignKey(b => b.RoomId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
+
+

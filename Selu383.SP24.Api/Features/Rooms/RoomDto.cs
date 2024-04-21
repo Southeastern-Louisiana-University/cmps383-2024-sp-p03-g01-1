@@ -10,5 +10,6 @@
         public bool Available { get; set; }
         public int HotelId { get; set; }
 
+
     }
 }
