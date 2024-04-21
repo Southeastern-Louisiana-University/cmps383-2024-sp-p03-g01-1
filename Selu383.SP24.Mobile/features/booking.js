@@ -111,40 +111,45 @@ function BookingScreen({ route }) {
         {availableRooms.map(room => (
           <TouchableOpacity key={room.id} onPress={() => handleRoomSelection(room)}>
 
-            <Card>
-              <Card.Title
-                title={room.type}
-                left={(props) =>     
-                  <Avatar.Icon
-                    {...props}
-                    icon={
-                      selectedRoom === room
-                        ? `bed-${room.type.toLowerCase()}`
-                        : `bed-${room.type.toLowerCase()}-outline`
-                    }
-                  />}
-                right={(props) =>     
-                  <Checkbox
-                    onPress={() => {
-                      handleRoomSelection(room);
-                    }}
-                  />}
-              /> 
-<Image
-  source={
-    room.type === 'Single' ? single :
-    room.type === 'Double' ? double :
-    room.type === 'Suite' ? suite :
-    null
-  }
-  style={style.roomImage}
-/>
+            <Card style={style.cardStyle}>
+            <Card.Title
+              title={room.type}
+              left={(props) =>     
+                <Avatar.Icon
+                  {...props}
+                  style={style.avatarStyle}
+                  icon={
+                  selectedRoom === room
+                    ? `bed`
+                    : `bed-outline`
+                }
+              />}
+              right={(props) =>     
+              <Checkbox
+              color="#22d3ee"
+              status={selectedRoom && selectedRoom.id === room.id ? 'checked' : 'unchecked'}
+              onPress={() => {
+                handleRoomSelection(room);
+                }}
+                
+              />}
+            /> 
+            <Image
+              source={
+                room.type === 'Single' ? single :
+                room.type === 'Double' ? double :
+                room.type === 'Suite' ? suite :
+                null
+              }
+              style={style.roomImage}
+            />
               <Card.Title
                 title={room.type}
                 subtitle={`Price: $${room.price}`}
               />
               <Card.Content>
-                <Text>Description: {room.description}</Text>
+                <Text>Capacity: {room.capacity}</Text>
+                <Text>Amenities: {room.amenities + ''}</Text>              
               </Card.Content>
             </Card>
           </TouchableOpacity>
@@ -211,37 +216,76 @@ function BookingScreen({ route }) {
   
 const style = StyleSheet.create({
   container: {
-      flexGrow: 1,
-      padding: 20,
+    flexGrow: 1,
+    padding: 20,
+    backgroundColor: '#f0f0f5', // Light gray background for better contrast
   },
   hotelName: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      marginBottom: 10,
-      marginTop: 20,
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 15,
+    marginTop: 20,
+    textAlign: 'center', // Center align the hotel name
   },
   description: {
-      marginBottom: 20,
-  },
-  input: {
-      marginBottom: 20,
-      paddingHorizontal: 10, 
-      backgroundColor: '#fff', 
-      borderRadius: 5, 
-      borderWidth: 1, 
-      borderColor: '#ccc', 
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 20,
+    lineHeight: 24, // Improve readability of longer descriptions
+    textAlign: 'justify', // Justify align the text
   },
   dateContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    backgroundColor: '#ffffff',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
   },
   dateLabel: {
-      fontSize: 16,
-      fontWeight: 'bold',
+    margin: 20,
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#444',
   },
   dateText: {
-      fontSize: 16,
+    margin: 20,
+    marginTop: -20,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#0056b3', // A bolder color for emphasis
+  },
+  cardStyle: {
+    marginBottom: 20,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
+    overflow: 'hidden', // Ensures shadows are visible
+  },
+  buttonStyle: {
+    backgroundColor: '#0056b3', // A consistent theme color
+    color: '#ffffff',
+    fontSize: 18,
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 5,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    overflow: 'hidden', // For border radius to take effect on Android
+    marginTop: 20,
+  },
+  avatarStyle: {
+    backgroundColor: '#22d3ee', // Change the background color to blue
   },
   roomImage: {
       width: '100%',

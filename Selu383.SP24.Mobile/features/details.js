@@ -32,8 +32,7 @@ function DetailsScreen({ route }) {
     cityName = "Baton Rouge";
   }
 
-  const description = hotelDetails ? `Welcome to Enstay, where the vibrant spirit of ${cityName} meets luxurious comfort. 
-    Nestled in the heart of the historic ${hotel.name}, Enstay embodies the essence of Southern hospitality with a modern twist.` : '';
+  const description = hotelDetails ? `Welcome to Enstay, where the vibrant spirit of ${cityName} meets luxurious comfort. Nestled in the heart of the historic ${hotel.name}, Enstay embodies the essence of Southern hospitality with a modern twist.` : '';
   const image = hotelDetails ? { uri: hotelDetails.image } : null;
 
   const handleBookNow = () => {
@@ -53,12 +52,13 @@ function DetailsScreen({ route }) {
               titleStyle={styles.cardTitle} 
             />
             <Card.Cover source={cityImageMap[hotel.name]} />
-          </Card>
+          
 
           <View style={styles.textContainer}>
-            <Text style={styles.name}>{hotel.name}</Text>
+            {/* <Text style={styles.name}>{hotel.name}</Text> */}
             <Text style={styles.description}>{description}</Text>
           </View>
+          </Card>
           <Button title="Book Now" onPress={handleBookNow} style={{ fontSize: 20 }} />
         </View>
       </ImageBackground>
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   card: {
-    marginBottom: 20,
+    marginBottom: 80,
     borderRadius: 10,
     elevation: 4,
     width: '100%',
@@ -109,6 +109,9 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     color: '#000', 
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginTop: 15,
   },
   textContainer: {
     alignItems: 'center',
@@ -123,9 +126,9 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: 'left',
     color: '#000', 
-    paddingHorizontal: 20,
+    padding: 20,
   },
   activitiesContainer: {
     marginTop: 20,
@@ -143,6 +146,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10, 
     paddingHorizontal: 20, 
+    marginBottom: 10, 
     borderRadius: 15, 
     backgroundColor: '#EAEBED', 
     shadowColor: '#000', 
