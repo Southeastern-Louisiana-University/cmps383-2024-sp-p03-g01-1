@@ -12,6 +12,9 @@ import BookingScreen from './features/booking';
 import LoginScreen from './features/login';
 import { AuthProvider, useAuth } from './features/AuthContext';
 import AdminPortalPage from './features/AdminPortal';
+import AdminBookingInfo from './features/AdminBookingInfo';
+import AdminAvailableRooms from './features/AdminAvailableRooms';
+
 
 function Header() {
   return (
@@ -170,6 +173,8 @@ export default function App() {
               <Stack.Screen name="Booking" component={BookingScreen} /> 
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="AdminPortal" component={AdminPortalPage} />
+              <Stack.Screen name="BookingInformation" component={AdminBookingInfo} />
+              <Stack.Screen name="AvailableRooms" component={AdminAvailableRooms} />
             </Stack.Navigator>
           </NavigationContainer>
       </PaperProvider>
