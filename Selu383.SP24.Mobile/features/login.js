@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, DefaultTheme } from 'react-native-paper';
 import { useAuth } from './AuthContext';
 import { useNavigation } from '@react-navigation/native';
 
@@ -37,6 +37,13 @@ export default function LoginScreen() {
             console.error('Error:', error);
         }
     };
+    const theme = {
+        ...DefaultTheme,
+        colors: {
+            ...DefaultTheme.colors,
+            primary: '#808080', // Gray color for underline and label on focus
+        },
+    };
 
     return (
         <View style={styles.container}>
@@ -46,6 +53,8 @@ export default function LoginScreen() {
                 value={username}
                 onChangeText={text => setUsername(text)}
                 style={styles.input}
+                theme={theme}
+
             />
             <TextInput
                 label="Password"
@@ -79,6 +88,7 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         marginBottom: 10,
+        backgroundColor: '#a7ccd1',
     },
     button: {
         width: '100%',

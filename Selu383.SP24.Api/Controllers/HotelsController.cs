@@ -116,52 +116,61 @@ public class HotelsController : ControllerBase
     }
 
     [HttpPost("{hotelId}/bookings")]
-    [Authorize]
     public async Task<ActionResult<BookingDto>> CreateBooking(int hotelId, BookingDto dto)
     {
+        // Check if the user ID can be parsed from the claim
         if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))
         {
-            var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); // Retrieve the user entity
-
+            // Retrieve the user entity
+            var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)
             {
                 return Unauthorized("User not found");
             }
 
-            var hotel = hotels.FirstOrDefault(x => x.Id == hotelId);
+            // Find the hotel by ID
+            var hotel = await hotels.FirstOrDefaultAsync(x => x.Id == hotelId);
             if (hotel == null)
             {
                 return NotFound("Hotel not found");
             }
-        //Console.WriteLine($"HotelId: {hotelId}, Received RoomId: {dto.RoomId}");
 
-        var room = await dataContext.Room.FirstOrDefaultAsync(r => r.Id == dto.RoomId && r.HotelId == hotelId);
-        if (room == null)
-        {
-            return NotFound("Room not found in the hotel");
-        }
-        if (dto.RoomId == 0)
-        {
-            return BadRequest("Room ID cannot be zero.");
-        }
+            // Ensure that the Room ID is provided and valid
+            if (dto.RoomId == 0)
+            {
+                return BadRequest("Room ID cannot be zero.");
+            }
+
+            // Find the room associated with the provided Room ID and Hotel ID
+            var room = await dataContext.Room.FirstOrDefaultAsync(r => r.Id == dto.RoomId && r.HotelId == hotelId);
+            if (room == null)
+            {
+                return NotFound("Room not found in the hotel");
+            }
+
+            // Create the booking entity
             var booking = new Booking
             {
                 HotelId = hotelId,
-                UserId = userId, 
+                UserId = userId,
                 RoomId = dto.RoomId,
                 CheckInDate = dto.CheckInDate,
                 CheckOutDate = dto.CheckOutDate
-                };
-        //Console.WriteLine($"Creating booking: {booking}");
+            };
 
+            // Add the booking to the context and save changes
             dataContext.Add(booking);
-            dataContext.SaveChanges();
+            await dataContext.SaveChangesAsync();
 
+            // Update the DTO with the generated booking ID
             dto.Id = booking.Id;
+
+            // Return the created booking DTO along with its location
             return CreatedAtAction(nameof(GetBooking), new { hotelId, bookingId = dto.Id }, dto);
         }
         else
         {
+            // If the user ID cannot be parsed from the claim, return a BadRequest
             return BadRequest("Invalid user identifier");
         }
     }
