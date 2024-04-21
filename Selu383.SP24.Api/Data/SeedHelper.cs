@@ -16,7 +16,6 @@ public static class SeedHelper
 
         await AddRoles(serviceProvider);
         await AddUsers(serviceProvider);
-
         await AddHotels(dataContext);
         await AddRooms(dataContext);
     }
