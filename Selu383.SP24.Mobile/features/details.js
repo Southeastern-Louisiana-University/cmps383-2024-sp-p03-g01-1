@@ -35,19 +35,20 @@ function DetailsScreen({ route }) {
 
       <Card style={style.card}>
       <Card.Title
+        style={style.name}
         title={hotel.name}
         left={(props) => <Avatar.Icon {...props} icon="office-building-marker-outline" />}
-        //right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
       />
       <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
 
-      </Card>
 
       <View style={style.textContainer}>
 
       <Text style={style.name}>{hotel.name}</Text>
       <Text style={style.description}>{description}</Text>
       </View>
+      </Card>
+
       <Button title="Book Now" onPress={handleBookNow} />
 
 
@@ -58,10 +59,6 @@ function DetailsScreen({ route }) {
 const style = StyleSheet.create({
   container: {
     margin: 20,
-    // flex: 1,
-    // padding: 20,
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   card: {
     marginBottom: 20,
@@ -83,15 +80,7 @@ const style = StyleSheet.create({
     textAlign: 'center',
     color: '#666',
   },
-  // cover: {
-  //   height: 200, // Adjust the height as needed
-  //   resizeMode: 'cover', // Ensure the image covers the entire area
-  // },
-  // image: {
-  //   width: 200, // Adjust as needed
-  //   height: 200, // Adjust as needed
-  //   resizeMode: 'cover',
-  // },
+
 });
 
 export default DetailsScreen;

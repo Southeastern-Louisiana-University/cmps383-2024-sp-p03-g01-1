@@ -4,6 +4,7 @@ import { Snackbar, Avatar, Card, IconButton, Checkbox } from 'react-native-paper
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
+import seededHotels from './seededHotels';
 
 function BookingScreen({ route }) {
     const { hotel } = route.params;
@@ -52,21 +53,16 @@ function BookingScreen({ route }) {
       } else {
           setSelectedRoom(room);
       }
-      console.log('Selected Room:', room); // Log the current room being processed, not the state
+      console.log('Selected Room:', room); 
     };
 
-    // const handleRoomSelection = (room) => {
-    //   room.checked = !room.checked;
-    //   if (selectedRoom === room) {
-    //     setSelectedRoom(null);
-    //     setChecked(false); 
-    //   } else {
-    //     setSelectedRoom(room); 
-    //     setChecked(true); 
-    //   }
-    //   console.log('Selected Room:', selectedRoom);
 
-    // };
+    const hotelDetails = seededHotels.find(item => {
+      //console.log("hotel.id:", hotel.id);
+      //console.log("item.id:", item.id);
+      return item.id === hotel.id;
+    });  
+    const description = hotelDetails ? hotelDetails.description : '';
 
     const handleBookRoom = async () => {
       if (!selectedRoom) {
@@ -132,7 +128,8 @@ function BookingScreen({ route }) {
 
     return (
       <ScrollView contentContainerStyle={style.container}>
-        
+        <Text style={style.hotelName}>{hotel.name}</Text>
+        <Text style={style.description}>{description}</Text>
         {availableRooms.map(room => (
           <TouchableOpacity key={room.id} onPress={() => handleRoomSelection(room)}>
 
@@ -150,9 +147,9 @@ function BookingScreen({ route }) {
               />}
               right={(props) =>     
               <Checkbox
-                //status={checked ? 'checked' : 'unchecked'}
-                onPress={() => {
-                  handleRoomSelection(room);
+              status={selectedRoom && selectedRoom.id === room.id ? 'checked' : 'unchecked'}
+              onPress={() => {
+                handleRoomSelection(room);
                 }}
               />}
             /> 
@@ -161,15 +158,16 @@ function BookingScreen({ route }) {
                 subtitle={`Price: $${room.price}`}
               />
               <Card.Content>
-                <Text>Description: {room.description}</Text>
+                <Text>Capacity: {room.capacity}</Text>
+
+                <Text>Description: {room.amenities + ''}</Text>
               </Card.Content>
             </Card>
           </TouchableOpacity>
         ))}
 
 
-        <Text style={style.hotelName}>{hotel.name}</Text>
-        <Text style={style.description}>{hotel.description}</Text>
+
 
         <View style={style.dateContainer}>
         <TouchableOpacity onPress={handleCheckInDateSelection}>
@@ -234,42 +232,75 @@ function BookingScreen({ route }) {
   
   const style = StyleSheet.create({
     container: {
-        flexGrow: 1,
-        padding: 20,
+      flexGrow: 1,
+      padding: 20,
+      backgroundColor: '#f0f0f5', // Light gray background for better contrast
     },
     hotelName: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        marginTop: 20,
+      fontSize: 28,
+      fontWeight: 'bold',
+      color: '#333',
+      marginBottom: 15,
+      marginTop: 20,
+      textAlign: 'center', // Center align the hotel name
     },
     description: {
-        marginBottom: 20,
-    },
-    input: {
-        marginBottom: 20,
-        paddingHorizontal: 10, 
-        backgroundColor: '#fff', 
-        borderRadius: 5, 
-        borderWidth: 1, 
-        borderColor: '#ccc', 
+      fontSize: 16,
+      color: '#666',
+      marginBottom: 20,
+      lineHeight: 24, // Improve readability of longer descriptions
+      textAlign: 'justify', // Justify align the text
     },
     dateContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 20,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 20,
+      paddingHorizontal: 10,
+      backgroundColor: '#ffffff',
+      borderRadius: 8,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 6,
+      elevation: 3,
     },
     dateLabel: {
-        fontSize: 16,
-        fontWeight: 'bold',
+      margin: 20,
+      fontSize: 18,
+      fontWeight: '500',
+      color: '#444',
     },
     dateText: {
-        fontSize: 16,
+      margin: 20,
+      marginTop: -20,
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#0056b3', // A bolder color for emphasis
     },
     cardStyle: {
-      marginBottom: 20, 
+      marginBottom: 20,
+      borderRadius: 8,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 6,
+      elevation: 3,
+      overflow: 'hidden', // Ensures shadows are visible
     },
-  
+    buttonStyle: {
+      backgroundColor: '#0056b3', // A consistent theme color
+      color: '#ffffff',
+      fontSize: 18,
+      paddingVertical: 12,
+      paddingHorizontal: 25,
+      borderRadius: 5,
+      textAlign: 'center',
+      fontWeight: 'bold',
+      overflow: 'hidden', // For border radius to take effect on Android
+      marginTop: 20,
+    },
+
 });
 
   export default BookingScreen;
