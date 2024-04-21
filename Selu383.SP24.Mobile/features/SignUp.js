@@ -72,7 +72,7 @@ export default function SignUp() {
         <View style={styles.container}>
             <Text style={styles.title}>Sign Up for Enstay</Text>
             <TextInput
-                label="Username"
+                label="Username or Email"
                 value={username}
                 onChangeText={text => setUsername(text)}
                 style={styles.input}

@@ -22,7 +22,7 @@ export default function CustomNavigationBar({
   };
 
   const handleAdminPortalPress = () => {
-    navigation.navigate('AdminPortal'); // Navigate to AdminPortal.js
+    navigation.navigate('AdminPortal'); 
     closeMenu();
   };
 
@@ -52,7 +52,7 @@ export default function CustomNavigationBar({
           />
           {userType === 'Admin' ? (
             <Menu.Item
-              onPress={handleAdminPortalPress} // Handle Admin Portal Press
+              onPress={handleAdminPortalPress} 
               title="Admin Portal"
             />
           ) : (
