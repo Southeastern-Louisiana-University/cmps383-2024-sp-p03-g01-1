@@ -123,15 +123,17 @@ public static class SeedHelper
     {
         var rooms = dataContext.Set<Room>();
 
+        // Check if rooms already exist
+        if (await rooms.AnyAsync())
+        {
+            return;
+        }
+
         // Retrieve hotels
         var hotels = await dataContext.Set<Hotel>().ToListAsync();
 
         foreach (var hotel in hotels)
         {
-            // Clear existing rooms for the current hotel
-            var existingRooms = await rooms.Where(r => r.HotelId == hotel.Id).ToListAsync();
-            dataContext.RemoveRange(existingRooms);
-
             // Add new rooms tied to the current hotel
             rooms.AddRange(
                 new List<Room>
@@ -169,6 +171,7 @@ public static class SeedHelper
 
         await dataContext.SaveChangesAsync();
     }
-    
+
+
 
 }
