@@ -4,12 +4,21 @@ import { useNavigation } from '@react-navigation/native';
 import { useAuth } from './AuthContext';
 import { Card, Avatar, IconButton } from 'react-native-paper';
 import seededHotels from './seededHotels';
+import FQNOLA from '../images/FQNOLA.jpg';
+import SLCNOLA from '../images/SLCNOLA.jpg';
+import BatonRouge from '../images/Baton Rouge.jpg';
 
 function DetailsScreen({ route }) {
   const navigation = useNavigation(); 
   const { hotel } = route.params;
 
   const { user } = useAuth();
+
+  const cityImageMap = {
+    "Baton Rouge": BatonRouge,
+    "French Quarter": FQNOLA,
+    "Jackson Square": SLCNOLA
+  };
   
   const hotelDetails = seededHotels.find(item => {
     //console.log("hotel.id:", hotel.id);
@@ -39,7 +48,7 @@ function DetailsScreen({ route }) {
         left={(props) => <Avatar.Icon {...props} icon="office-building-marker-outline" />}
         //right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
       />
-      <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+      <Card.Cover source={cityImageMap[hotel.name]} />
 
       </Card>
 
