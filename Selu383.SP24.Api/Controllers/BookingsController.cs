@@ -11,8 +11,8 @@ namespace Selu383.SP24.Api.Features.Bookings
     {
         private static readonly List<BookingDto> _bookings = new List<BookingDto>
         {
-            new BookingDto { Id = 1, HotelId = 1, CheckInDate = new DateTime(2024, 4, 20), CheckOutDate = new DateTime(2024, 4, 25) },
-            new BookingDto { Id = 2, HotelId = 2, CheckInDate = new DateTime(2024, 5, 1), CheckOutDate = new DateTime(2024, 5, 5) }
+            new BookingDto { Id = 1, HotelId = 1,  RoomId= 1, CheckInDate = new DateTime(2024, 4, 20), CheckOutDate = new DateTime(2024, 4, 25) },
+            new BookingDto { Id = 2, HotelId = 2, RoomId = 2, CheckInDate = new DateTime(2024, 5, 1), CheckOutDate = new DateTime(2024, 5, 5) }
         };
 
         [HttpGet]
