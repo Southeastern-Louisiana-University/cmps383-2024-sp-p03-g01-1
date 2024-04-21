@@ -99,7 +99,7 @@ export default function Login() {
           {/* Display message indicating user is logged in */}
           <table className="login"> 
           <p>{user.userName}, logged in</p>
-            <button onClick={handleLogout}>Logout</button>
+            <button className="btn rounded-pill buttonLogin" onClick={handleLogout}>Logout</button>
           </table>
         </div>
         :
@@ -122,8 +122,8 @@ export default function Login() {
                     <input type="password" name="password" id="password" value={password} placeholder="Enter password" onChange={handlePasswordChange} />
                     <br />
                     <div className="loginpageButton">
-                      <button className="buttonLogin" type="submit">Log In</button>
-                      <button className="buttonSignUp" onClick={() => navigate('/register')}>Sign Up</button>
+                      <button className="btn rounded-pill buttonLogin" type="submit">Log In</button>
+                      <button className="btn rounded-pill buttonSignUp" onClick={() => navigate('/register')}>Sign Up</button>
                     </div>
                   </form>
                 </td>

@@ -17,8 +17,7 @@ public class UsersController : ControllerBase
         this.userManager = userManager;
     }
 
-    [HttpPost]
-    [Authorize(Roles = RoleNames.Admin)]
+    [HttpPost ("/api/createusers")]
     public async Task<ActionResult<UserDto>> Create(CreateUserDto dto)
     {
         using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
@@ -35,11 +34,7 @@ public class UsersController : ControllerBase
 
         try
         {
-            var roleResult = await userManager.AddToRolesAsync(newUser, dto.Roles);
-            if (!roleResult.Succeeded)
-            {
-                return BadRequest();
-            }
+            
         }
         catch (InvalidOperationException e) when(e.Message.StartsWith("Role") && e.Message.EndsWith("does not exist."))
         {
@@ -51,7 +46,6 @@ public class UsersController : ControllerBase
         return Ok(new UserDto
         {
             Id = newUser.Id,
-            Roles = dto.Roles,
             UserName = newUser.UserName,
         });
     }
