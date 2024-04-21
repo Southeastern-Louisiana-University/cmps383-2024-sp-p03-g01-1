@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Selu383.SP24.Api.Data;
 
@@ -11,9 +12,11 @@ using Selu383.SP24.Api.Data;
 namespace Selu383.SP24.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240419201042_TestingRoomIdEdit")]
+    partial class TestingRoomIdEdit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,12 +251,6 @@ namespace Selu383.SP24.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HotelId");
-
-                    b.HasIndex("RoomId");
-
-                    b.HasIndex("UserId");
-
                     b.ToTable("Bookings");
                 });
 
@@ -270,6 +267,7 @@ namespace Selu383.SP24.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ManagerId")
@@ -281,9 +279,11 @@ namespace Selu383.SP24.Api.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("PostalCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -302,6 +302,7 @@ namespace Selu383.SP24.Api.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Amenities")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Available")
@@ -317,6 +318,7 @@ namespace Selu383.SP24.Api.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("Type")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -381,33 +383,6 @@ namespace Selu383.SP24.Api.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Selu383.SP24.Api.Features.Bookings.Booking", b =>
-                {
-                    b.HasOne("Selu383.SP24.Api.Features.Hotels.Hotel", "Hotel")
-                        .WithMany()
-                        .HasForeignKey("HotelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Selu383.SP24.Api.Features.Rooms.Room", "Room")
-                        .WithMany("Bookings")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Selu383.SP24.Api.Features.Authorization.User", "User")
-                        .WithMany("Bookings")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Hotel");
-
-                    b.Navigation("Room");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Selu383.SP24.Api.Features.Hotels.Hotel", b =>
                 {
                     b.HasOne("Selu383.SP24.Api.Features.Authorization.User", "Manager")
@@ -435,8 +410,6 @@ namespace Selu383.SP24.Api.Migrations
 
             modelBuilder.Entity("Selu383.SP24.Api.Features.Authorization.User", b =>
                 {
-                    b.Navigation("Bookings");
-
                     b.Navigation("Hotels");
 
                     b.Navigation("Roles");
@@ -445,11 +418,6 @@ namespace Selu383.SP24.Api.Migrations
             modelBuilder.Entity("Selu383.SP24.Api.Features.Hotels.Hotel", b =>
                 {
                     b.Navigation("Rooms");
-                });
-
-            modelBuilder.Entity("Selu383.SP24.Api.Features.Rooms.Room", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

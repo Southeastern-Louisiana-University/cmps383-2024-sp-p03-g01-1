@@ -1,7 +1,6 @@
 @import '@fortawesome/fontawesome-free/css/all.css';
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -42,8 +41,13 @@ body {
 }
 
 .image-custom {
-  width: 100%;
+  width: 100px;
   height: 100px;
+  padding: 0;
+}
+
+.image-shift {
+  padding: 0;
 }
 
 .navbar {
@@ -51,10 +55,16 @@ body {
 }
 
 .nav-p-custom {
-  font-size: 50px;
-  padding: 5px 0 0 0;
+  font-size: 60px;
+  padding-right: 30px;
+  padding-left: 0px;
   height: 100px;
   color: #00171F;
+}
+
+.nav-bar-custom {
+  margin-right: 10px;
+  margin-left: auto;
 }
 
 .nav-col-link-custom{
@@ -83,29 +93,6 @@ body {
   margin: 0;
 }
 
-.icon-col-custom:not(:last-child){
-  margin: 0px;
-}
-
-.icon-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.icon-button:hover {
-  background-color: #22d3ee;
-}
-
-.icon-custom {
-  font-size: 15px;
-  color: #003459;
-}
-
-.icon-rotate {
-  transform: rotate(270deg);
-}
-
 .nav-btn-col-custom {
   flex: 1;
   text-align: center;
@@ -117,9 +104,8 @@ body {
 .nav-btn-custom {
   background-color: #003459;
   color: #fff;
-  margin: 0;
-  padding: 0;
-  width: 110px;
+  margin: auto;
+  width: 130px;
   height: 40px;
   font-size: 16px;  
 }

@@ -1,0 +1,57 @@
+
+.register {
+  max-width: 22%;
+  margin: 50px auto;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+.registerTHead th {
+  font-size: 24px;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.registerTBody td {
+  padding: 10px;
+}
+
+.register h2 {
+  text-align: center;
+}
+
+.register label {
+  display: block;
+  font-weight: bold;
+}
+
+.register input[type="text"],
+.register input[type="password"] {
+  width: calc(100% - 20px);
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.register .password-mismatch {
+  border-color: red;
+}
+
+.register button {
+  background-color: #003459;
+  color: #fff;
+  margin: auto;
+  width: 130px;
+  height: 40px;
+  font-size: 16px;
+}
+
+  .register button:hover {
+    background-color: #f2cc8F;
+  }
+
+.text-danger {
+  color: red;
+}

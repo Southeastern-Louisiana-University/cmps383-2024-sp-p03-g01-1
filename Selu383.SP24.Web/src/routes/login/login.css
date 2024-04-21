@@ -1,0 +1,64 @@
+/* General styles */
+
+.login {
+  max-width: 22%;
+  margin: 50px auto;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.loginTHead th {
+  font-size: 24px;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.loginTBody td {
+  padding: 10px;
+}
+
+.login label {
+  display: block;
+  font-weight: bold;
+}
+
+.login input[type="text"],
+.login input[type="password"] {
+  width: calc(100% - 20px);
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.loginpageButton {
+  text-align: center;
+}
+
+.buttonLogin,
+.buttonSignUp {
+  background-color: #003459;
+  color: #fff; 
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+  .buttonLogin:hover,
+  .buttonSignUp:hover {
+    background-color: #f2cc8F;
+  }
+
+.logged-in-user {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+  .logged-in-user span {
+      font-weight: bold;
+  }

@@ -32,6 +32,9 @@
         "projectId": "e59fd472-1499-4f14-973d-2267ec51951a"
       }
     },
-    "owner": "bradford"
+    "owner": "bradford",
+    "plugins": [
+      "expo-router"
+    ]
   }
 }

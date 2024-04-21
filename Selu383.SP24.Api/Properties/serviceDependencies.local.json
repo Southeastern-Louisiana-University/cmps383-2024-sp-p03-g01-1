@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "secrets1": {
-      "type": "secrets.user"
+      "type": "secrets.user",
+      "dynamicId": null
     },
     "mssql1": {
       "serviceConnectorResourceId": "",

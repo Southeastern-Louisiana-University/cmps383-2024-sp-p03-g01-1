@@ -7,6 +7,7 @@ using Selu383.SP24.Api.Features.Authorization;
 using Selu383.SP24.Api.Features.Bookings;
 using Selu383.SP24.Api.Features.Hotels;
 using System.Security.Claims;
+using Selu383.SP24.Api.Features.Rooms;
 
 namespace Selu383.SP24.Api.Controllers;
 
@@ -56,9 +57,9 @@ public class HotelsController : ControllerBase
                            {
                                Id = b.Id,
                                HotelId = b.HotelId,
+                               RoomId = b.RoomId,
                                CheckInDate = b.CheckInDate,
                                CheckOutDate = b.CheckOutDate
-                               // Include more properties if needed
                            })
                            .ToList();
 
@@ -78,11 +79,11 @@ public class HotelsController : ControllerBase
         {
             Id = booking.Id,
             HotelId = booking.HotelId,
+            RoomId = booking.RoomId,
             CheckInDate = booking.CheckInDate,
             CheckOutDate = booking.CheckOutDate
-            // Include more properties if needed
         };
-
+        Console.WriteLine($"Received roomId: {booking.RoomId}");
         return Ok(bookingDto);
     }
 
@@ -118,38 +119,51 @@ public class HotelsController : ControllerBase
     [Authorize]
     public async Task<ActionResult<BookingDto>> CreateBooking(int hotelId, BookingDto dto)
     {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); // Get the ID of the logged-in user
-        var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); // Retrieve the user entity
-
-        if (user == null)
+        if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))
         {
-            return Unauthorized("User not found");
+            var user = await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId); // Retrieve the user entity
+
+            if (user == null)
+            {
+                return Unauthorized("User not found");
+            }
+
+            var hotel = hotels.FirstOrDefault(x => x.Id == hotelId);
+            if (hotel == null)
+            {
+                return NotFound("Hotel not found");
+            }
+        //Console.WriteLine($"HotelId: {hotelId}, Received RoomId: {dto.RoomId}");
+
+        var room = await dataContext.Room.FirstOrDefaultAsync(r => r.Id == dto.RoomId && r.HotelId == hotelId);
+        if (room == null)
+        {
+            return NotFound("Room not found in the hotel");
         }
-        //if (IsInvalidBooking(dto))
-        //{
-        //    return BadRequest();
-        //}
-
-        var hotel = hotels.FirstOrDefault(x => x.Id == hotelId);
-        if (hotel == null)
+        if (dto.RoomId == 0)
         {
-            return NotFound("Hotel not found");
+            return BadRequest("Room ID cannot be zero.");
         }
+            var booking = new Booking
+            {
+                HotelId = hotelId,
+                UserId = userId, 
+                RoomId = dto.RoomId,
+                CheckInDate = dto.CheckInDate,
+                CheckOutDate = dto.CheckOutDate
+                };
+        //Console.WriteLine($"Creating booking: {booking}");
 
-        var booking = new Booking
+            dataContext.Add(booking);
+            dataContext.SaveChanges();
+
+            dto.Id = booking.Id;
+            return CreatedAtAction(nameof(GetBooking), new { hotelId, bookingId = dto.Id }, dto);
+        }
+        else
         {
-            HotelId = hotelId,
-            UserId = userId, // Associate the booking with the logged-in user
-
-            CheckInDate = dto.CheckInDate,
-            CheckOutDate = dto.CheckOutDate
-            // Add more properties as needed
-        };
-        dataContext.Add(booking);
-        dataContext.SaveChanges();
-
-        dto.Id = booking.Id;
-        return CreatedAtAction(nameof(GetBooking), new { hotelId, bookingId = dto.Id }, dto);
+            return BadRequest("Invalid user identifier");
+        }
     }
 
 
@@ -192,21 +206,14 @@ public class HotelsController : ControllerBase
     [Authorize(Roles = RoleNames.Admin)]
     public ActionResult<BookingDto> UpdateBooking(int hotelId, int bookingId, BookingDto dto)
     {
-        //if (IsInvalidBooking(dto))
-        //{
-        //    return BadRequest();
-        //}
-
         var booking = dataContext.Set<Booking>().FirstOrDefault(b => b.Id == bookingId && b.HotelId == hotelId);
         if (booking == null)
         {
             return NotFound("Booking not found");
         }
 
-        // Update booking properties
         booking.CheckInDate = dto.CheckInDate;
         booking.CheckOutDate = dto.CheckOutDate;
-        // Update more properties if needed
 
         dataContext.SaveChanges();
 
@@ -263,7 +270,7 @@ public class HotelsController : ControllerBase
 
         if (!User.IsInRole(RoleNames.Admin))
         {
-            // only admins can change manager ids anyway
+            // only admins can change manager ids 
             return false;
         }
         return !dataContext.Set<User>().Any(x => x.Id == managerId);
