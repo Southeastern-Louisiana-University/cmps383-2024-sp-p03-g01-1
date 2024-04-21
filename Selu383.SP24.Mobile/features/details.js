@@ -37,7 +37,9 @@ function DetailsScreen({ route }) {
       <Card.Title
         titleStyle={style.name}
         title={hotel.name}
-        left={(props) => <Avatar.Icon {...props} icon="office-building-marker-outline" />}
+        left={(props) => <Avatar.Icon {...props}
+        style={style.avatarStyle}
+        icon="office-building-marker-outline" />}
       />
       <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
 
@@ -81,7 +83,9 @@ const style = StyleSheet.create({
     textAlign: 'center',
     color: '#666',
   },
-
+  avatarStyle: {
+    backgroundColor: '#22d3ee', // Change the background color to blue
+  },
 });
 
 export default DetailsScreen;
