@@ -121,54 +121,52 @@ public static class SeedHelper
     {
         var rooms = dataContext.Set<Room>();
 
-        if (await rooms.AnyAsync())
-        {
-            return;
-        }
-
         // Retrieve hotel IDs
         var hotelIds = await dataContext.Set<Hotel>().Select(h => h.Id).ToListAsync();
 
         // Add rooms to each hotel
         foreach (var hotelId in hotelIds)
         {
+            // Clear existing rooms for the current hotel
+            var existingRooms = await rooms.Where(r => r.HotelId == hotelId).ToListAsync();
+            dataContext.RemoveRange(existingRooms);
+
+            // Add new rooms
             rooms.AddRange(
                 new List<Room>
                 {
-                    new Room
-                    {
-                        Type = "Single",
-                        Capacity = 1,
-                        Amenities = new List<string> { "Stuff" },
-                        Price = 100.00m,
-                        Available = true,
-                        HotelId = hotelId
-                    },
-                    new Room
-                    {
-                        Type = "Double",
-                        Capacity = 2,
-                        Amenities = new List<string> { "Stuff" },
-                        Price = 150.00m,
-                        Available = true,
-                        HotelId = hotelId
-                    },
-                    new Room
-                    {
-                        Type = "Suite",
-                        Capacity = 4,
-                        Amenities =new List<string> { "Stuff" },
-                        Price = 250.00m,
-                        Available = true,
-                        HotelId = hotelId
-                    }
+                new Room
+                {
+                    Type = "Single",
+                    Capacity = 1,
+                    Amenities = new List<string> { "Complimentary Wi-fi", "Coffee Maker", "Work Desk" },
+                    Price = 100.00m,
+                    Available = true,
+                    HotelId = hotelId
+                },
+                new Room
+                {
+                    Type = "Double",
+                    Capacity = 2,
+                    Amenities = new List<string> { "Complimentary Breakfast", "Access to Fitness Center", "In-room Safe" },
+                    Price = 150.00m,
+                    Available = true,
+                    HotelId = hotelId
+                },
+                new Room
+                {
+                    Type = "Suite",
+                    Capacity = 4,
+                    Amenities = new List<string> { "Private Balcony", "Mini Refrigerator", "Jacuzzi Tub" },
+                    Price = 250.00m,
+                    Available = true,
+                    HotelId = hotelId
+                }
                 }
             );
         }
 
         await dataContext.SaveChangesAsync();
     }
+
 }
-
-    
-
