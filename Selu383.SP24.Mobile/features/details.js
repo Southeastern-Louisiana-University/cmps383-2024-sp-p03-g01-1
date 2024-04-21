@@ -64,6 +64,7 @@ const style = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 10,
     elevation: 4,
+    
   },
   textContainer: {
     alignItems: 'center',

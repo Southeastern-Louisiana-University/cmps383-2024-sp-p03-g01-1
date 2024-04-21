@@ -139,6 +139,8 @@ function BookingScreen({ route }) {
               left={(props) =>     
                 <Avatar.Icon
                   {...props}
+                  style={style.avatarStyle}
+
                   icon={
                   selectedRoom === room
                     ? `bed`
@@ -300,7 +302,9 @@ function BookingScreen({ route }) {
       overflow: 'hidden', // For border radius to take effect on Android
       marginTop: 20,
     },
-
+    avatarStyle: {
+      backgroundColor: '#22d3ee', // Change the background color to blue
+    },
 });
 
   export default BookingScreen;
