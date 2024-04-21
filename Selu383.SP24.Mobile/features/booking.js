@@ -149,10 +149,12 @@ function BookingScreen({ route }) {
               />}
               right={(props) =>     
               <Checkbox
+              color="#22d3ee"
               status={selectedRoom && selectedRoom.id === room.id ? 'checked' : 'unchecked'}
               onPress={() => {
                 handleRoomSelection(room);
                 }}
+                
               />}
             /> 
               <Card.Title
