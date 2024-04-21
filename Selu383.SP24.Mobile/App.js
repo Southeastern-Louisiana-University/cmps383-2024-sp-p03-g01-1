@@ -121,10 +121,10 @@ function HomeScreen() {
         ) : (
           <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
             {hotels.map((hotel) => (
-  <TouchableOpacity
-    key={hotel.id}
-    onPress={() => handleHotelPress(hotel)}
-  >
+          <TouchableOpacity
+            key={hotel.id}
+            onPress={() => handleHotelPress(hotel)}
+          >
     <Card elevation={5} style={[styles.card, { width: Dimensions.get('window').width - 20 }]}>
       
       <Card.Cover source={cityImageMap[hotel.name]} />
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    marginBottom: 10,
+    marginBottom: 20,
     width: '90%',
     maxWidth: 400,
     backgroundColor: '#a7ccd1',
