@@ -17,6 +17,7 @@ import { AuthProvider, useAuth } from './features/AuthContext';
 import AdminPortalPage from './features/AdminPortal';
 import AdminBookingInfo from './features/AdminBookingInfo';
 import AdminAvailableRooms from './features/AdminAvailableRooms';
+import SignUp from './features/SignUp';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -202,6 +203,7 @@ const styles = StyleSheet.create({
                 <Stack.Screen name="AdminPortal" component={AdminPortalPage} />
                 <Stack.Screen name="BookingInformation" component={AdminBookingInfo} />
                 <Stack.Screen name="AvailableRooms" component={AdminAvailableRooms} />
+                <Stack.Screen name="SignUp" component={SignUp} />
               </Stack.Navigator>
             </NavigationContainer>
           </PaperProvider>
