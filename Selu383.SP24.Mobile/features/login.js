@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { useAuth } from './AuthContext';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 
 export default function LoginScreen() {
     
@@ -30,7 +30,6 @@ export default function LoginScreen() {
             Alert.alert('Login Successful', data.message);
             navigation.navigate('Home'); 
 
-            
           } else {
             // Login failed, display error message
             Alert.alert('Login Failed', data.message);
@@ -42,7 +41,7 @@ export default function LoginScreen() {
 
     return (
         <View style={style.container}>
-          <Text style={style.title}>Login</Text>
+          <Text style={style.title}>Login to Enstay</Text>
           <TextInput
             label="Username or Email"
             value={username}
@@ -56,9 +55,12 @@ export default function LoginScreen() {
             secureTextEntry // Hide the entered text
             style={style.input}
           />
-          <Button mode="contained" onPress={handleLogin} style={style.button}>
+          <Button mode="contained" onPress={handleLogin} style={[style.button, { backgroundColor: '#22D3EE' }]}>
             Login
           </Button>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+            <Text style={style.signUpLink}>Don't have an account? <Text style={{ fontWeight: 'bold', textDecorationLine: 'underline', color: '#000' }}>Sign up instead</Text></Text>
+          </TouchableOpacity>
         </View>
     );
 }
@@ -83,4 +85,8 @@ const style = StyleSheet.create({
       width: '100%',
       marginTop: 10,
     },
-  });
+    signUpLink: {
+      marginTop: 10,
+      color: '#000',
+    },
+});
