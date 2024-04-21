@@ -30,7 +30,7 @@ function Register() {
     }
 
     try {
-      const response = await fetch('/api/users/signup', {
+      const response = await fetch('/api/createusers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -104,7 +104,7 @@ function Register() {
                   {passwordMismatch && <p className="text-danger">Your passwords do not match.</p>}
                 </div>
                 <div>
-                  <button className="registerButton" type="submit">Register</button>
+                  <button className="btn rounded-pill registerButton" type="submit">Register</button>
                 </div>
               </form>
             </td>
