@@ -92,7 +92,7 @@ function BookingScreen({ route }) {
         //console.log('Hotel ID:', hotel.id);
         const bookingData = {
           hotelId: hotel.id,
-          roomId: selectedRoomId,
+          roomId: selectedRoom.id,
           userId: user.id,
           checkInDate: checkInDate.toISOString(), 
           checkOutDate: checkOutDate.toISOString(),
