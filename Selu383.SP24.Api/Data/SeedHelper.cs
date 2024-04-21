@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Selu383.SP24.Api.Features.Authorization;
+using Selu383.SP24.Api.Features.Bookings;
 using Selu383.SP24.Api.Features.Hotels;
 using Selu383.SP24.Api.Features.Rooms;
 
@@ -16,9 +17,9 @@ public static class SeedHelper
 
         await AddRoles(serviceProvider);
         await AddUsers(serviceProvider);
-
         await AddHotels(dataContext);
         await AddRooms(dataContext);
+        
     }
 
     private static async Task AddUsers(IServiceProvider serviceProvider)
@@ -121,17 +122,18 @@ public static class SeedHelper
     {
         var rooms = dataContext.Set<Room>();
 
-        // Retrieve hotel IDs
-        var hotelIds = await dataContext.Set<Hotel>().Select(h => h.Id).ToListAsync();
-
-        // Add rooms to each hotel
-        foreach (var hotelId in hotelIds)
+        // Check if rooms already exist
+        if (await rooms.AnyAsync())
         {
-            // Clear existing rooms for the current hotel
-            var existingRooms = await rooms.Where(r => r.HotelId == hotelId).ToListAsync();
-            dataContext.RemoveRange(existingRooms);
+            return;
+        }
 
-            // Add new rooms
+        // Retrieve hotels
+        var hotels = await dataContext.Set<Hotel>().ToListAsync();
+
+        foreach (var hotel in hotels)
+        {
+            // Add new rooms tied to the current hotel
             rooms.AddRange(
                 new List<Room>
                 {
@@ -142,7 +144,7 @@ public static class SeedHelper
                     Amenities = new List<string> { "Complimentary Wi-fi", "Coffee Maker", "Work Desk" },
                     Price = 100.00m,
                     Available = true,
-                    HotelId = hotelId
+                    HotelId = hotel.Id
                 },
                 new Room
                 {
@@ -151,7 +153,7 @@ public static class SeedHelper
                     Amenities = new List<string> { "Complimentary Breakfast", "Access to Fitness Center", "In-room Safe" },
                     Price = 150.00m,
                     Available = true,
-                    HotelId = hotelId
+                    HotelId = hotel.Id
                 },
                 new Room
                 {
@@ -160,7 +162,7 @@ public static class SeedHelper
                     Amenities = new List<string> { "Private Balcony", "Mini Refrigerator", "Jacuzzi Tub" },
                     Price = 250.00m,
                     Available = true,
-                    HotelId = hotelId
+                    HotelId = hotel.Id
                 }
                 }
             );
@@ -168,5 +170,7 @@ public static class SeedHelper
 
         await dataContext.SaveChangesAsync();
     }
+
+
 
 }
