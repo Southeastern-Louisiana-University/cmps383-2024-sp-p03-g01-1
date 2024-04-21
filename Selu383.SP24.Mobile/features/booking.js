@@ -141,8 +141,8 @@ function BookingScreen({ route }) {
                   {...props}
                   icon={
                   selectedRoom === room
-                    ? `bed-${room.type.toLowerCase()}`
-                    : `bed-${room.type.toLowerCase()}-outline`
+                    ? `bed`
+                    : `bed-outline`
                 }
               />}
               right={(props) =>     
