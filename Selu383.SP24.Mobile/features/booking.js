@@ -160,7 +160,7 @@ function BookingScreen({ route }) {
               <Card.Content>
                 <Text>Capacity: {room.capacity}</Text>
 
-                <Text>Description: {room.amenities + ''}</Text>
+                <Text>Amenities: {room.amenities + ''}</Text>
               </Card.Content>
             </Card>
           </TouchableOpacity>

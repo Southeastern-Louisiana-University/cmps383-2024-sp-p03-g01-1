@@ -35,6 +35,7 @@ function DetailsScreen({ route }) {
 
       <Card style={style.card}>
       <Card.Title
+        titleStyle={style.name}
         title={hotel.name}
         left={(props) => <Avatar.Icon {...props} icon="office-building-marker-outline" />}
       />
@@ -43,7 +44,7 @@ function DetailsScreen({ route }) {
 
       <View style={style.textContainer}>
 
-      <Text style={style.name}>{hotel.name}</Text>
+      {/* <Text style={style.name}>{hotel.name}</Text> */}
       <Text style={style.description}>{description}</Text>
       </View>
       </Card>
@@ -71,8 +72,8 @@ const style = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
+    margin: 10,
+    textAlign: 'left',
   },
   description: {
     fontSize: 16,
