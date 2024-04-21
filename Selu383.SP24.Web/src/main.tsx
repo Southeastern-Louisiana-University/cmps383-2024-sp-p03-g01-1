@@ -10,6 +10,7 @@ import Home from './Components/Home.tsx';
 import Hotels from './routes/hotel/index.tsx';
 import Login from './routes/login/index.tsx';
 import Register from './routes/signup/index.tsx';
+import Contact from './routes/contact/index.tsx';
 
 const router = createBrowserRouter([
 
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
           {
             path: "/register",
             element: <Register />
+          },
+          {
+            path: "/contact",
+            element: <Contact />
           },
 
         ],

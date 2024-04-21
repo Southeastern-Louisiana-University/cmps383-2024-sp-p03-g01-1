@@ -99,7 +99,7 @@ export default function Login() {
           {/* Display message indicating user is logged in */}
           <table className="login"> 
           <p>{user.userName}, logged in</p>
-            <button onClick={handleLogout}>Logout</button>
+            <button className="btn rounded-pill buttonLogin" onClick={handleLogout}>Logout</button>
           </table>
         </div>
         :
