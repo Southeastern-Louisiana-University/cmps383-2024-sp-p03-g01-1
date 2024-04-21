@@ -47,7 +47,9 @@ function DetailsScreen({ route }) {
           <Card style={styles.card}>
             <Card.Title
               title={hotel.name}
-              left={(props) => <Avatar.Icon {...props} icon="office-building-marker-outline" />}
+              left={(props) => <Avatar.Icon {...props} 
+              style={styles.avatarStyle}
+              icon="office-building-marker-outline" />}
               titleStyle={styles.cardTitle} 
             />
             <Card.Cover source={cityImageMap[hotel.name]} />
@@ -161,6 +163,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#000', 
     textAlign: 'center',
+  },
+  avatarStyle: {
+    backgroundColor: '#22d3ee', // Change the background color to blue
   },
 });
 
