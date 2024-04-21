@@ -4,11 +4,11 @@
     "slug": "Selu383-SP24-Mobile-p03-g01-1",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo_upscaled.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./images/logo2.png",
+      "resizeMode": "Contain",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
