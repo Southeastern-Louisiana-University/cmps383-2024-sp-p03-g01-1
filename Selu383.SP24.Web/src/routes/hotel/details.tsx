@@ -72,17 +72,17 @@ export default function HotelDetails() {
                     <p style={{ color: 'white' }}>{hotel.city}, {hotel.state}, {hotel.postalCode}</p>
                     <div className="row">
                         <div className="image-container">
-                            <img src={cityImageMap[hotel.city]} alt="Big Image" />
+                            <img src={cityImageMap[hotel.name]} alt="Big Image" />
                         </div>
                         <div className="roomcards-container">
                             {rooms.slice(0, 3).map((room, index) => (
                                 <div className="card" key={index}>
-                                    <h2>Room {index + 1}</h2>
-                                    <h3>Type: {room.type}</h3>
-                                    <h3>Capacity: {room.capacity}</h3>
-                                    <h3>Amenities: {room.amenities.join(', ')}</h3>
-                                    <h3>Price: {room.price}</h3>
-                                    <h3>Available: {room.available ? 'Yes' : 'No'}</h3>
+                                    <h3>Room {index + 1}</h3>
+                                    <h5>Type: {room.type}</h5>
+                                    <h5>Capacity: {room.capacity}</h5>
+                                    <h5>Amenities: {room.amenities.join(', ')}</h5>
+                                    <h5>Price: {room.price}</h5>
+                                    <h5>Available: {room.available ? 'Yes' : 'No'}</h5>
                                 </div>
                             ))}
 
