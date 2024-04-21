@@ -12,6 +12,7 @@ import Login from './routes/login/index.tsx';
 import Register from './routes/signup/index.tsx';
 import Contact from './routes/contact/index.tsx';
 import Booking from './routes/booking/index.tsx';
+import About from './routes/about/index.tsx';
 
 const router = createBrowserRouter([
 
@@ -53,7 +54,10 @@ const router = createBrowserRouter([
                 path: "/booking",
                 element: <Booking />
             },
-
+            {
+                path: "/about",
+                element: <About />
+            },  
         ],
     },
 ]);
