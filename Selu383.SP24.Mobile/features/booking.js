@@ -140,7 +140,6 @@ function BookingScreen({ route }) {
                 <Avatar.Icon
                   {...props}
                   style={style.avatarStyle}
-
                   icon={
                   selectedRoom === room
                     ? `bed`
