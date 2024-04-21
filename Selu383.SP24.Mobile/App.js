@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions, Alert, Image } from 'react-native'; // Import Image component
-import { Button, Card, Title, Paragraph, Provider as PaperProvider } from 'react-native-paper';
+import { Button, Card, Title, Avatar, Paragraph, Provider as PaperProvider } from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CustomNavigationBar from './features/CustomNavigationBar';
 import axios from 'axios';
@@ -96,9 +96,21 @@ function HomeScreen() {
   return (
     <View style={styles.container}>
       <Header />
-      <Text style={{ fontSize: 24, marginBottom: 10 }}>
-        Welcome, {user ? `${user.userName}` : 'please sign in'}!
-      </Text>
+      <View style={styles.welcomeContainer}>
+      {user ? (
+        <View style={styles.userGreeting}>
+          <Avatar.Icon size={48} icon="account-circle" style={styles.avatar} />
+          <Title style={styles.welcomeText}>
+            Welcome, {user.userName}!
+          </Title>
+        </View>
+      ) : (
+        <Title>
+          Welcome, please sign in!
+        </Title>
+      )}
+    </View>
+
       <View style={styles.quickBookContainer}>
         <Text style={styles.title}>Where can we take you?</Text>
         {error ? (
@@ -175,6 +187,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: '90%',
     maxWidth: 400,
+    backgroundColor: '#a7ccd1',
   },
   errorContainer: {
     alignItems: 'center',
@@ -184,6 +197,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: 'red',
   },
+    welcomeContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginVertical: 20,
+      flexDirection: 'row',
+    },
+    avatar: {
+      backgroundColor: '#22d3ee',
+    },
+    userGreeting: {
+      flexDirection: 'row',
+      alignItems: 'center',  // This ensures vertical alignment of the items in the row.
+    },
+    welcomeText: {
+      marginLeft: 10,
+    },
 });
 
 const Stack = createStackNavigator();

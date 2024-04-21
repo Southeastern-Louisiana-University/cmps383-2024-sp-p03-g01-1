@@ -47,8 +47,10 @@ function DetailsScreen({ route }) {
           <Card style={styles.card}>
             <Card.Title
               title={hotel.name}
-              left={(props) => <Avatar.Icon {...props} icon="office-building-marker-outline" />}
-              titleStyle={styles.cardTitle} // Added titleStyle to customize title text color
+              left={(props) => <Avatar.Icon {...props} 
+              style={styles.avatarStyle}
+              icon="office-building-marker-outline" />}
+              titleStyle={styles.cardTitle} 
             />
             <Card.Cover source={cityImageMap[hotel.name]} />
           </Card>
@@ -76,7 +78,6 @@ function DetailsScreen({ route }) {
             <Image source={HistoricalLandmarkIcon} style={styles.activityIcon} />
             <Text style={styles.activityCaption}>Visit historical landmarks</Text>
           </View>
-          {/* Add more activities as needed */}
         </ScrollView>
       </View>
     </View>
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: '#EAEBED', // Semi-transparent black overlay
+    backgroundColor: '#EAEBED', 
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -104,10 +105,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 4,
     width: '100%',
-    backgroundColor: '#fff', // White card background color
+    backgroundColor: '#fff', 
   },
   cardTitle: {
-    color: '#000', // Black title text color
+    color: '#000', 
   },
   textContainer: {
     alignItems: 'center',
@@ -118,33 +119,33 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
-    color: '#000', // White text color
+    color: '#000', 
   },
   description: {
     fontSize: 18,
     textAlign: 'center',
-    color: '#000', // White text color
+    color: '#000', 
     paddingHorizontal: 20,
   },
   activitiesContainer: {
     marginTop: 20,
     paddingHorizontal: 20,
-    marginBottom: 20, // Add margin bottom for separation
+    marginBottom: 20, 
   },
   activitiesTitle: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#000', // White text color
+    color: '#000', 
   },
   activityItem: {
-    marginRight: 15, // Adjust spacing between items
+    marginRight: 15, 
     alignItems: 'center',
-    paddingVertical: 10, // Increase padding for better visibility
-    paddingHorizontal: 20, // Increase padding for better visibility
-    borderRadius: 15, // Add border radius for better appearance
-    backgroundColor: '#EAEBED', // Light blue background color
-    shadowColor: '#000', // Shadow color
+    paddingVertical: 10, 
+    paddingHorizontal: 20, 
+    borderRadius: 15, 
+    backgroundColor: '#EAEBED', 
+    shadowColor: '#000', 
     shadowOffset: {
       width: 0,
       height: 2,
@@ -154,14 +155,17 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   activityIcon: {
-    width: 48, // Increase width
-    height: 48, // Increase height
-    marginBottom: 10, // Add margin bottom for spacing
+    width: 48, 
+    height: 48, 
+    marginBottom: 10, 
   },
   activityCaption: {
     fontSize: 16,
-    color: '#000', // Black text color
+    color: '#000', 
     textAlign: 'center',
+  },
+  avatarStyle: {
+    backgroundColor: '#22d3ee', // Change the background color to blue
   },
 });
 

@@ -1,0 +1,17 @@
+
+.about-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    margin: 0;
+}
+
+
+.about-card-body {
+    background-color: #E07A5F;
+    width: 100%;
+    margin: 20px;
+    padding: 0;
+}
