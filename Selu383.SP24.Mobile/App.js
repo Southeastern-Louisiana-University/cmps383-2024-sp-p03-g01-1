@@ -102,7 +102,7 @@ function HomeScreen() {
         {error ? (
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>{error}</Text>
-            <Button onPress={handleRetry} color="#22D3EE">Retry</Button>
+            <Button onPress={handleRetry} color="#22d3ee">Retry</Button>
           </View>
         ) : (
           <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -114,7 +114,7 @@ function HomeScreen() {
                 <Card elevation={5} style={[styles.card, { width: Dimensions.get('window').width - 20 }]}>
                   <Card.Cover source={cityImageMap[hotel.city]} />
                   <Card.Content>
-                    <Title>{hotel.name}</Title>
+                  <Title style={styles.cardTitle}>{hotel.name}</Title>
                     <Paragraph>{hotel.description}</Paragraph>
                   </Card.Content>
                 </Card>
@@ -144,12 +144,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000',
     marginBottom: 10,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 20,
+    
   },
   button: {
     marginTop: 10,
@@ -172,6 +174,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       width: '90%',
       maxWidth: 400,
+      backgroundColor: '#a7ccd1'
     },
     errorContainer: {
       alignItems: 'center',
@@ -180,6 +183,10 @@ const styles = StyleSheet.create({
     errorText: {
       marginBottom: 10,
       color: 'red',
+    },
+    cardTitle: {
+      fontSize: 24,  
+      textAlign: 'center', 
     },
   });
   

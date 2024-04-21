@@ -35,19 +35,22 @@ function DetailsScreen({ route }) {
 
       <Card style={style.card}>
       <Card.Title
+        titleStyle={style.name}
         title={hotel.name}
-        left={(props) => <Avatar.Icon {...props} icon="office-building-marker-outline" />}
-        //right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
+        left={(props) => <Avatar.Icon {...props}
+        style={style.avatarStyle}
+        icon="office-building-marker-outline" />}
       />
       <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
 
-      </Card>
 
       <View style={style.textContainer}>
 
-      <Text style={style.name}>{hotel.name}</Text>
+      {/* <Text style={style.name}>{hotel.name}</Text> */}
       <Text style={style.description}>{description}</Text>
       </View>
+      </Card>
+
       <Button title="Book Now" onPress={handleBookNow} />
 
 
@@ -58,15 +61,12 @@ function DetailsScreen({ route }) {
 const style = StyleSheet.create({
   container: {
     margin: 20,
-    // flex: 1,
-    // padding: 20,
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   card: {
     marginBottom: 20,
     borderRadius: 10,
     elevation: 4,
+    
   },
   textContainer: {
     alignItems: 'center',
@@ -75,23 +75,17 @@ const style = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
+    margin: 10,
+    textAlign: 'left',
   },
   description: {
     fontSize: 16,
     textAlign: 'center',
     color: '#666',
   },
-  // cover: {
-  //   height: 200, // Adjust the height as needed
-  //   resizeMode: 'cover', // Ensure the image covers the entire area
-  // },
-  // image: {
-  //   width: 200, // Adjust as needed
-  //   height: 200, // Adjust as needed
-  //   resizeMode: 'cover',
-  // },
+  avatarStyle: {
+    backgroundColor: '#22d3ee', // Change the background color to blue
+  },
 });
 
 export default DetailsScreen;
