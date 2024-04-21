@@ -21,11 +21,11 @@ function DetailsScreen({ route }) {
 
 
   const handleBookNow = () => {
-    navigation.navigate('Booking', { hotel });
+    navigation.navigate('Booking', { hotelId: hotel.id, hotel });
   };
-  // console.log(hotel);
+  console.log(hotel);
   // console.log(seededHotels);
-  console.log("hotelDetails:", hotelDetails);
+  //console.log("hotelDetails:", hotelDetails);
   // console.log("description:", description);
   console.log("Image URI:", image);
 
