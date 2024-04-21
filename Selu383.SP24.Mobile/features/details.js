@@ -21,7 +21,15 @@ function DetailsScreen({ route }) {
   };
   
   const hotelDetails = seededHotels.find(item => item.id === hotel.id);  
-  const description = hotelDetails ? hotelDetails.description : '';
+
+  let cityName = "";
+  if (hotel.name === "Jackson Square" || hotel.name === "French Quarter") {
+    cityName = "New Orleans";
+  } else if (hotel.name === "Baton Rouge") {
+    cityName = "Baton Rouge";
+  }
+
+  const description = hotelDetails ? `Welcome to Enstay, where the vibrant spirit of ${cityName} meets luxurious comfort. Nestled in the heart of the historic ${hotel.name}, Enstay embodies the essence of Southern hospitality with a modern twist.` : '';
   const image = hotelDetails ? { uri: hotelDetails.image } : null;
 
   const handleBookNow = () => {
