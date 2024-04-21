@@ -136,7 +136,7 @@ function BookingScreen({ route }) {
         {availableRooms.map(room => (
           <TouchableOpacity key={room.id} onPress={() => handleRoomSelection(room)}>
 
-            <Card>
+            <Card style={style.cardStyle}>
             <Card.Title
               title={room.type}
               left={(props) =>     
@@ -266,7 +266,10 @@ function BookingScreen({ route }) {
     dateText: {
         fontSize: 16,
     },
-
+    cardStyle: {
+      marginBottom: 20, 
+    },
+  
 });
 
   export default BookingScreen;
