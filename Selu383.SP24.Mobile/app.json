@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./images/logo2.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.bradford.Selu383SP24Mobilep03g011"
