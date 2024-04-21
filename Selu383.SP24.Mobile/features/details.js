@@ -35,7 +35,6 @@ function DetailsScreen({ route }) {
 
       <Card style={style.card}>
       <Card.Title
-        style={style.name}
         title={hotel.name}
         left={(props) => <Avatar.Icon {...props} icon="office-building-marker-outline" />}
       />
