@@ -107,7 +107,8 @@ function BookingScreen({ route }) {
 
     return (
       <ScrollView contentContainerStyle={style.container}>
-        
+          <Text style={style.hotelName}>{hotel.name}</Text>
+
         {availableRooms.map(room => (
           <TouchableOpacity key={room.id} onPress={() => handleRoomSelection(room)}>
 
@@ -156,7 +157,7 @@ function BookingScreen({ route }) {
         ))}
 
 
-        <Text style={style.hotelName}>{hotel.name}</Text>
+        {/* <Text style={style.hotelName}>{hotel.name}</Text> */}
         <Text style={style.description}>{hotel.description}</Text>
 
         <View style={style.dateContainer}>
