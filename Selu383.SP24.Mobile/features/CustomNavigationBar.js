@@ -44,24 +44,16 @@ export default function CustomNavigationBar({
             onPress={handleLoginPress}
             title="Login"
           />
-          <Menu.Item
+          {/* <Menu.Item
             onPress={() => {
               console.log('Option 2 was pressed');
             }}
             title="Option 2"
-          />
-          {userType === 'Admin' ? (
+          /> */}
+          {userType === 'Admin' && (
             <Menu.Item
               onPress={handleAdminPortalPress} 
               title="Admin Portal"
-            />
-          ) : (
-            <Menu.Item
-              onPress={() => {
-                console.log('Option 3 was pressed');
-              }}
-              title="Option 3"
-              disabled
             />
           )}
         </Menu>

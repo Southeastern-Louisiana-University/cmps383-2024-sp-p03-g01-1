@@ -157,7 +157,7 @@ public static class SeedHelper
                 },
                 new Room
                 {
-                    Type = "Suite",
+                    Type = "King",
                     Capacity = 4,
                     Amenities = new List<string> { "Private Balcony", "Mini Refrigerator", "Jacuzzi Tub" },
                     Price = 250.00m,

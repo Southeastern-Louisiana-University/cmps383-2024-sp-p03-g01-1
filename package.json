@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@react-native-picker/picker": "^2.7.5"
+    "@react-native-picker/picker": "^2.7.5",
+    "expo-router": "^3.4.8"
   }
 }
