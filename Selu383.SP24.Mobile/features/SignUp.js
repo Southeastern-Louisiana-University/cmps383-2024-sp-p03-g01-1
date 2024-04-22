@@ -29,11 +29,11 @@ export default function SignUp() {
         }
 
         const userData = {
-            userName: username,
+            username: username,
             password: password,
             roles: ["user"]
         };
-
+        console.log(userData);
         try {
             const response = await fetch('https://selu383-sp24-p03-g01.azurewebsites.net/api/createusers', {
                 method: 'POST',
@@ -41,12 +41,12 @@ export default function SignUp() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(userData),
-                username: username,
-                password: password,
+                // username: username,
+                // password: password,
             });
 
             const data = await response.json();
-
+            console.log(data);
             if (!response.ok) {
                 throw new Error(data.message || 'Failed to sign up');
             }
@@ -67,7 +67,7 @@ export default function SignUp() {
     };
     const checkPasswordStrength = (password) => {
         if (password.length < 8 || !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)) {
-            setPasswordStrength('Password must be at least 8 characters long and contain a special character.');
+            setPasswordStrength('Password must be at least 8 characters long, a number, and contain a special character.');
             return false;
         }
         setPasswordStrength('');
