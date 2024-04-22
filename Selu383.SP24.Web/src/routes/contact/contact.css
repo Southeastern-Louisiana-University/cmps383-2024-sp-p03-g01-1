@@ -1,5 +1,5 @@
 .container {
-  background-color: rgb(0, 23, 31);
+  background-color: #00171F;
   color: white;
   padding: 20px;
 }
@@ -31,7 +31,7 @@ textarea {
   margin: auto;
   width: 130px;
   height: 40px;
-  font-size: 16px;  
+  font-size: 16px;
 }
 
 .contact-btn-custom:hover {

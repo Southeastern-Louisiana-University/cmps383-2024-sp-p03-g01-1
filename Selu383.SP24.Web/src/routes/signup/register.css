@@ -2,13 +2,14 @@
 .register {
   max-width: 22%;
   margin: 50px auto;
-  background-color: #fff;
+  background-color: #00171F;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
 .registerTHead th {
   font-size: 24px;
+  color: #22d3cc;
   padding: 10px 0;
   text-align: center;
 }
@@ -24,6 +25,7 @@
 .register label {
   display: block;
   font-weight: bold;
+  color: #22d3cc
 }
 
 .register input[type="text"],
