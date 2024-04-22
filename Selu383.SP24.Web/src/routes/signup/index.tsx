@@ -69,7 +69,7 @@ function Register() {
             <td>
               <form onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor="username">Username</label>
+                  <label className="" htmlFor="username">Username</label>
                   <input
                     type="text"
                     id="username"

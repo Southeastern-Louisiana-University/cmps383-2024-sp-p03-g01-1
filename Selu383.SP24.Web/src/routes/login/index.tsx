@@ -95,16 +95,24 @@ export default function Login() {
   return (
     <>
       {user !== null ?
-        <div>
+        <div className="login">
           {/* Display message indicating user is logged in */}
-          <table className="login"> 
-          <p>Welcome, {user.userName}, you are now logged in!</p>
-            <button className="btn rounded-pill buttonLogin" onClick={handleLogout}>Logout</button>
+          <table> 
+            <thead className="loginTHead-custom">
+              <tr>
+                <th>Welcome, {user.userName}, you are now logged in!</th>
+              </tr>
+            </thead>
+            <tbody className="loginTBody">
+              <tr>
+                <td>
+                <button className="btn rounded-pill buttonLogin" onClick={handleLogout}>Logout</button>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
         :
-
-
         <div className="login">
           <table>
             <thead className="loginTHead">
