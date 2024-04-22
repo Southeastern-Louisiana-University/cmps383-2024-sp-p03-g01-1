@@ -11,13 +11,14 @@ function Booking() {
     const [checkInDate, setCheckInDate] = useState('');
     const [checkOutDate, setCheckOutDate] = useState('');
     const [roomId, setRoomId] = useState('');
-    const [hotelId] = useState('1'); // Default hotelId to 1 for hotel 1
+    const [hotelId] = useState('2'); // Default hotelId to 10 for hotel 10
     const [bookingSuccess, setBookingSuccess] = useState(false);
     const [bookingError, setBookingError] = useState('');
     const [rooms, setRooms] = useState<RoomDto[]>([]); // State to hold room information
 
+
     useEffect(() => {
-        if (hotelId === '1') { // Fetch rooms only if hotelId is 1
+        if (hotelId === '2') { // Fetch rooms only if hotelId is 10
             fetch(`/api/rooms?hotelId=${hotelId}`, {
                 method: "get",
             })
@@ -29,7 +30,7 @@ function Booking() {
                 })
                 .then((j) => {
                     // Filter rooms based on hotelId
-                    const filteredRooms = j.filter(room => room.hotelId === 1);
+                    const filteredRooms = j.filter(room => room.hotelId === 2);
                     setRooms(filteredRooms);
                 })
                 .catch((error: Error) => {
@@ -37,7 +38,7 @@ function Booking() {
                     console.error('Error fetching rooms:', error);
                 });
         } else {
-            // Reset rooms if hotelId is not 1
+            // Reset rooms if hotelId is not 10
             setRooms([]);
         }
     }, [hotelId]);
