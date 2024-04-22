@@ -1,6 +1,6 @@
-/* General styles */
+/* Styles for Booking component */
 
-.login {
+.booking {
     max-width: 22%;
     margin: 50px auto;
     background-color: #fff;
@@ -9,23 +9,23 @@
     padding: 20px;
 }
 
-.loginTHead th {
+.bookingTHead th {
     font-size: 24px;
     padding: 10px 0;
     text-align: center;
 }
 
-.loginTBody td {
+.bookingTBody td {
     padding: 10px;
 }
 
-.login label {
+.booking label {
     display: block;
     font-weight: bold;
 }
 
-.login input[type="text"],
-.login input[type="password"] {
+.booking input[type="date"],
+.booking select {
     width: calc(100% - 20px);
     padding: 8px;
     margin-bottom: 10px;
@@ -33,12 +33,7 @@
     border-radius: 3px;
 }
 
-.loginpageButton {
-    text-align: center;
-}
-
-.buttonLogin,
-.buttonSignUp {
+.bookingButton {
     background-color: #003459;
     color: #fff;
     padding: 10px 20px;
@@ -48,17 +43,10 @@
     cursor: pointer;
 }
 
-    .buttonLogin:hover,
-    .buttonSignUp:hover {
+    .bookingButton:hover {
         background-color: #f2cc8F;
     }
 
-.logged-in-user {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 18px;
+.text-danger {
+    color: red;
 }
-
-    .logged-in-user span {
-        font-weight: bold;
-    }

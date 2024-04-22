@@ -21,8 +21,11 @@ const AdminBookingInfo = () => {
       } else if (hotel === 'Jackson Square') {
         endpoint = 'https://selu383-sp24-p03-g01.azurewebsites.net/api/hotels/11/bookings';
       }
+
       const response = await axios.get(endpoint);
       setBookings(response.data);
+      //console.log(bookings);
+
       setLoading(false);
     } catch (error) {
       console.error('Error fetching bookings:', error);
@@ -78,6 +81,8 @@ const AdminBookingInfo = () => {
           renderItem={({ item }) => (
             <View style={styles.item}>
               <Text style={styles.itemText}>Booking ID: {item.id}</Text>
+              <Text style={styles.itemText}>User: {item.userId}</Text>
+
               <Text style={styles.itemText}>Hotel: {getHotelName(item.hotelId)}</Text>
               <Text style={styles.itemText}>Check-In Date: {item.checkInDate}</Text>
               <Text style={styles.itemText}>Check-Out Date: {item.checkOutDate}</Text>
