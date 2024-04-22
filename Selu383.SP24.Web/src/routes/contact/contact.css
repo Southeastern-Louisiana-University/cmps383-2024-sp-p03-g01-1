@@ -21,7 +21,7 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fff; /* Lighter background color */
-  color: #000;
+  color: #00171F;
   resize: none; /* Prevent resizing of textarea */
 }
 

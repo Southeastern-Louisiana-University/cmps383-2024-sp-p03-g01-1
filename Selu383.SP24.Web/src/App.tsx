@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import './App.css';
 import Navbar from './Components/Navbar';
-import SearchBar from './Components/Search';
+// import SearchBar from './Components/Search';
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
       <div>
         <p className="landing-p-custom">Where Convenience Checks In</p>
       </div>
-      <SearchBar />
+      {/* <SearchBar /> */}
       <Outlet />
     </>
   );
