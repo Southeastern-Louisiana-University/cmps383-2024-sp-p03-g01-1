@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import { TextInput, Button, Checkbox } from 'react-native-paper';
+import { TextInput, Button, Checkbox, DefaultTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 export default function SignUp() {
@@ -58,7 +58,13 @@ export default function SignUp() {
             Alert.alert('Error', error.message || 'Failed to sign up. Please try again later.');
         }
     };
-
+    const theme = {
+        ...DefaultTheme,
+        colors: {
+            ...DefaultTheme.colors,
+            primary: '#808080', // Gray color for underline and label on focus
+        },
+    };
     const checkPasswordStrength = (password) => {
         if (password.length < 8 || !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)) {
             setPasswordStrength('Password must be at least 8 characters long and contain a special character.');
@@ -76,6 +82,7 @@ export default function SignUp() {
                 value={username}
                 onChangeText={text => setUsername(text)}
                 style={styles.input}
+                theme={theme}
             />
             <TextInput
                 label="Password"
@@ -88,6 +95,7 @@ export default function SignUp() {
                 }}
                 secureTextEntry
                 style={styles.input}
+                theme={theme}
                 ref={passwordRef}
             />
             <TextInput
@@ -99,6 +107,7 @@ export default function SignUp() {
                 }}
                 secureTextEntry
                 style={styles.input}
+                theme={theme}
             />
             {!passwordsMatch && (
                 <Text style={styles.errorText}>Passwords do not match</Text>
@@ -110,6 +119,7 @@ export default function SignUp() {
                 label="I agree to the Terms of Service"
                 status={agreeToTerms ? 'checked' : 'unchecked'}
                 onPress={() => setAgreeToTerms(!agreeToTerms)}
+                color="#22d3ee"
             />
             <Button
                 mode="contained"
@@ -141,6 +151,8 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         marginBottom: 10,
+        backgroundColor: '#a7ccd1',
+
     },
     button: {
         width: '100%',
