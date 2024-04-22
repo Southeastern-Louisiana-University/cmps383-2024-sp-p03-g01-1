@@ -3,25 +3,41 @@
 .login {
   max-width: 22%;
   margin: 50px auto;
-  background-color: #fff;
+  background-color: #00171F;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
 
+.login-table {
+  background-color: #00171F;
+}
+
+.loginTHead-custom {
+  font-size: 15px;
+  color: #23d3cc;
+  background-color: #00171F;
+  padding: 10px;
+}
+
 .loginTHead th {
   font-size: 24px;
+  color: #23d3cc;
+  background-color: #00171F;
   padding: 10px 0;
   text-align: center;
 }
 
 .loginTBody td {
   padding: 10px;
+  background-color: #00171F;
+  color: #23d3cc;
 }
 
 .login label {
   display: block;
   font-weight: bold;
+  color: #23d3cc
 }
 
 .login input[type="text"],
@@ -35,6 +51,7 @@
 
 .loginpageButton {
   text-align: center;
+  color:#23d3cc;
 }
 
 .buttonLogin,
@@ -57,8 +74,12 @@
   text-align: center;
   margin-bottom: 20px;
   font-size: 18px;
+  color: #23d3cc;
+  background-color: #00171F;
 }
 
   .logged-in-user span {
       font-weight: bold;
+      color: #23d3cc;
+      background-color: #00171F;
   }
