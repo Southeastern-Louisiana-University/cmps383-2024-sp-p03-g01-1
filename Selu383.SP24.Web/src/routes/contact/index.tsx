@@ -34,8 +34,8 @@ const ContactUs: React.FC = () => {
     <div className="container">
       <h1>Contact Us</h1>
       <div>
-        <p>For inquiries, please fill out the form below or contact us at:</p>
-        <p>Phone: +1234567890</p>
+        <h5>For inquiries, please fill out the form below or contact us at:</h5>
+        <h5>Phone: +1234567890</h5>
       </div>
       {!submitted ? (
         <form onSubmit={handleFormSubmit}>

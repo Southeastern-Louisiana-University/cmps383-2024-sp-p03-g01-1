@@ -4,6 +4,10 @@
   padding: 20px;
 }
 
+h1, h2, h5 {
+  color: #22d3cc;
+}
+
 .form-group {
   margin-bottom: 20px;
 }
@@ -11,6 +15,7 @@
 label {
   display: block;
   margin-bottom: 5px;
+  color: #22d3cc;
 }
 
 input[type="text"],
