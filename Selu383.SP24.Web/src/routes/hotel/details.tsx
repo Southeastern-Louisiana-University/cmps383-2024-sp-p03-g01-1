@@ -8,12 +8,14 @@ import SLCNOLA from "../../images/SLCNOLA.jpg";
 import { RoomDto } from "../../Components/RoomDto";
 
 import "./hotelindex.css";
+
 export default function HotelDetails() {
     const { id } = useParams<{ id: string }>(); // Specify that id is a string
     const [hotel, setHotel] = useState<HotelDto>();
     const [rooms, setRooms] = useState<RoomDto[]>([]); // State to hold room information
     const [error, setError] = useState<Error | null>(null);
     const navigate = useNavigate();
+
     useEffect(() => {
         if (id) { // Check if id is defined
             fetch(`/api/hotels/${id}`, {
@@ -65,7 +67,15 @@ export default function HotelDetails() {
     };
 
     const handleButtonClick = (hotelId: number) => {
-        navigate(`/hotels/details/${hotelId}`);
+        if (hotelId === 9) {
+            navigate("/booking/1");
+        } else if (hotelId === 10) {
+            navigate("/booking/2");
+        } else if (hotelId === 11) {
+            navigate("/booking/3");
+        } else {
+            // Handle other cases if needed
+        }
     };
 
     return (
@@ -80,39 +90,23 @@ export default function HotelDetails() {
                             <img src={cityImageMap[hotel.name]} alt="Big Image" />
                         </div>
                         <div className="containerindex">
-                            <div className="rowindex"> 
-                            {rooms.slice(0, 3).map((room, index) => (
-                               
-                                   
-                                <div className="card card-customindex">
-                                    <div className="col-3index" key={index}>
-                                        <div className="card-bodyindex">
-                                            <h3 className="card-titleindex">Room {index + 1}</h3>
-                                            <p className="card-text card-text-customindex">Type: {room.type}</p>
-                                            <p className="card-text card-text-customindex">Capacity: {room.capacity}</p>
-                                            <p className="card-text card-text-customindex">Amenities: {room.amenities.join(', ')}</p>
-                                            <p className="card-text card-text-customindex">Price: {room.price}</p>
-                                            <p className="card-text card-text-customindex">Available: {room.available ? 'Yes' : 'No'}</p>
-                                            <button onClick={() => handleButtonClick(hotel.id)} className="btn btn-custom rounded-pill rounded-5index">Book Now</button>
-                                        </div>
+                            <div className="rowindex">
+                                {rooms.slice(0, 3).map((room, index) => (
+                                    <div className="card card-customindex" key={index}>
+                                        <div className="col-3index">
+                                            <div className="card-bodyindex">
+                                                <h3 className="card-titleindex">Room {index + 1}</h3>
+                                                <p className="card-text card-text-customindex">Type: {room.type}</p>
+                                                <p className="card-text card-text-customindex">Capacity: {room.capacity}</p>
+                                                <p className="card-text card-text-customindex">Amenities: {room.amenities.join(', ')}</p>
+                                                <p className="card-text card-text-customindex">Price: {room.price}</p>
+                                                <p className="card-text card-text-customindex">Available: {room.available ? 'Yes' : 'No'}</p>
+                                                <button onClick={() => handleButtonClick(hotel.id)} className="btn btn-custom rounded-pill rounded-5index">Book Now</button>
+                                            </div>
                                         </div>
                                     </div>
-                            ))}
-                                    </div> 
-
-                                   
-                               
-                           
-
-
-                            
-
-
-
-
-
-
-
+                                ))}
+                            </div>
                         </div>
                     </div>
                     <br />

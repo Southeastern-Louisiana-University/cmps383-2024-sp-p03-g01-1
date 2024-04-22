@@ -4,7 +4,7 @@ import logo from "../../images/logo.png";
 
 function About() {
     return (
-        <>
+        <div className="container">
             <h1 className="aboutusH1">About Us</h1>
             <table className="centerAbout">
                 <tr>
@@ -38,7 +38,7 @@ function About() {
                 </div>
             </table>
             <Outlet />
-        </>
+        </div>
     );
 }
 
