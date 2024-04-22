@@ -13,7 +13,7 @@ h1 {
 }
 
 body {
-  background-color: #22d3ee;
+  background-image: repeating-radial-gradient(circle, #22d3ee, #f2cc8f, #003459);
 }
 
 .app-container {
